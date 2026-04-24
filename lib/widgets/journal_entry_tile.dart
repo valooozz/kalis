@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import '../models/journal_entry_model.dart';
+import '../core/utils/date_utils.dart';
+
+class JournalEntryTile extends StatelessWidget {
+  final JournalEntryModel entry;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
+
+  const JournalEntryTile({
+    super.key,
+    required this.entry,
+    required this.onEdit,
+    required this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      title: Text(entry.text),
+      subtitle: Text(
+        entry.date.toShortDate(),
+        style: theme.textTheme.bodySmall?.copyWith(
+          color: theme.colorScheme.outline,
+        ),
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.edit_outlined),
+            onPressed: onEdit,
+            tooltip: 'Modifier',
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete_outline),
+            onPressed: onDelete,
+            tooltip: 'Supprimer',
+            color: theme.colorScheme.error,
+          ),
+        ],
+      ),
+    );
+  }
+}
