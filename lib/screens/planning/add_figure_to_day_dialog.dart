@@ -77,7 +77,7 @@ class AddFigureToDayDialog extends ConsumerWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: const Text('Fermer'),
         ),
       ],
     );
