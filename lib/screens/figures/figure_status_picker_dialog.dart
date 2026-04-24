@@ -14,17 +14,19 @@ class FigureStatusPickerDialog extends ConsumerWidget {
 
     return AlertDialog(
       title: const Text('Changer le statut'),
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: FigureState.values.map((state) {
           final isSelected = state == figure.state;
           return GestureDetector(
             onTap: () => _changeState(context, ref, state),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
+              width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
+                borderRadius: BorderRadius.circular(8),
                 color: isSelected
                     ? theme.colorScheme.primaryContainer
                     : Colors.transparent,
