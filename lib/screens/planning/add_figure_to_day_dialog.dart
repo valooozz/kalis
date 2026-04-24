@@ -89,7 +89,5 @@ class AddFigureToDayDialog extends ConsumerWidget {
     if (repository == null) return;
 
     await repository.add(TrainingPlannedModel(figureId: figure.id, date: date));
-
-    if (context.mounted) Navigator.of(context).pop();
   }
 }
