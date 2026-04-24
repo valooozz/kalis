@@ -17,8 +17,7 @@ class FigureDetailDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final entriesAsync =
-        ref.watch(journalEntriesForFigureProvider(figure.id));
+    final entriesAsync = ref.watch(journalEntriesForFigureProvider(figure.id));
 
     return AlertDialog(
       title: Row(
@@ -51,7 +50,7 @@ class FigureDetailDialog extends ConsumerWidget {
               // Dates
               if (figure.startDate != null)
                 _InfoRow(
-                  label: 'Début',
+                  label: 'Débutée le',
                   value: figure.startDate!.toShortDate(),
                 ),
               if (figure.endDate != null)
@@ -78,8 +77,7 @@ class FigureDetailDialog extends ConsumerWidget {
                 ],
               ),
               entriesAsync.when(
-                loading: () =>
-                    const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
                 error: (e, _) => Text('Erreur : $e'),
                 data: (entries) {
                   if (entries.isEmpty) {
@@ -95,13 +93,14 @@ class FigureDetailDialog extends ConsumerWidget {
                   }
                   return Column(
                     children: entries
-                        .map((entry) => JournalEntryTile(
-                              entry: entry,
-                              onEdit: () =>
-                                  _openEditEntry(context, ref, entry.id),
-                              onDelete: () =>
-                                  _deleteEntry(ref, entry.id),
-                            ))
+                        .map(
+                          (entry) => JournalEntryTile(
+                            entry: entry,
+                            onEdit: () =>
+                                _openEditEntry(context, ref, entry.id),
+                            onDelete: () => _deleteEntry(ref, entry.id),
+                          ),
+                        )
                         .toList(),
                   );
                 },
@@ -142,6 +141,7 @@ class FigureDetailDialog extends ConsumerWidget {
   }
 
   void _openStatusPicker(BuildContext context, WidgetRef ref) {
+    Navigator.of(context).pop();
     showDialog(
       context: context,
       builder: (_) => FigureStatusPickerDialog(figure: figure),

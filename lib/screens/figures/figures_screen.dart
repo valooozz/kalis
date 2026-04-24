@@ -14,26 +14,25 @@ class FiguresScreen extends ConsumerWidget {
     final figuresAsync = ref.watch(figuresProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Figures'),
-      ),
+      appBar: AppBar(title: const Text('Figures')),
       body: figuresAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Erreur : $e')),
         data: (figures) {
           if (figures.isEmpty) {
-            return _EmptyFigures(
-              onAdd: () => _openAddDialog(context),
-            );
+            return _EmptyFigures(onAdd: () => _openAddDialog(context));
           }
 
           // Groupement par statut
-          final learned =
-              figures.where((f) => f.state == FigureState.learned).toList();
-          final learning =
-              figures.where((f) => f.state == FigureState.learning).toList();
-          final toLearn =
-              figures.where((f) => f.state == FigureState.toLearn).toList();
+          final learned = figures
+              .where((f) => f.state == FigureState.learned)
+              .toList();
+          final learning = figures
+              .where((f) => f.state == FigureState.learning)
+              .toList();
+          final toLearn = figures
+              .where((f) => f.state == FigureState.toLearn)
+              .toList();
 
           return CustomScrollView(
             slivers: [
@@ -63,10 +62,7 @@ class FiguresScreen extends ConsumerWidget {
   }
 
   void _openAddDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (_) => const FigureFormDialog(),
-    );
+    showDialog(context: context, builder: (_) => const FigureFormDialog());
   }
 }
 
@@ -107,8 +103,10 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-          BuildContext context, double shrinkOffset, bool overlapsContent) =>
-      child;
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) => child;
 
   @override
   double get maxExtent => 36;
@@ -121,7 +119,6 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
       oldDelegate.child != child;
 }
 
-// Sliver de liste de figures
 class _FigureSliver extends StatelessWidget {
   final List<FigureModel> figures;
 
@@ -130,27 +127,23 @@ class _FigureSliver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          final figure = figures[index];
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: FigureCard(
-              figure: figure,
-              onTap: () => showDialog(
-                context: context,
-                builder: (_) => FigureDetailDialog(figure: figure),
-              ),
+      delegate: SliverChildBuilderDelegate((context, index) {
+        final figure = figures[index];
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          child: FigureCard(
+            figure: figure,
+            onTap: () => showDialog(
+              context: context,
+              builder: (_) => FigureDetailDialog(figure: figure),
             ),
-          );
-        },
-        childCount: figures.length,
-      ),
+          ),
+        );
+      }, childCount: figures.length),
     );
   }
 }
 
-// Message quand il n'y a aucune figure
 class _EmptyFigures extends StatelessWidget {
   final VoidCallback onAdd;
 
