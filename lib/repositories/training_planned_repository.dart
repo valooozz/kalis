@@ -8,8 +8,8 @@ class TrainingPlannedRepository {
   TrainingPlannedRepository({
     required FirebaseFirestore firestore,
     required String userId,
-  })  : _firestore = firestore,
-        _userId = userId;
+  }) : _firestore = firestore,
+       _userId = userId;
 
   CollectionReference<Map<String, dynamic>> get _collection =>
       _firestore.collection('users').doc(_userId).collection('trainingPlanned');
@@ -22,9 +22,11 @@ class TrainingPlannedRepository {
         .where('date', isGreaterThanOrEqualTo: dayStart.toIso8601String())
         .where('date', isLessThanOrEqualTo: dayEnd.toIso8601String())
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => TrainingPlannedModel.fromFirestore(doc.data()))
-            .toList());
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => TrainingPlannedModel.fromFirestore(doc.data()))
+              .toList(),
+        );
   }
 
   Stream<List<TrainingPlannedModel>> watchByFigure(String figureId) {
@@ -32,12 +34,17 @@ class TrainingPlannedRepository {
         .where('figureId', isEqualTo: figureId)
         .orderBy('date', descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => TrainingPlannedModel.fromFirestore(doc.data()))
-            .toList());
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => TrainingPlannedModel.fromFirestore(doc.data()))
+              .toList(),
+        );
   }
 
-  Stream<List<TrainingPlannedModel>> watchByDateRange(DateTime start, DateTime end) {
+  Stream<List<TrainingPlannedModel>> watchByDateRange(
+    DateTime start,
+    DateTime end,
+  ) {
     final rangeStart = DateTime(start.year, start.month, start.day);
     final rangeEnd = DateTime(end.year, end.month, end.day, 23, 59, 59);
 
@@ -45,9 +52,11 @@ class TrainingPlannedRepository {
         .where('date', isGreaterThanOrEqualTo: rangeStart.toIso8601String())
         .where('date', isLessThanOrEqualTo: rangeEnd.toIso8601String())
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => TrainingPlannedModel.fromFirestore(doc.data()))
-            .toList());
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => TrainingPlannedModel.fromFirestore(doc.data()))
+              .toList(),
+        );
   }
 
   Future<void> add(TrainingPlannedModel trainingPlanned) async {
@@ -58,14 +67,24 @@ class TrainingPlannedRepository {
   }
 
   Future<void> remove(String figureId, DateTime date) async {
-    final docId =
-        '${figureId}_${date.toIso8601String().substring(0, 10)}';
+    final docId = '${figureId}_${date.toIso8601String().substring(0, 10)}';
     await _collection.doc(docId).delete();
   }
 
+  Future<void> removeAllForFigure(String figureId) async {
+    final snapshot = await _collection
+        .where('figureId', isEqualTo: figureId)
+        .get();
+
+    final batch = _firestore.batch();
+    for (final doc in snapshot.docs) {
+      batch.delete(doc.reference);
+    }
+    await batch.commit();
+  }
+
   Future<bool> exists(String figureId, DateTime date) async {
-    final docId =
-        '${figureId}_${date.toIso8601String().substring(0, 10)}';
+    final docId = '${figureId}_${date.toIso8601String().substring(0, 10)}';
     final doc = await _collection.doc(docId).get();
     return doc.exists;
   }

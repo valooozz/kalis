@@ -104,8 +104,11 @@ class FigureStatusPickerDialog extends ConsumerWidget {
       return;
     }
 
-    final repository = ref.read(figureRepositoryProvider);
-    if (repository == null) return;
+    final figureRepository = ref.read(figureRepositoryProvider);
+    final trainingPlannedRepository = ref.read(
+      trainingPlannedRepositoryProvider,
+    );
+    if (figureRepository == null || trainingPlannedRepository == null) return;
 
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
@@ -114,13 +117,14 @@ class FigureStatusPickerDialog extends ConsumerWidget {
     FigureModel updated = figure.copyWith(state: newState);
     if (newState == FigureState.toLearn) {
       updated = updated.copyWith(clearStartDate: true, clearEndDate: true);
+      await trainingPlannedRepository.removeAllForFigure(figure.id);
     } else if (newState == FigureState.learning) {
       updated = updated.copyWith(startDate: today, clearEndDate: true);
     } else if (newState == FigureState.learned) {
       updated = updated.copyWith(endDate: today);
     }
 
-    await repository.update(updated);
+    await figureRepository.update(updated);
     if (context.mounted) Navigator.of(context).pop();
   }
 }

@@ -8,8 +8,8 @@ class TrainingDoneRepository {
   TrainingDoneRepository({
     required FirebaseFirestore firestore,
     required String userId,
-  })  : _firestore = firestore,
-        _userId = userId;
+  }) : _firestore = firestore,
+       _userId = userId;
 
   CollectionReference<Map<String, dynamic>> get _collection =>
       _firestore.collection('users').doc(_userId).collection('trainingDone');
@@ -22,9 +22,11 @@ class TrainingDoneRepository {
         .where('date', isGreaterThanOrEqualTo: dayStart.toIso8601String())
         .where('date', isLessThanOrEqualTo: dayEnd.toIso8601String())
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => TrainingDoneModel.fromFirestore(doc.data()))
-            .toList());
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => TrainingDoneModel.fromFirestore(doc.data()))
+              .toList(),
+        );
   }
 
   Stream<List<TrainingDoneModel>> watchByFigure(String figureId) {
@@ -32,9 +34,11 @@ class TrainingDoneRepository {
         .where('figureId', isEqualTo: figureId)
         .orderBy('date', descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => TrainingDoneModel.fromFirestore(doc.data()))
-            .toList());
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => TrainingDoneModel.fromFirestore(doc.data()))
+              .toList(),
+        );
   }
 
   Future<void> add(TrainingDoneModel trainingDone) async {
@@ -45,14 +49,12 @@ class TrainingDoneRepository {
   }
 
   Future<void> remove(String figureId, DateTime date) async {
-    final docId =
-        '${figureId}_${date.toIso8601String().substring(0, 10)}';
+    final docId = '${figureId}_${date.toIso8601String().substring(0, 10)}';
     await _collection.doc(docId).delete();
   }
 
   Future<bool> exists(String figureId, DateTime date) async {
-    final docId =
-        '${figureId}_${date.toIso8601String().substring(0, 10)}';
+    final docId = '${figureId}_${date.toIso8601String().substring(0, 10)}';
     final doc = await _collection.doc(docId).get();
     return doc.exists;
   }
