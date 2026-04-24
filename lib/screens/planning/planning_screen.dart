@@ -17,9 +17,7 @@ class PlanningScreen extends ConsumerWidget {
     final days = List.generate(14, (i) => today.add(Duration(days: i)));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Planification'),
-      ),
+      appBar: AppBar(title: const Text('Planification')),
       body: CustomScrollView(
         slivers: [
           for (final day in days) ...[
@@ -66,8 +64,10 @@ class _DayHeader extends StatelessWidget {
               if (isToday) ...[
                 const SizedBox(width: 8),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(12),
@@ -95,8 +95,10 @@ class _DayHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) =>
-      child;
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) => child;
 
   @override
   double get maxExtent => 36;
@@ -133,16 +135,17 @@ class _DayContent extends ConsumerWidget {
               spacing: 8,
               runSpacing: 8,
               children: [
-                ...figures.map((figure) => SizedBox(
-                      width: _cardSize(context),
-                      height: _cardSize(context),
-                      child: FigureSquareCard(
-                        figure: figure,
-                        onTap: () {},
-                        onLongPress: () =>
-                            _removeFigure(ref, figure, date),
-                      ),
-                    )),
+                ...figures.map(
+                  (figure) => SizedBox(
+                    width: _cardSize(context),
+                    height: _cardSize(context),
+                    child: FigureSquareCard(
+                      figure: figure,
+                      onTap: () {},
+                      onLongPress: () => _removeFigure(ref, figure, date),
+                    ),
+                  ),
+                ),
                 // Bouton d'ajout
                 SizedBox(
                   width: _cardSize(context),
@@ -163,7 +166,10 @@ class _DayContent extends ConsumerWidget {
   }
 
   Future<void> _removeFigure(
-      WidgetRef ref, FigureModel figure, DateTime date) async {
+    WidgetRef ref,
+    FigureModel figure,
+    DateTime date,
+  ) async {
     final plannedRepository = ref.read(trainingPlannedRepositoryProvider);
     final doneRepository = ref.read(trainingDoneRepositoryProvider);
     if (plannedRepository == null || doneRepository == null) return;
@@ -196,11 +202,7 @@ class _AddFigureButton extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(12),
         child: Center(
-          child: Icon(
-            Icons.add,
-            color: theme.colorScheme.primary,
-            size: 32,
-          ),
+          child: Icon(Icons.add, color: theme.colorScheme.primary, size: 32),
         ),
       ),
     );

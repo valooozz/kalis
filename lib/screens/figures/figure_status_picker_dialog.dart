@@ -112,8 +112,10 @@ class FigureStatusPickerDialog extends ConsumerWidget {
 
     // Mise à jour des dates selon le nouveau statut
     FigureModel updated = figure.copyWith(state: newState);
-    if (newState == FigureState.learning) {
-      updated = updated.copyWith(startDate: today);
+    if (newState == FigureState.toLearn) {
+      updated = updated.copyWith(clearStartDate: true, clearEndDate: true);
+    } else if (newState == FigureState.learning) {
+      updated = updated.copyWith(startDate: today, clearEndDate: true);
     } else if (newState == FigureState.learned) {
       updated = updated.copyWith(endDate: today);
     }

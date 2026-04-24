@@ -17,9 +17,7 @@ class TodayScreen extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Aujourd'hui"),
-      ),
+      appBar: AppBar(title: const Text("Séance du jour")),
       body: figuresAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Erreur : $e')),
@@ -73,7 +71,8 @@ class TodayScreen extends ConsumerWidget {
                     return FigureSquareCard(
                       figure: figure,
                       isDone: isDone,
-                      onTap: () => _openTrainingDialog(context, ref, figure, isDone),
+                      onTap: () =>
+                          _openTrainingDialog(context, ref, figure, isDone),
                       onLongPress: () => _toggleDone(ref, figure, isDone),
                     );
                   },
@@ -111,10 +110,7 @@ class TodayScreen extends ConsumerWidget {
     if (isDone) {
       await repository.remove(figure.id, today);
     } else {
-      await repository.add(TrainingDoneModel(
-        figureId: figure.id,
-        date: today,
-      ));
+      await repository.add(TrainingDoneModel(figureId: figure.id, date: today));
     }
   }
 }
