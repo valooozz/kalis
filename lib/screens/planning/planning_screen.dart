@@ -95,14 +95,14 @@ class _DayHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-          BuildContext context, double shrinkOffset, bool overlapsContent) =>
+      BuildContext context, double shrinkOffset, bool overlapsContent) =>
       child;
 
   @override
-  double get maxExtent => 44;
+  double get maxExtent => 36;
 
   @override
-  double get minExtent => 44;
+  double get minExtent => 36;
 
   @override
   bool shouldRebuild(covariant _DayHeaderDelegate oldDelegate) =>
