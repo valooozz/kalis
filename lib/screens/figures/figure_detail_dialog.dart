@@ -135,9 +135,9 @@ class FigureDetailDialog extends ConsumerWidget {
       case FigureState.toLearn:
         return Icon(Icons.bookmark_outline, color: theme.colorScheme.outline);
       case FigureState.learning:
-        return Icon(Icons.bookmark_add, color: theme.colorScheme.primary);
+        return Icon(Icons.sports_gymnastics, color: theme.colorScheme.primary);
       case FigureState.learned:
-        return Icon(Icons.bookmark, color: theme.colorScheme.primary);
+        return Icon(Icons.done_outline, color: theme.colorScheme.primary);
     }
   }
 

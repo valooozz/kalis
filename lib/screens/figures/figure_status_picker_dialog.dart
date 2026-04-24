@@ -66,7 +66,7 @@ class FigureStatusPickerDialog extends ConsumerWidget {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.bookmark_add, color: color),
+            Icon(Icons.sports_gymnastics, color: color),
             const SizedBox(height: 4),
             Text('En apprentissage',
                 style: theme.textTheme.labelSmall?.copyWith(color: color)),
@@ -76,7 +76,7 @@ class FigureStatusPickerDialog extends ConsumerWidget {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.bookmark, color: color),
+            Icon(Icons.done_outline, color: color),
             const SizedBox(height: 4),
             Text('Apprise',
                 style: theme.textTheme.labelSmall?.copyWith(color: color)),
