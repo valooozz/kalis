@@ -31,18 +31,15 @@ class AddFigureToDayDialog extends ConsumerWidget {
             // Case à cocher
             CheckboxListTile(
               value: showLearned,
-              onChanged: (_) =>
-                  ref.read(showLearnedProvider.notifier).toggle(),
+              onChanged: (_) => ref.read(showLearnedProvider.notifier).toggle(),
               title: const Text('Afficher les figures apprises'),
               contentPadding: EdgeInsets.zero,
               controlAffinity: ListTileControlAffinity.leading,
             ),
             const Divider(),
-            // Liste des figures disponibles
             Flexible(
               child: availableAsync.when(
-                loading: () =>
-                    const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
                 error: (e, _) => Text('Erreur : $e'),
                 data: (figures) {
                   if (figures.isEmpty) {
@@ -91,10 +88,7 @@ class AddFigureToDayDialog extends ConsumerWidget {
     final repository = ref.read(trainingPlannedRepositoryProvider);
     if (repository == null) return;
 
-    await repository.add(TrainingPlannedModel(
-      figureId: figure.id,
-      date: date,
-    ));
+    await repository.add(TrainingPlannedModel(figureId: figure.id, date: date));
 
     if (context.mounted) Navigator.of(context).pop();
   }

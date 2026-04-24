@@ -30,15 +30,12 @@ class FigureSquareCard extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               border: Border(
-                top: BorderSide(
-                  color: figureColor,
-                  width: 5,
-                ),
-                bottom: BorderSide(
-                  color: figureColor,
-                  width: isDone ? 5 : 0,
-                ),
+                top: BorderSide(color: figureColor, width: 10),
+                bottom: isDone
+                    ? BorderSide(color: figureColor, width: 10)
+                    : BorderSide.none,
               ),
+              borderRadius: BorderRadius.circular(12),
             ),
             padding: const EdgeInsets.all(8),
             child: Stack(
@@ -53,13 +50,13 @@ class FigureSquareCard extends StatelessWidget {
                   ),
                 ),
                 if (isDone)
-  Center(
-    child: Icon(
-      Icons.done_outline,
-      color: figureColor.withValues(alpha: 0.5),
-      size: 80,
-    ),
-  ),
+                  Center(
+                    child: Icon(
+                      Icons.done_outline,
+                      color: figureColor.withValues(alpha: 0.5),
+                      size: 80,
+                    ),
+                  ),
               ],
             ),
           ),

@@ -8,11 +8,7 @@ class FigureCard extends ConsumerWidget {
   final FigureModel figure;
   final VoidCallback onTap;
 
-  const FigureCard({
-    super.key,
-    required this.figure,
-    required this.onTap,
-  });
+  const FigureCard({super.key, required this.figure, required this.onTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,11 +23,10 @@ class FigureCard extends ConsumerWidget {
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            border: Border(
-              left: BorderSide(
-                color: figureColor,
-                width: 5,
-              ),
+            border: Border(left: BorderSide(color: figureColor, width: 10)),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(12),
+              bottomLeft: Radius.circular(12),
             ),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -78,11 +73,7 @@ class _DateRow extends StatelessWidget {
   final DateTime? date;
   final String label;
 
-  const _DateRow({
-    required this.icon,
-    required this.date,
-    required this.label,
-  });
+  const _DateRow({required this.icon, required this.date, required this.label});
 
   @override
   Widget build(BuildContext context) {
