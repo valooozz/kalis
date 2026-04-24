@@ -8,8 +8,8 @@ class FigureRepository {
   FigureRepository({
     required FirebaseFirestore firestore,
     required String userId,
-  })  : _firestore = firestore,
-        _userId = userId;
+  }) : _firestore = firestore,
+       _userId = userId;
 
   CollectionReference<Map<String, dynamic>> get _collection =>
       _firestore.collection('users').doc(_userId).collection('figures');
@@ -37,7 +37,45 @@ class FigureRepository {
     await _collection.doc(figure.id).update(figure.toFirestore());
   }
 
-  Future<void> delete(String id) async {
-    await _collection.doc(id).delete();
+  Future<void> delete(String figureId) async {
+    final batch = _firestore.batch();
+
+    // Suppression de la figure
+    batch.delete(_collection.doc(figureId));
+
+    // Suppression des trainingDone associés
+    final trainingDone = await _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('trainingDone')
+        .where('figureId', isEqualTo: figureId)
+        .get();
+    for (final doc in trainingDone.docs) {
+      batch.delete(doc.reference);
+    }
+
+    // Suppression des trainingPlanned associés
+    final trainingPlanned = await _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('trainingPlanned')
+        .where('figureId', isEqualTo: figureId)
+        .get();
+    for (final doc in trainingPlanned.docs) {
+      batch.delete(doc.reference);
+    }
+
+    // Suppression des journalEntries associées
+    final journalEntries = await _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('journalEntries')
+        .where('figureId', isEqualTo: figureId)
+        .get();
+    for (final doc in journalEntries.docs) {
+      batch.delete(doc.reference);
+    }
+
+    await batch.commit();
   }
 }
