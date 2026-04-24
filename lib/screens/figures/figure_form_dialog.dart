@@ -25,8 +25,7 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
   @override
   void initState() {
     super.initState();
-    _nameController =
-        TextEditingController(text: widget.figure?.name ?? '');
+    _nameController = TextEditingController(text: widget.figure?.name ?? '');
     _selectedColor = widget.figure?.color ?? FigureColor.blue;
     _startDate = widget.figure?.startDate;
     _endDate = widget.figure?.endDate;
@@ -67,7 +66,7 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
               selected: _selectedColor,
               onChanged: (color) => setState(() => _selectedColor = color),
             ),
-            // Dates (uniquement en mode édition)
+            // Dates et suppression (uniquement en mode édition)
             if (_isEditing) ...[
               const SizedBox(height: 24),
               _DatePicker(
@@ -88,6 +87,14 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
         ),
       ),
       actions: [
+        if (_isEditing)
+          TextButton(
+            onPressed: _delete,
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+            ),
+            child: const Text('Supprimer la figure'),
+          ),
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Annuler'),
@@ -129,6 +136,40 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
 
     if (mounted) Navigator.of(context).pop();
   }
+
+  Future<void> _delete() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Supprimer la figure'),
+        content: Text(
+          'Supprimer "${widget.figure!.name}" ? Cette action est irréversible.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Annuler'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+            ),
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Supprimer'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    final repository = ref.read(figureRepositoryProvider);
+    if (repository == null) return;
+
+    await repository.delete(widget.figure!.id);
+
+    if (mounted) Navigator.of(context).pop();
+  }
 }
 
 class _DatePicker extends StatelessWidget {
@@ -152,9 +193,7 @@ class _DatePicker extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            date != null
-                ? '$label : ${date!.toShortDate()}'
-                : '$label : —',
+            date != null ? '$label : ${date!.toShortDate()}' : '$label : —',
             style: theme.textTheme.bodyMedium,
           ),
         ),

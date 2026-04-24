@@ -51,8 +51,9 @@ class FigureStatusPickerDialog extends ConsumerWidget {
   }
 
   Widget _stateIcon(FigureState state, ThemeData theme, bool isSelected) {
-    final color =
-        isSelected ? theme.colorScheme.primary : theme.colorScheme.outline;
+    final color = isSelected
+        ? theme.colorScheme.primary
+        : theme.colorScheme.outline;
     switch (state) {
       case FigureState.toLearn:
         return Column(
@@ -60,8 +61,10 @@ class FigureStatusPickerDialog extends ConsumerWidget {
           children: [
             Icon(Icons.bookmark_outline, color: color),
             const SizedBox(height: 4),
-            Text('À apprendre',
-                style: theme.textTheme.labelSmall?.copyWith(color: color)),
+            Text(
+              'À apprendre',
+              style: theme.textTheme.labelSmall?.copyWith(color: color),
+            ),
           ],
         );
       case FigureState.learning:
@@ -70,8 +73,10 @@ class FigureStatusPickerDialog extends ConsumerWidget {
           children: [
             Icon(Icons.sports_gymnastics, color: color),
             const SizedBox(height: 4),
-            Text('En apprentissage',
-                style: theme.textTheme.labelSmall?.copyWith(color: color)),
+            Text(
+              'En apprentissage',
+              style: theme.textTheme.labelSmall?.copyWith(color: color),
+            ),
           ],
         );
       case FigureState.learned:
@@ -80,15 +85,20 @@ class FigureStatusPickerDialog extends ConsumerWidget {
           children: [
             Icon(Icons.done_outline, color: color),
             const SizedBox(height: 4),
-            Text('Apprise',
-                style: theme.textTheme.labelSmall?.copyWith(color: color)),
+            Text(
+              'Apprise',
+              style: theme.textTheme.labelSmall?.copyWith(color: color),
+            ),
           ],
         );
     }
   }
 
   Future<void> _changeState(
-      BuildContext context, WidgetRef ref, FigureState newState) async {
+    BuildContext context,
+    WidgetRef ref,
+    FigureState newState,
+  ) async {
     if (newState == figure.state) {
       Navigator.of(context).pop();
       return;

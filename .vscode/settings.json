@@ -1,3 +1,7 @@
 {
-    "cmake.sourceDirectory": "C:/Users/valen/repos/kalis/windows"
+    "cmake.sourceDirectory": "C:/Users/valen/repos/kalis/windows",
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "Dart-Code.dart-code"
+    }
 }
