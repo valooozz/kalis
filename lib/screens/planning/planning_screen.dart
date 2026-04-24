@@ -43,7 +43,6 @@ class _DayHeader extends StatelessWidget {
     final isToday = date.isToday;
 
     return SliverPersistentHeader(
-      pinned: true,
       delegate: _DayHeaderDelegate(
         child: Container(
           color: theme.scaffoldBackgroundColor,
