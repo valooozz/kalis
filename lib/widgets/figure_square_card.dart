@@ -34,6 +34,10 @@ class FigureSquareCard extends StatelessWidget {
                   color: figureColor,
                   width: 5,
                 ),
+                bottom: BorderSide(
+                  color: figureColor,
+                  width: isDone ? 5 : 0,
+                ),
               ),
             ),
             padding: const EdgeInsets.all(8),
@@ -49,15 +53,13 @@ class FigureSquareCard extends StatelessWidget {
                   ),
                 ),
                 if (isDone)
-                  Positioned(
-                    bottom: 4,
-                    right: 4,
-                    child: Icon(
-                      Icons.check_circle,
-                      color: theme.colorScheme.primary,
-                      size: 20,
-                    ),
-                  ),
+  Center(
+    child: Icon(
+      Icons.done_outline,
+      color: figureColor.withValues(alpha: 0.5),
+      size: 80,
+    ),
+  ),
               ],
             ),
           ),
