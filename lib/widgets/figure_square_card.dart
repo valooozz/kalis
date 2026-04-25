@@ -54,7 +54,7 @@ class FigureSquareCard extends StatelessWidget {
                     child: Icon(
                       Icons.done_outline,
                       color: figureColor.withValues(alpha: 0.5),
-                      size: 80,
+                      size: 70,
                     ),
                   ),
               ],
