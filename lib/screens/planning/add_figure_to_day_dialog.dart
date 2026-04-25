@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 import '../../models/figure_model.dart';
 import '../../models/training_planned_model.dart';
 import '../../providers/planning_providers.dart';
@@ -14,13 +15,14 @@ class AddFigureToDayDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final lbl = AppLocalizations.of(context)!;
     final availableAsync = ref.watch(availableFiguresForDayProvider(date));
     final showLearned = ref.watch(showLearnedProvider);
-    final theme = Theme.of(context);
 
     return AlertDialog(
       title: Text(
-        'Ajouter une figure\n${date.toShortLabel(Localizations.localeOf(context))}',
+        '${lbl.addFigure}\n${date.toShortLabel(Localizations.localeOf(context))}',
         style: theme.textTheme.titleMedium,
       ),
       content: SizedBox(
@@ -32,7 +34,7 @@ class AddFigureToDayDialog extends ConsumerWidget {
             CheckboxListTile(
               value: showLearned,
               onChanged: (_) => ref.read(showLearnedProvider.notifier).toggle(),
-              title: const Text('Afficher les figures apprises'),
+              title: Text(lbl.showLearnedFigures),
               contentPadding: EdgeInsets.zero,
               controlAffinity: ListTileControlAffinity.leading,
             ),
@@ -46,7 +48,7 @@ class AddFigureToDayDialog extends ConsumerWidget {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: Text(
-                        'Aucune figure disponible',
+                        lbl.noFigureAvailable,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.outline,
                         ),
@@ -74,7 +76,7 @@ class AddFigureToDayDialog extends ConsumerWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Fermer'),
+          child: Text(lbl.buttonClose),
         ),
       ],
     );

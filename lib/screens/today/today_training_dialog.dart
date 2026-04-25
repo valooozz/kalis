@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 import '../../models/figure_model.dart';
 import '../../models/training_done_model.dart';
 import '../../models/journal_entry_model.dart';
@@ -35,8 +36,10 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final entryAsync =
-        ref.watch(todayJournalEntryForFigureProvider(widget.figure.id));
+    final lbl = AppLocalizations.of(context)!;
+    final entryAsync = ref.watch(
+      todayJournalEntryForFigureProvider(widget.figure.id),
+    );
 
     // Quand l'entrée est chargée, on initialise le controller
     entryAsync.whenData((entry) {
@@ -51,29 +54,24 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Note de séance',
-            style: theme.textTheme.labelLarge,
-          ),
+          Text(lbl.trainingNote, style: theme.textTheme.labelLarge),
           const SizedBox(height: 8),
           TextField(
             controller: _controller,
             maxLines: 4,
-            decoration: const InputDecoration(
-              hintText: 'Comment s\'est passé l\'entraînement ?',
-            ),
+            decoration: InputDecoration(hintText: lbl.trainingHint),
           ),
         ],
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(lbl.buttonCancel),
         ),
         FilledButton.icon(
           onPressed: () => _validate(entryAsync.valueOrNull),
           icon: const Icon(Icons.check),
-          label: const Text('Valider'),
+          label: Text(lbl.buttonValidate),
         ),
       ],
     );
@@ -88,18 +86,15 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
     final text = _controller.text.trim();
 
     // Ajout dans TrainingDone
-    await repository.add(TrainingDoneModel(
-      figureId: widget.figure.id,
-      date: today,
-    ));
+    await repository.add(
+      TrainingDoneModel(figureId: widget.figure.id, date: today),
+    );
 
     // Gestion de l'entrée de journal
     if (text.isNotEmpty) {
       if (existingEntry != null) {
         // Modification de l'entrée existante
-        await journalRepository.update(
-          existingEntry.copyWith(text: text),
-        );
+        await journalRepository.update(existingEntry.copyWith(text: text));
       } else {
         // Création d'une nouvelle entrée
         await journalRepository.create(

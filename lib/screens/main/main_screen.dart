@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 
 class MainScreen extends StatelessWidget {
   final Widget child;
@@ -26,6 +27,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lbl = AppLocalizations.of(context)!;
     final location = GoRouterState.of(context).uri.toString();
     final currentIndex = _locationToIndex(location);
 
@@ -34,18 +36,15 @@ class MainScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (index) => _onItemTapped(context, index),
-        items: const [
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.self_improvement),
-            label: 'Figures',
+            label: lbl.tabFigures,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.today),
-            label: "Aujourd'hui",
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.today), label: lbl.tabToday),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month),
-            label: 'Planification',
+            label: lbl.tabPlanning,
           ),
         ],
       ),

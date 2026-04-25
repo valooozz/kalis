@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 import '../../models/figure_model.dart';
 import '../../providers/planning_providers.dart';
 import '../../providers/today_providers.dart';
@@ -13,6 +14,7 @@ class PlanningScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final lbl = AppLocalizations.of(context)!;
     final today = ref.watch(todayProvider);
     final days = List.generate(14, (i) => today.add(Duration(days: i)));
 
@@ -23,7 +25,7 @@ class PlanningScreen extends ConsumerWidget {
             pinned: true,
             expandedHeight: 120,
             flexibleSpace: FlexibleSpaceBar(
-              title: const Text('Planification'),
+              title: Text(lbl.planningScreenTitle),
               titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
             ),
           ),
@@ -47,6 +49,7 @@ class _DayHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final lbl = AppLocalizations.of(context)!;
     final isToday = date.isToday;
 
     return SliverPersistentHeader(
@@ -58,7 +61,7 @@ class _DayHeader extends StatelessWidget {
             children: [
               Text(
                 isToday
-                    ? 'Aujourd\'hui'
+                    ? lbl.today
                     : date.toShortLabel(Localizations.localeOf(context)),
                 style: theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.bold,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 import '../models/figure_model.dart';
 import '../providers/figure_providers.dart';
 import '../core/utils/date_utils.dart';
@@ -12,9 +13,10 @@ class FigureCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final lbl = AppLocalizations.of(context)!;
     final lastDateAsync = ref.watch(lastTrainingDateProvider(figure.id));
     final nextDateAsync = ref.watch(nextTrainingDateProvider(figure.id));
-    final theme = Theme.of(context);
     final figureColor = figure.color.color;
 
     // Si le dernier entraînement est aujourd'hui, on ignore
@@ -58,13 +60,13 @@ class FigureCard extends ConsumerWidget {
                       _DateRow(
                         icon: Icons.history,
                         date: lastDateAsync.valueOrNull,
-                        label: 'Dernier',
+                        label: lbl.lastTraining,
                       ),
                       const SizedBox(height: 2),
                       _DateRow(
                         icon: Icons.event,
                         date: displayedNextDate,
-                        label: 'Prochain',
+                        label: lbl.nextTraining,
                       ),
                     ],
                   ],
@@ -89,7 +91,8 @@ class _DateRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final dateText = date != null ? date!.toRelativeLabel() : '—';
+    final lbl = AppLocalizations.of(context)!;
+    final dateText = date != null ? date!.toRelativeLabel(lbl) : '—';
 
     return Row(
       children: [

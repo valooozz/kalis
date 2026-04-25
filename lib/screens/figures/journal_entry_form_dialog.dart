@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/providers/today_providers.dart';
 import '../../models/journal_entry_model.dart';
 import '../../providers/journal_providers.dart';
@@ -41,6 +42,7 @@ class _JournalEntryFormDialogState
 
   @override
   Widget build(BuildContext context) {
+    final lbl = AppLocalizations.of(context)!;
     final today = ref.read(todayProvider);
 
     // Chargement de l'entrée existante si on est en mode édition
@@ -60,21 +62,21 @@ class _JournalEntryFormDialogState
     }
 
     return AlertDialog(
-      title: Text(_isEditing ? 'Modifier l\'entrée' : 'Nouvelle entrée'),
+      title: Text(_isEditing ? lbl.editJournalEntry : lbl.newJournalEntry),
       content: TextField(
         controller: _controller,
         maxLines: 5,
         autofocus: true,
-        decoration: const InputDecoration(hintText: 'Écris ta note ici...'),
+        decoration: InputDecoration(hintText: lbl.journalHint),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(lbl.buttonCancel),
         ),
         FilledButton(
           onPressed: () => _save(today),
-          child: Text(_isEditing ? 'Enregistrer' : 'Ajouter'),
+          child: Text(_isEditing ? lbl.buttonSave : lbl.buttonAdd),
         ),
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 import '../../models/figure_model.dart';
 import '../../providers/journal_providers.dart';
 import '../../providers/core_providers.dart';
@@ -17,6 +18,7 @@ class FigureDetailDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final lbl = AppLocalizations.of(context)!;
     final entriesAsync = ref.watch(journalEntriesForFigureProvider(figure.id));
 
     return AlertDialog(
@@ -36,7 +38,7 @@ class FigureDetailDialog extends ConsumerWidget {
           IconButton(
             icon: _stateIcon(figure.state, theme),
             onPressed: () => _openStatusPicker(context, ref),
-            tooltip: 'Changer le statut',
+            tooltip: lbl.changeStatus,
           ),
         ],
       ),
@@ -50,12 +52,12 @@ class FigureDetailDialog extends ConsumerWidget {
               // Dates
               if (figure.startDate != null)
                 _InfoRow(
-                  label: 'Débutée le',
+                  label: lbl.fieldStartedOn,
                   value: figure.startDate!.toShortDate(),
                 ),
               if (figure.endDate != null)
                 _InfoRow(
-                  label: 'Maîtrisée le',
+                  label: lbl.fieldMasteredOn,
                   value: figure.endDate!.toShortDate(),
                 ),
               const Divider(height: 24),
@@ -73,7 +75,7 @@ class FigureDetailDialog extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Journal',
+                            lbl.journal,
                             style: theme.textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -82,7 +84,7 @@ class FigureDetailDialog extends ConsumerWidget {
                             IconButton(
                               icon: const Icon(Icons.add),
                               onPressed: () => _openAddEntry(context, ref),
-                              tooltip: 'Ajouter une entrée',
+                              tooltip: lbl.addJournalEntry,
                             ),
                         ],
                       ),
@@ -90,7 +92,7 @@ class FigureDetailDialog extends ConsumerWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: Text(
-                            'Aucune entrée de journal',
+                            lbl.noJournalEntry,
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.colorScheme.outline,
                             ),
@@ -120,7 +122,7 @@ class FigureDetailDialog extends ConsumerWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Fermer'),
+          child: Text(lbl.buttonClose),
         ),
         FilledButton.icon(
           onPressed: () {
@@ -131,7 +133,7 @@ class FigureDetailDialog extends ConsumerWidget {
             );
           },
           icon: const Icon(Icons.edit),
-          label: const Text('Modifier'),
+          label: Text(lbl.buttonEdit),
         ),
       ],
     );

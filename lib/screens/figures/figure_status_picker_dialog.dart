@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/providers/today_providers.dart';
 import '../../models/figure_model.dart';
 import '../../providers/core_providers.dart';
@@ -12,9 +13,10 @@ class FigureStatusPickerDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final lbl = AppLocalizations.of(context)!;
 
     return AlertDialog(
-      title: const Text('Changer le statut'),
+      title: Text(lbl.changeStatus),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +47,7 @@ class FigureStatusPickerDialog extends ConsumerWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(lbl.buttonCancel),
         ),
       ],
     );

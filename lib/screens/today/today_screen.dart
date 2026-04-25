@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 import '../../models/figure_model.dart';
 import '../../providers/today_providers.dart';
 import '../../providers/core_providers.dart';
@@ -12,9 +13,10 @@ class TodayScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final lbl = AppLocalizations.of(context)!;
     final figuresAsync = ref.watch(todayFiguresProvider);
     final doneIdsAsync = ref.watch(todayDoneIdsProvider);
-    final theme = Theme.of(context);
 
     return Scaffold(
       body: figuresAsync.when(
@@ -31,7 +33,7 @@ class TodayScreen extends ConsumerWidget {
                     pinned: true,
                     expandedHeight: 120,
                     flexibleSpace: FlexibleSpaceBar(
-                      title: const Text('Séance du jour'),
+                      title: Text(lbl.todayScreenTitle),
                       titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
                     ),
                   ),
@@ -48,14 +50,14 @@ class TodayScreen extends ConsumerWidget {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'Aucune figure prévue aujourd\'hui',
+                              lbl.noFiguresToday,
                               style: theme.textTheme.titleMedium?.copyWith(
                                 color: theme.colorScheme.outline,
                               ),
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Profites-en pour te reposer !',
+                              lbl.noFiguresTodaySubtitle,
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 color: theme.colorScheme.outline,
                               ),

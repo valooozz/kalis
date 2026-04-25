@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 import '../../models/figure_model.dart';
 import '../../providers/core_providers.dart';
 import '../../widgets/color_picker_row.dart';
@@ -40,9 +41,10 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final lbl = AppLocalizations.of(context)!;
 
     return AlertDialog(
-      title: Text(_isEditing ? 'Modifier la figure' : 'Nouvelle figure'),
+      title: Text(_isEditing ? lbl.editFigure : lbl.newFigure),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -51,16 +53,16 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
             // Nom
             TextField(
               controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Nom',
-                hintText: 'Ex: Muscle-up',
+              decoration: InputDecoration(
+                labelText: lbl.fieldName,
+                hintText: lbl.fieldNameHint,
               ),
               textCapitalization: TextCapitalization.sentences,
               autofocus: true,
             ),
             const SizedBox(height: 24),
             // Couleur
-            Text('Couleur', style: theme.textTheme.labelLarge),
+            Text(lbl.fieldColor, style: theme.textTheme.labelLarge),
             const SizedBox(height: 8),
             ColorPickerRow(
               selected: _selectedColor,
@@ -70,14 +72,14 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
             if (_isEditing) ...[
               const SizedBox(height: 24),
               _DatePicker(
-                label: 'Date de début',
+                label: lbl.fieldStartDate,
                 date: _startDate,
                 onChanged: (date) => setState(() => _startDate = date),
                 onCleared: () => setState(() => _startDate = null),
               ),
               const SizedBox(height: 12),
               _DatePicker(
-                label: 'Date de maîtrise',
+                label: lbl.fieldMasteryDate,
                 date: _endDate,
                 onChanged: (date) => setState(() => _endDate = date),
                 onCleared: () => setState(() => _endDate = null),
@@ -89,19 +91,19 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
       actions: [
         if (_isEditing)
           TextButton(
-            onPressed: _delete,
+            onPressed: () => _delete(lbl),
             style: TextButton.styleFrom(
               foregroundColor: Theme.of(context).colorScheme.error,
             ),
-            child: const Text('Supprimer la figure'),
+            child: Text(lbl.deleteFigure),
           ),
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
+          child: Text(lbl.buttonCancel),
         ),
         FilledButton(
           onPressed: _save,
-          child: Text(_isEditing ? 'Enregistrer' : 'Ajouter'),
+          child: Text(_isEditing ? lbl.buttonSave : lbl.buttonAdd),
         ),
       ],
     );
@@ -137,25 +139,23 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
     if (mounted) Navigator.of(context).pop();
   }
 
-  Future<void> _delete() async {
+  Future<void> _delete(AppLocalizations lbl) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Supprimer la figure'),
-        content: Text(
-          'Supprimer "${widget.figure!.name}" ? Cette action est irréversible.',
-        ),
+        title: Text(lbl.deleteFigure),
+        content: Text(lbl.deleteFigureConfirm(widget.figure!.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(lbl.buttonCancel),
           ),
           FilledButton(
             style: FilledButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.error,
             ),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Supprimer'),
+            child: Text(lbl.buttonDelete),
           ),
         ],
       ),

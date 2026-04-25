@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 
 extension AppDateUtils on DateTime {
   // Vérifie si deux dates sont le même jour
@@ -63,12 +64,12 @@ extension AppDateUtils on DateTime {
   }
 
   // Retourne un label lisible relatif à aujourd'hui
-  String toRelativeLabel() {
+  String toRelativeLabel(AppLocalizations lbl) {
     final days = daysFromToday();
-    if (days == 0) return "Aujourd'hui";
-    if (days == 1) return 'Demain';
-    if (days == -1) return 'Hier';
-    if (days > 0) return 'Dans $days jours';
-    return 'Il y a ${days.abs()} jours';
+    if (days == 0) return lbl.today;
+    if (days == 1) return lbl.tomorrow;
+    if (days == -1) return lbl.yesterday;
+    if (days > 0) return lbl.inDays(days);
+    return lbl.daysAgo(days.abs());
   }
 }

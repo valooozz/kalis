@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 import 'core/theme/app_theme.dart';
 import 'core/router/app_router.dart';
 import 'firebase_options.dart';
@@ -11,9 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialisation de Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Connexion anonyme si pas déjà connecté
   if (FirebaseAuth.instance.currentUser == null) {
@@ -22,9 +21,7 @@ void main() async {
 
   runApp(
     // ProviderScope est nécessaire pour que Riverpod fonctionne
-    const ProviderScope(
-      child: KalisApp(),
-    ),
+    const ProviderScope(child: KalisApp()),
   );
 }
 
@@ -46,11 +43,9 @@ class KalisApp extends ConsumerWidget {
       routerConfig: router,
 
       locale: const Locale('fr'),
-      supportedLocales: const [
-        Locale('fr'),
-        Locale('en'),
-      ],
+      supportedLocales: const [Locale('fr'), Locale('en')],
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

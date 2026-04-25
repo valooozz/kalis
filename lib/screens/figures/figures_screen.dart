@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 import '../../models/figure_model.dart';
 import '../../providers/figure_providers.dart';
 import '../../widgets/figure_card.dart';
@@ -11,6 +12,7 @@ class FiguresScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final lbl = AppLocalizations.of(context)!;
     final figuresAsync = ref.watch(figuresProvider);
 
     return Scaffold(
@@ -39,20 +41,22 @@ class FiguresScreen extends ConsumerWidget {
                 pinned: true,
                 expandedHeight: 120,
                 flexibleSpace: FlexibleSpaceBar(
-                  title: const Text('Figures'),
+                  title: Text(lbl.figuresScreenTitle),
                   titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
                 ),
               ),
               if (learned.isNotEmpty) ...[
-                _StickyHeader(label: 'Apprises (${learned.length})'),
+                _StickyHeader(label: '${lbl.stateLearned} (${learned.length})'),
                 _FigureSliver(figures: learned),
               ],
               if (learning.isNotEmpty) ...[
-                _StickyHeader(label: 'En apprentissage (${learning.length})'),
+                _StickyHeader(
+                  label: '${lbl.stateLearning} (${learning.length})',
+                ),
                 _FigureSliver(figures: learning),
               ],
               if (toLearn.isNotEmpty) ...[
-                _StickyHeader(label: 'À apprendre (${toLearn.length})'),
+                _StickyHeader(label: '${lbl.stateToLearn} (${toLearn.length})'),
                 _FigureSliver(figures: toLearn),
               ],
               // Padding en bas pour le FAB
@@ -159,6 +163,7 @@ class _EmptyFigures extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final lbl = AppLocalizations.of(context)!;
 
     return Center(
       child: Column(
@@ -171,7 +176,7 @@ class _EmptyFigures extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Aucune figure pour le moment',
+            lbl.noFigures,
             style: theme.textTheme.titleMedium?.copyWith(
               color: theme.colorScheme.outline,
             ),
@@ -180,7 +185,7 @@ class _EmptyFigures extends StatelessWidget {
           FilledButton.icon(
             onPressed: onAdd,
             icon: const Icon(Icons.add),
-            label: const Text('Ajouter une figure'),
+            label: Text(lbl.addFigure),
           ),
         ],
       ),

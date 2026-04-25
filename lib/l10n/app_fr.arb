@@ -1,0 +1,76 @@
+{
+    "@@locale": "fr",
+    "appName": "Kalis",
+    "tabFigures": "Figures",
+    "tabToday": "Aujourd'hui",
+    "tabPlanning": "Planification",
+    "figuresScreenTitle": "Figures",
+    "todayScreenTitle": "Séance du jour",
+    "planningScreenTitle": "Planification",
+    "stateLearned": "Apprise",
+    "stateLearning": "En apprentissage",
+    "stateToLearn": "À apprendre",
+    "noFiguresToday": "Aucune figure prévue aujourd'hui",
+    "noFiguresTodaySubtitle": "Profites-en pour te reposer !",
+    "noFigures": "Aucune figure pour le moment",
+    "noFiguresAction": "Ajouter une figure",
+    "noJournalEntry": "Aucune entrée de journal",
+    "noFigureAvailable": "Aucune figure disponible",
+    "addFigure": "Ajouter une figure",
+    "editFigure": "Modifier la figure",
+    "newFigure": "Nouvelle figure",
+    "deleteFigure": "Supprimer la figure",
+    "deleteFigureConfirm": "Supprimer \"{name}\" ? Cette action est irréversible.",
+    "@deleteFigureConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "fieldName": "Nom",
+    "fieldNameHint": "Ex: Muscle-up",
+    "fieldColor": "Couleur",
+    "fieldStartDate": "Date de début",
+    "fieldMasteryDate": "Date de maîtrise",
+    "fieldStartedOn": "Débutée le",
+    "fieldMasteredOn": "Maîtrisée le",
+    "changeStatus": "Changer le statut",
+    "journal": "Journal",
+    "newJournalEntry": "Nouvelle entrée",
+    "editJournalEntry": "Modifier l'entrée",
+    "addJournalEntry": "Ajouter une entrée",
+    "journalHint": "Écris ta note ici...",
+    "trainingHint": "Comment s'est passé l'entraînement ?",
+    "trainingNote": "Note de séance",
+    "addFigureToDay": "Ajouter une figure",
+    "showLearnedFigures": "Afficher les figures apprises",
+    "lastTraining": "Dernier",
+    "nextTraining": "Prochain",
+    "buttonCancel": "Annuler",
+    "buttonClose": "Fermer",
+    "buttonSave": "Enregistrer",
+    "buttonAdd": "Ajouter",
+    "buttonEdit": "Modifier",
+    "buttonDelete": "Supprimer",
+    "buttonValidate": "Valider",
+    "daysAgo": "Il y a {days} jours",
+    "@daysAgo": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
+    "inDays": "Dans {days} jours",
+    "@inDays": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
+    "today": "Aujourd'hui",
+    "tomorrow": "Demain",
+    "yesterday": "Hier"
+}

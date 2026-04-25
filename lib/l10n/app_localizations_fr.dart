@@ -1,0 +1,172 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for French (`fr`).
+class AppLocalizationsFr extends AppLocalizations {
+  AppLocalizationsFr([String locale = 'fr']) : super(locale);
+
+  @override
+  String get appName => 'Kalis';
+
+  @override
+  String get tabFigures => 'Figures';
+
+  @override
+  String get tabToday => 'Aujourd\'hui';
+
+  @override
+  String get tabPlanning => 'Planification';
+
+  @override
+  String get figuresScreenTitle => 'Figures';
+
+  @override
+  String get todayScreenTitle => 'Séance du jour';
+
+  @override
+  String get planningScreenTitle => 'Planification';
+
+  @override
+  String get stateLearned => 'Apprise';
+
+  @override
+  String get stateLearning => 'En apprentissage';
+
+  @override
+  String get stateToLearn => 'À apprendre';
+
+  @override
+  String get noFiguresToday => 'Aucune figure prévue aujourd\'hui';
+
+  @override
+  String get noFiguresTodaySubtitle => 'Profites-en pour te reposer !';
+
+  @override
+  String get noFigures => 'Aucune figure pour le moment';
+
+  @override
+  String get noFiguresAction => 'Ajouter une figure';
+
+  @override
+  String get noJournalEntry => 'Aucune entrée de journal';
+
+  @override
+  String get noFigureAvailable => 'Aucune figure disponible';
+
+  @override
+  String get addFigure => 'Ajouter une figure';
+
+  @override
+  String get editFigure => 'Modifier la figure';
+
+  @override
+  String get newFigure => 'Nouvelle figure';
+
+  @override
+  String get deleteFigure => 'Supprimer la figure';
+
+  @override
+  String deleteFigureConfirm(String name) {
+    return 'Supprimer \"$name\" ? Cette action est irréversible.';
+  }
+
+  @override
+  String get fieldName => 'Nom';
+
+  @override
+  String get fieldNameHint => 'Ex: Muscle-up';
+
+  @override
+  String get fieldColor => 'Couleur';
+
+  @override
+  String get fieldStartDate => 'Date de début';
+
+  @override
+  String get fieldMasteryDate => 'Date de maîtrise';
+
+  @override
+  String get fieldStartedOn => 'Débutée le';
+
+  @override
+  String get fieldMasteredOn => 'Maîtrisée le';
+
+  @override
+  String get changeStatus => 'Changer le statut';
+
+  @override
+  String get journal => 'Journal';
+
+  @override
+  String get newJournalEntry => 'Nouvelle entrée';
+
+  @override
+  String get editJournalEntry => 'Modifier l\'entrée';
+
+  @override
+  String get addJournalEntry => 'Ajouter une entrée';
+
+  @override
+  String get journalHint => 'Écris ta note ici...';
+
+  @override
+  String get trainingHint => 'Comment s\'est passé l\'entraînement ?';
+
+  @override
+  String get trainingNote => 'Note de séance';
+
+  @override
+  String get addFigureToDay => 'Ajouter une figure';
+
+  @override
+  String get showLearnedFigures => 'Afficher les figures apprises';
+
+  @override
+  String get lastTraining => 'Dernier';
+
+  @override
+  String get nextTraining => 'Prochain';
+
+  @override
+  String get buttonCancel => 'Annuler';
+
+  @override
+  String get buttonClose => 'Fermer';
+
+  @override
+  String get buttonSave => 'Enregistrer';
+
+  @override
+  String get buttonAdd => 'Ajouter';
+
+  @override
+  String get buttonEdit => 'Modifier';
+
+  @override
+  String get buttonDelete => 'Supprimer';
+
+  @override
+  String get buttonValidate => 'Valider';
+
+  @override
+  String daysAgo(int days) {
+    return 'Il y a $days jours';
+  }
+
+  @override
+  String inDays(int days) {
+    return 'Dans $days jours';
+  }
+
+  @override
+  String get today => 'Aujourd\'hui';
+
+  @override
+  String get tomorrow => 'Demain';
+
+  @override
+  String get yesterday => 'Hier';
+}

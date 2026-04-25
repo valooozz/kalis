@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalis/l10n/app_localizations.dart';
 import '../models/journal_entry_model.dart';
 import '../core/utils/date_utils.dart';
 
@@ -17,6 +18,7 @@ class JournalEntryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final lbl = AppLocalizations.of(context)!;
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -33,12 +35,12 @@ class JournalEntryTile extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.edit_outlined),
             onPressed: onEdit,
-            tooltip: 'Modifier',
+            tooltip: lbl.buttonEdit,
           ),
           IconButton(
             icon: const Icon(Icons.delete_outline),
             onPressed: onDelete,
-            tooltip: 'Supprimer',
+            tooltip: lbl.buttonDelete,
             color: theme.colorScheme.error,
           ),
         ],
