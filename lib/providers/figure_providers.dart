@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/core/utils/date_utils.dart';
+import 'package:kalis/providers/today_providers.dart';
 import '../models/figure_model.dart';
 import 'core_providers.dart';
 
@@ -71,8 +72,7 @@ final nextTrainingDateProvider = StreamProvider.family<DateTime?, String>((
   final repository = ref.watch(trainingPlannedRepositoryProvider);
   if (repository == null) return const Stream.empty();
 
-  final now = DateTime.now();
-  final today = DateTime(now.year, now.month, now.day);
+  final today = ref.watch(todayProvider);
 
   return repository.watchByFigure(figureId).map((trainings) {
     final upcoming = trainings
@@ -98,8 +98,7 @@ final nextTrainingDateAfterTodayProvider =
       final repository = ref.watch(trainingPlannedRepositoryProvider);
       if (repository == null) return const Stream.empty();
 
-      final now = DateTime.now();
-      final today = DateTime(now.year, now.month, now.day);
+      final today = ref.watch(todayProvider);
       final tomorrow = today.add(const Duration(days: 1));
 
       return repository.watchByFigure(figureId).map((trainings) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/providers/today_providers.dart';
 import '../../models/journal_entry_model.dart';
 import '../../providers/journal_providers.dart';
 import '../../providers/core_providers.dart';
@@ -40,12 +41,15 @@ class _JournalEntryFormDialogState
 
   @override
   Widget build(BuildContext context) {
+    final today = ref.read(todayProvider);
+
     // Chargement de l'entrée existante si on est en mode édition
     if (_isEditing) {
-      final entryAsync = ref.watch(
-        journalEntryForFigureAndDateProvider(
-          (figureId: widget.figureId, date: DateTime.now()),
-        ),
+      final entryAsync = ref.read(
+        journalEntryForFigureAndDateProvider((
+          figureId: widget.figureId,
+          date: today,
+        )),
       );
       entryAsync.whenData((entry) {
         if (entry != null && !_initialized) {
@@ -61,9 +65,7 @@ class _JournalEntryFormDialogState
         controller: _controller,
         maxLines: 5,
         autofocus: true,
-        decoration: const InputDecoration(
-          hintText: 'Écris ta note ici...',
-        ),
+        decoration: const InputDecoration(hintText: 'Écris ta note ici...'),
       ),
       actions: [
         TextButton(
@@ -71,14 +73,14 @@ class _JournalEntryFormDialogState
           child: const Text('Annuler'),
         ),
         FilledButton(
-          onPressed: _save,
+          onPressed: () => _save(today),
           child: Text(_isEditing ? 'Enregistrer' : 'Ajouter'),
         ),
       ],
     );
   }
 
-  Future<void> _save() async {
+  Future<void> _save(DateTime today) async {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
 
@@ -95,7 +97,7 @@ class _JournalEntryFormDialogState
         JournalEntryModel(
           id: '',
           figureId: widget.figureId,
-          date: DateTime.now(),
+          date: today,
           text: text,
         ),
       );

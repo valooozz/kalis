@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/providers/today_providers.dart';
 import '../../models/figure_model.dart';
 import '../../providers/core_providers.dart';
 
@@ -110,8 +111,7 @@ class FigureStatusPickerDialog extends ConsumerWidget {
     );
     if (figureRepository == null || trainingPlannedRepository == null) return;
 
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
+    final today = ref.read(todayProvider);
 
     // Mise à jour des dates selon le nouveau statut
     FigureModel updated = figure.copyWith(state: newState);
