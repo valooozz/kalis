@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/date_utils.dart';
 import '../models/figure_model.dart';
 import 'core_providers.dart';
 
@@ -15,8 +16,9 @@ final figuresProvider = StreamProvider<List<FigureModel>>((ref) {
         FigureState.learning: 1,
         FigureState.toLearn: 2,
       };
-      final stateComparison =
-          stateOrder[a.state]!.compareTo(stateOrder[b.state]!);
+      final stateComparison = stateOrder[a.state]!.compareTo(
+        stateOrder[b.state]!,
+      );
       if (stateComparison != 0) return stateComparison;
 
       // Tri alphabétique au sein du même statut
@@ -29,22 +31,28 @@ final figuresProvider = StreamProvider<List<FigureModel>>((ref) {
 // Figures filtrées par statut
 final figuresByStateProvider =
     Provider.family<AsyncValue<List<FigureModel>>, FigureState>((ref, state) {
-  return ref.watch(figuresProvider).whenData(
-        (figures) => figures.where((f) => f.state == state).toList(),
-      );
-});
+      return ref
+          .watch(figuresProvider)
+          .whenData(
+            (figures) => figures.where((f) => f.state == state).toList(),
+          );
+    });
 
 // Une figure par son id
-final figureByIdProvider =
-    Provider.family<AsyncValue<FigureModel?>, String>((ref, id) {
-  return ref.watch(figuresProvider).whenData(
-        (figures) => figures.where((f) => f.id == id).firstOrNull,
-      );
+final figureByIdProvider = Provider.family<AsyncValue<FigureModel?>, String>((
+  ref,
+  id,
+) {
+  return ref
+      .watch(figuresProvider)
+      .whenData((figures) => figures.where((f) => f.id == id).firstOrNull);
 });
 
 // Date du dernier entraînement d'une figure
-final lastTrainingDateProvider =
-    StreamProvider.family<DateTime?, String>((ref, figureId) {
+final lastTrainingDateProvider = StreamProvider.family<DateTime?, String>((
+  ref,
+  figureId,
+) {
   final repository = ref.watch(trainingDoneRepositoryProvider);
   if (repository == null) return const Stream.empty();
 
@@ -56,8 +64,10 @@ final lastTrainingDateProvider =
 });
 
 // Date du prochain entraînement d'une figure
-final nextTrainingDateProvider =
-    StreamProvider.family<DateTime?, String>((ref, figureId) {
+final nextTrainingDateProvider = StreamProvider.family<DateTime?, String>((
+  ref,
+  figureId,
+) {
   final repository = ref.watch(trainingPlannedRepositoryProvider);
   if (repository == null) return const Stream.empty();
 
@@ -66,11 +76,13 @@ final nextTrainingDateProvider =
 
   return repository.watchByFigure(figureId).map((trainings) {
     final upcoming = trainings
-        .where((t) =>
-            t.date.isAfter(today) ||
-            (t.date.year == today.year &&
-                t.date.month == today.month &&
-                t.date.day == today.day))
+        .where(
+          (t) =>
+              t.date.isAfter(today) ||
+              (t.date.year == today.year &&
+                  t.date.month == today.month &&
+                  t.date.day == today.day),
+        )
         .toList();
 
     if (upcoming.isEmpty) return null;
@@ -79,3 +91,23 @@ final nextTrainingDateProvider =
     return upcoming.first.date;
   });
 });
+
+// Date du prochain entraînement en ignorant aujourd'hui
+final nextTrainingDateAfterTodayProvider =
+    StreamProvider.family<DateTime?, String>((ref, figureId) {
+      final repository = ref.watch(trainingPlannedRepositoryProvider);
+      if (repository == null) return const Stream.empty();
+
+      final now = DateTime.now();
+      final today = DateTime(now.year, now.month, now.day);
+      final tomorrow = today.add(const Duration(days: 1));
+
+      return repository.watchByFigure(figureId).map((trainings) {
+        final upcoming = trainings
+            .where((t) => t.date.isAfter(today) || t.date.isSameDay(tomorrow))
+            .toList();
+        if (upcoming.isEmpty) return null;
+        upcoming.sort((a, b) => a.date.compareTo(b.date));
+        return upcoming.first.date;
+      });
+    });

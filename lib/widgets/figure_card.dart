@@ -17,6 +17,17 @@ class FigureCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final figureColor = figure.color.color;
 
+    // Si le dernier entraînement est aujourd'hui, on ignore
+    // la première occurrence de TrainingPlanned (qui est aujourd'hui)
+    // et on prend la suivante
+    final lastDate = lastDateAsync.valueOrNull;
+    final nextDate = nextDateAsync.valueOrNull;
+    final lastIsToday = lastDate != null && lastDate.isToday;
+    final displayedNextDate =
+        lastIsToday && nextDate != null && nextDate.isToday
+        ? ref.watch(nextTrainingDateAfterTodayProvider(figure.id)).valueOrNull
+        : nextDate;
+
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -52,7 +63,7 @@ class FigureCard extends ConsumerWidget {
                       const SizedBox(height: 2),
                       _DateRow(
                         icon: Icons.event,
-                        date: nextDateAsync.valueOrNull,
+                        date: displayedNextDate,
                         label: 'Prochain',
                       ),
                     ],
