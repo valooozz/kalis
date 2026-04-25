@@ -59,7 +59,7 @@ class FigureCard extends ConsumerWidget {
                   ],
                 ),
               ),
-              _StateIcon(state: figure.state),
+              _StateIcon(state: figure.state, color: figure.color.color),
             ],
           ),
         ),
@@ -97,20 +97,21 @@ class _DateRow extends StatelessWidget {
 
 class _StateIcon extends StatelessWidget {
   final FigureState state;
+  final Color color;
 
-  const _StateIcon({required this.state});
+  const _StateIcon({required this.state, required this.color});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    // final theme = Theme.of(context);
 
     switch (state) {
       case FigureState.toLearn:
-        return Icon(Icons.bookmark_outline, color: theme.colorScheme.outline);
+        return Icon(Icons.bookmark_outline, color: color);
       case FigureState.learning:
-        return Icon(Icons.sports_gymnastics, color: theme.colorScheme.primary);
+        return Icon(Icons.sports_gymnastics, color: color);
       case FigureState.learned:
-        return Icon(Icons.done_outline, color: theme.colorScheme.primary);
+        return Icon(Icons.done_outline, color: color);
     }
   }
 }
