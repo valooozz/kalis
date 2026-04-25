@@ -78,7 +78,7 @@ class _DateRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final dateText = date != null ? date!.toShortDate() : '—';
+    final dateText = date != null ? date!.toRelativeLabel() : '—';
 
     return Row(
       children: [

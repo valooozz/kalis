@@ -21,7 +21,7 @@ extension AppDateUtils on DateTime {
     return dateOnly.isBefore(now);
   }
 
-  // Formate la date en "lun. 15 jan." 
+  // Formate la date en "lun. 15 jan."
   String toShortLabel(Locale locale) {
     final weekdays = {
       1: 'lun.',
@@ -33,9 +33,18 @@ extension AppDateUtils on DateTime {
       7: 'dim.',
     };
     final months = {
-      1: 'jan.', 2: 'fév.', 3: 'mar.', 4: 'avr.',
-      5: 'mai', 6: 'juin', 7: 'juil.', 8: 'août',
-      9: 'sep.', 10: 'oct.', 11: 'nov.', 12: 'déc.',
+      1: 'jan.',
+      2: 'fév.',
+      3: 'mar.',
+      4: 'avr.',
+      5: 'mai',
+      6: 'juin',
+      7: 'juil.',
+      8: 'août',
+      9: 'sep.',
+      10: 'oct.',
+      11: 'nov.',
+      12: 'déc.',
     };
     return '${weekdays[weekday]} $day ${months[month]}';
   }
@@ -45,5 +54,21 @@ extension AppDateUtils on DateTime {
     return '${day.toString().padLeft(2, '0')}/'
         '${month.toString().padLeft(2, '0')}/'
         '$year';
+  }
+
+  // Retourne le nombre de jours entre cette date et aujourd'hui
+  int daysFromToday() {
+    final now = DateTime.now().dateOnly;
+    return dateOnly.difference(now).inDays;
+  }
+
+  // Retourne un label lisible relatif à aujourd'hui
+  String toRelativeLabel() {
+    final days = daysFromToday();
+    if (days == 0) return "Aujourd'hui";
+    if (days == 1) return 'Demain';
+    if (days == -1) return 'Hier';
+    if (days > 0) return 'Dans $days jours';
+    return 'Il y a ${days.abs()} jours';
   }
 }
