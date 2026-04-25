@@ -17,9 +17,16 @@ class PlanningScreen extends ConsumerWidget {
     final days = List.generate(14, (i) => today.add(Duration(days: i)));
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Planification')),
       body: CustomScrollView(
         slivers: [
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 120,
+            flexibleSpace: FlexibleSpaceBar(
+              title: const Text('Planification'),
+              titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
+            ),
+          ),
           for (final day in days) ...[
             _DayHeader(date: day),
             _DayContent(date: day),

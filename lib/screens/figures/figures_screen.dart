@@ -14,7 +14,6 @@ class FiguresScreen extends ConsumerWidget {
     final figuresAsync = ref.watch(figuresProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Figures')),
       body: figuresAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Erreur : $e')),
@@ -36,6 +35,14 @@ class FiguresScreen extends ConsumerWidget {
 
           return CustomScrollView(
             slivers: [
+              SliverAppBar(
+                pinned: true,
+                expandedHeight: 120,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: const Text('Figures'),
+                  titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
+                ),
+              ),
               if (learned.isNotEmpty) ...[
                 _StickyHeader(label: 'Apprises (${learned.length})'),
                 _FigureSliver(figures: learned),

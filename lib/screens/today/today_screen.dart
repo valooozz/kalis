@@ -17,66 +17,81 @@ class TodayScreen extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Séance du jour")),
       body: figuresAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Erreur : $e')),
         data: (figures) {
-          if (figures.isEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.celebration,
-                    size: 64,
-                    color: theme.colorScheme.outline,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Aucune figure prévue aujourd\'hui',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: theme.colorScheme.outline,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Profites-en pour te reposer !',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.outline,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }
-
           return doneIdsAsync.when(
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (e, _) => Center(child: Text('Erreur : $e')),
             data: (doneIds) {
-              return Padding(
-                padding: const EdgeInsets.all(16),
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
+              return CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    pinned: true,
+                    expandedHeight: 120,
+                    flexibleSpace: FlexibleSpaceBar(
+                      title: const Text('Séance du jour'),
+                      titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
+                    ),
                   ),
-                  itemCount: figures.length,
-                  itemBuilder: (context, index) {
-                    final figure = figures[index];
-                    final isDone = doneIds.contains(figure.id);
-
-                    return FigureSquareCard(
-                      figure: figure,
-                      isDone: isDone,
-                      onTap: () =>
-                          _openTrainingDialog(context, ref, figure, isDone),
-                      onLongPress: () => _toggleDone(ref, figure, isDone),
-                    );
-                  },
-                ),
+                  if (figures.isEmpty)
+                    SliverFillRemaining(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.celebration,
+                              size: 64,
+                              color: theme.colorScheme.outline,
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'Aucune figure prévue aujourd\'hui',
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                color: theme.colorScheme.outline,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Profites-en pour te reposer !',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: theme.colorScheme.outline,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  else
+                    SliverPadding(
+                      padding: const EdgeInsets.all(16),
+                      sliver: SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 8,
+                            ),
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          final figure = figures[index];
+                          final isDone = doneIds.contains(figure.id);
+                          return FigureSquareCard(
+                            figure: figure,
+                            isDone: isDone,
+                            onTap: () => _openTrainingDialog(
+                              context,
+                              ref,
+                              figure,
+                              isDone,
+                            ),
+                            onLongPress: () => _toggleDone(ref, figure, isDone),
+                          );
+                        }, childCount: figures.length),
+                      ),
+                    ),
+                ],
               );
             },
           );
