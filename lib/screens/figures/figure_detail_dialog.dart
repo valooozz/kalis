@@ -59,49 +59,57 @@ class FigureDetailDialog extends ConsumerWidget {
                   value: figure.endDate!.toShortDate(),
                 ),
               const Divider(height: 24),
-              // Journal
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Journal',
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    onPressed: () => _openAddEntry(context, ref),
-                    tooltip: 'Ajouter une entrée',
-                  ),
-                ],
-              ),
+
               entriesAsync.when(
                 loading: () => const Center(child: CircularProgressIndicator()),
                 error: (e, _) => Text('Erreur : $e'),
                 data: (entries) {
-                  if (entries.isEmpty) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Text(
-                        'Aucune entrée de journal',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.outline,
-                        ),
-                      ),
-                    );
-                  }
+                  final hasTodayEntry = entries.any((e) => e.date.isToday);
                   return Column(
-                    children: entries
-                        .map(
-                          (entry) => JournalEntryTile(
-                            entry: entry,
-                            onEdit: () =>
-                                _openEditEntry(context, ref, entry.id),
-                            onDelete: () => _deleteEntry(ref, entry.id),
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Journal',
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          if (!hasTodayEntry)
+                            IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: () => _openAddEntry(context, ref),
+                              tooltip: 'Ajouter une entrée',
+                            ),
+                        ],
+                      ),
+                      if (entries.isEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            'Aucune entrée de journal',
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.outline,
+                            ),
                           ),
                         )
-                        .toList(),
+                      else
+                        Column(
+                          children: entries
+                              .map(
+                                (entry) => JournalEntryTile(
+                                  entry: entry,
+                                  onEdit: () =>
+                                      _openEditEntry(context, ref, entry.id),
+                                  onDelete: () => _deleteEntry(ref, entry.id),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                    ],
                   );
                 },
               ),
