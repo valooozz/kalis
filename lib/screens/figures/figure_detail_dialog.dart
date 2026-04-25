@@ -130,14 +130,7 @@ class FigureDetailDialog extends ConsumerWidget {
   }
 
   Widget _stateIcon(FigureState state, ThemeData theme) {
-    switch (state) {
-      case FigureState.toLearn:
-        return Icon(Icons.bookmark_outline, color: theme.colorScheme.outline);
-      case FigureState.learning:
-        return Icon(Icons.sports_gymnastics, color: theme.colorScheme.primary);
-      case FigureState.learned:
-        return Icon(Icons.done_outline, color: theme.colorScheme.primary);
-    }
+    return Icon(figure.state.icon, color: figure.color.color);
   }
 
   void _openStatusPicker(BuildContext context, WidgetRef ref) {

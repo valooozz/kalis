@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
 
-enum FigureState {
-  toLearn,
-  learning,
-  learned,
+enum FigureState { toLearn, learning, learned }
+
+extension FigureStateExtension on FigureState {
+  IconData get icon {
+    switch (this) {
+      case FigureState.toLearn:
+        return Icons.bookmark_outline;
+      case FigureState.learning:
+        return Icons.sports_gymnastics;
+      case FigureState.learned:
+        return Icons.done_outline;
+    }
+  }
+
+  String get label {
+    switch (this) {
+      case FigureState.toLearn:
+        return 'À apprendre';
+      case FigureState.learning:
+        return 'En apprentissage';
+      case FigureState.learned:
+        return 'Apprise';
+    }
+  }
 }
 
-enum FigureColor {
-  red,
-  orange,
-  yellow,
-  green,
-  blue,
-  purple,
-}
+enum FigureColor { red, orange, yellow, green, blue, purple }
 
 extension FigureColorExtension on FigureColor {
   Color get color {

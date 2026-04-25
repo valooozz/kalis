@@ -59,10 +59,10 @@ class FigureStatusPickerDialog extends ConsumerWidget {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.bookmark_outline, color: color),
+            Icon(state.icon, color: color),
             const SizedBox(height: 4),
             Text(
-              'À apprendre',
+              state.label,
               style: theme.textTheme.labelSmall?.copyWith(color: color),
             ),
           ],
@@ -71,10 +71,10 @@ class FigureStatusPickerDialog extends ConsumerWidget {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.sports_gymnastics, color: color),
+            Icon(state.icon, color: color),
             const SizedBox(height: 4),
             Text(
-              'En apprentissage',
+              state.label,
               style: theme.textTheme.labelSmall?.copyWith(color: color),
             ),
           ],
@@ -83,10 +83,10 @@ class FigureStatusPickerDialog extends ConsumerWidget {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.done_outline, color: color),
+            Icon(state.icon, color: color),
             const SizedBox(height: 4),
             Text(
-              'Apprise',
+              state.label,
               style: theme.textTheme.labelSmall?.copyWith(color: color),
             ),
           ],

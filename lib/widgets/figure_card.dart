@@ -103,15 +103,6 @@ class _StateIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
-
-    switch (state) {
-      case FigureState.toLearn:
-        return Icon(Icons.bookmark_outline, color: color);
-      case FigureState.learning:
-        return Icon(Icons.sports_gymnastics, color: color);
-      case FigureState.learned:
-        return Icon(Icons.done_outline, color: color);
-    }
+    return Icon(state.icon, color: color);
   }
 }
