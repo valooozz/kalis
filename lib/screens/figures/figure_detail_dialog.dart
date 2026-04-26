@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/models/training_planned_model.dart';
+import 'package:kalis/providers/today_providers.dart';
 import '../../models/figure_model.dart';
 import '../../providers/journal_providers.dart';
 import '../../providers/core_providers.dart';
@@ -60,6 +62,18 @@ class FigureDetailDialog extends ConsumerWidget {
                   label: lbl.fieldMasteredOn,
                   value: figure.endDate!.toShortDate(),
                 ),
+
+              if (figure.state == FigureState.toLearn)
+                Center(
+                  child: FilledButton.icon(
+                    onPressed: () {
+                      _beginLearning(context, ref);
+                    },
+                    icon: Icon(FigureState.learning.icon),
+                    label: Text(lbl.beginLearning),
+                  ),
+                ),
+
               const Divider(height: 24),
 
               entriesAsync.when(
@@ -169,6 +183,35 @@ class FigureDetailDialog extends ConsumerWidget {
   Future<void> _deleteEntry(WidgetRef ref, String entryId) async {
     final repository = ref.read(journalEntryRepositoryProvider);
     await repository?.delete(entryId);
+  }
+
+  Future<void> _beginLearning(BuildContext context, WidgetRef ref) async {
+    final today = ref.read(todayProvider);
+
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: today,
+      firstDate: today,
+      lastDate: DateTime(2100),
+    );
+
+    if (picked == null) return;
+
+    final figureRepository = ref.read(figureRepositoryProvider);
+    final plannedRepository = ref.read(trainingPlannedRepositoryProvider);
+    if (figureRepository == null || plannedRepository == null) return;
+
+    final updated = figure.copyWith(
+      state: FigureState.learning,
+      startDate: picked,
+    );
+    await figureRepository.update(updated);
+
+    await plannedRepository.add(
+      TrainingPlannedModel(figureId: figure.id, date: picked),
+    );
+
+    if (context.mounted) Navigator.of(context).pop();
   }
 }
 

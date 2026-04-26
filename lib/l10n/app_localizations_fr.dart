@@ -169,4 +169,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get yesterday => 'Hier';
+
+  @override
+  String get beginLearning => 'Je vais apprendre cette figure';
 }

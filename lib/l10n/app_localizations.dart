@@ -405,6 +405,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Hier'**
   String get yesterday;
+
+  /// No description provided for @beginLearning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je vais apprendre cette figure'**
+  String get beginLearning;
 }
 
 class _AppLocalizationsDelegate
