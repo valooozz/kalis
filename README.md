@@ -4,7 +4,7 @@ Kalis est une application mobile de suivi et d'organisation de séances de calli
 
 ## Fonctionnalités
 
-- **Figures** — Organisez vos figures en trois catégories : à apprendre, en apprentissage, et apprises. Assignez une couleur à chaque figure et suivez les dates de début et de maîtrise.
+- **Figures** — Organisez vos figures en trois catégories : à apprendre, en apprentissage, et maîtrisées. Assignez une couleur à chaque figure et suivez les dates de début et de maîtrise.
 - **Séance du jour** — Visualisez les figures prévues pour aujourd'hui, validez-les et ajoutez des notes de séance.
 - **Planification** — Planifiez vos entraînements sur les 14 prochains jours en ajoutant les figures à travailler jour par jour.
 - **Journal** — Gardez une trace de vos progrès grâce à des entrées de journal associées à chaque figure.

@@ -21,7 +21,7 @@ extension FigureStateExtension on FigureState {
       case FigureState.learning:
         return 'En apprentissage';
       case FigureState.learned:
-        return 'Apprise';
+        return 'Maîtrisée';
     }
   }
 }

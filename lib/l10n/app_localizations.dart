@@ -139,7 +139,7 @@ abstract class AppLocalizations {
   /// No description provided for @stateLearned.
   ///
   /// In fr, this message translates to:
-  /// **'Apprise'**
+  /// **'Maîtrisée'**
   String get stateLearned;
 
   /// No description provided for @stateLearning.
@@ -319,7 +319,7 @@ abstract class AppLocalizations {
   /// No description provided for @showLearnedFigures.
   ///
   /// In fr, this message translates to:
-  /// **'Afficher les figures apprises'**
+  /// **'Afficher les figures maîtrisées'**
   String get showLearnedFigures;
 
   /// No description provided for @lastTraining.

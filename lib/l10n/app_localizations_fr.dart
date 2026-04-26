@@ -30,7 +30,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get planningScreenTitle => 'Planification';
 
   @override
-  String get stateLearned => 'Apprise';
+  String get stateLearned => 'Maîtrisée';
 
   @override
   String get stateLearning => 'En apprentissage';
@@ -122,7 +122,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get addFigureToDay => 'Ajouter une figure';
 
   @override
-  String get showLearnedFigures => 'Afficher les figures apprises';
+  String get showLearnedFigures => 'Afficher les figures maîtrisées';
 
   @override
   String get lastTraining => 'Dernier';
