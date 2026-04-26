@@ -1,5 +1,9 @@
 # Version 1
 
+### v1.2.0
+
+- Ajout logo et splashscreen
+
 ### v1.1.0
 
 - Changement état "Apprise" en "Maitrîsée"

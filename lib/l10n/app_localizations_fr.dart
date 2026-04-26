@@ -30,7 +30,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get planningScreenTitle => 'Planification';
 
   @override
-  String get stateLearned => 'Maîtrisée';
+  String get stateLearned => 'Maîtrisées';
 
   @override
   String get stateLearning => 'En apprentissage';

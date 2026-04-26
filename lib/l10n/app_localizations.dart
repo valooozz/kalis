@@ -139,7 +139,7 @@ abstract class AppLocalizations {
   /// No description provided for @stateLearned.
   ///
   /// In fr, this message translates to:
-  /// **'Maîtrisée'**
+  /// **'Maîtrisées'**
   String get stateLearned;
 
   /// No description provided for @stateLearning.
