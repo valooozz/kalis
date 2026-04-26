@@ -64,6 +64,7 @@ class AddFigureToDayDialog extends ConsumerWidget {
                       return FigureCard(
                         figure: figure,
                         onTap: () => _addFigure(context, ref, figure),
+                        referenceDate: date,
                       );
                     },
                   );

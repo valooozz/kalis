@@ -2,21 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 
 extension AppDateUtils on DateTime {
-  // Vérifie si deux dates sont le même jour
   bool isSameDay(DateTime other) {
     return year == other.year && month == other.month && day == other.day;
   }
 
-  // Retourne une DateTime sans l'heure
   DateTime get dateOnly => DateTime(year, month, day);
 
-  // Vérifie si la date est aujourd'hui
   bool get isToday {
     final now = DateTime.now();
     return isSameDay(now);
   }
 
-  // Vérifie si la date est dans le passé (hors aujourd'hui)
   bool get isPast {
     final now = DateTime.now().dateOnly;
     return dateOnly.isBefore(now);
@@ -57,19 +53,22 @@ extension AppDateUtils on DateTime {
         '$year';
   }
 
-  // Retourne le nombre de jours entre cette date et aujourd'hui
-  int daysFromToday() {
-    final now = DateTime.now().dateOnly;
-    return dateOnly.difference(now).inDays;
+  int daysFrom(DateTime reference) {
+    final ref = reference.dateOnly;
+    return dateOnly.difference(ref).inDays;
   }
 
-  // Retourne un label lisible relatif à aujourd'hui
-  String toRelativeLabel(AppLocalizations lbl) {
-    final days = daysFromToday();
+  String toRelativeLabel(AppLocalizations lbl, {DateTime? reference}) {
+    final days = daysFrom(reference ?? DateTime.now());
+    final referenceIsToday = reference == null;
     if (days == 0) return lbl.today;
-    if (days == 1) return lbl.tomorrow;
-    if (days == -1) return lbl.yesterday;
-    if (days > 0) return lbl.inDays(days);
-    return lbl.daysAgo(days.abs());
+    if (days == 1) return referenceIsToday ? lbl.tomorrow : lbl.dayAfter;
+    if (days == -1) return referenceIsToday ? lbl.yesterday : lbl.dayBefore;
+    if (days > 0) {
+      return referenceIsToday ? lbl.inDays(days) : lbl.daysAfter(days);
+    }
+    return referenceIsToday
+        ? lbl.daysAgo(days.abs())
+        : lbl.daysBefore(days.abs());
   }
 }

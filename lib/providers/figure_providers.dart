@@ -110,3 +110,24 @@ final nextTrainingDateAfterTodayProvider =
         return upcoming.first.date;
       });
     });
+
+// Date du prochain entraînement après un jour donné
+final nextTrainingDateAfterDayProvider =
+    StreamProvider.family<DateTime?, ({String figureId, DateTime date})>((
+      ref,
+      params,
+    ) {
+      final repository = ref.watch(trainingPlannedRepositoryProvider);
+      if (repository == null) return const Stream.empty();
+
+      final targetDay = params.date.dateOnly;
+
+      return repository.watchByFigure(params.figureId).map((trainings) {
+        final upcoming = trainings
+            .where((t) => t.date.isAfter(targetDay))
+            .toList();
+        if (upcoming.isEmpty) return null;
+        upcoming.sort((a, b) => a.date.compareTo(b.date));
+        return upcoming.first.date;
+      });
+    });

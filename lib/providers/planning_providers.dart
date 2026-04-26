@@ -167,7 +167,12 @@ final availableFiguresForDayProvider =
               )
               .valueOrNull;
           nextTrainingDates[figure.id] = ref
-              .watch(nextTrainingDateProvider(figure.id))
+              .watch(
+                nextTrainingDateAfterDayProvider((
+                  figureId: figure.id,
+                  date: date,
+                )),
+              )
               .valueOrNull;
         }
 

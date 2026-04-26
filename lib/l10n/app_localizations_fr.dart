@@ -157,8 +157,18 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String daysBefore(int days) {
+    return '$days jours plus tôt';
+  }
+
+  @override
   String inDays(int days) {
     return 'Dans $days jours';
+  }
+
+  @override
+  String daysAfter(int days) {
+    return '$days jours plus tard';
   }
 
   @override
@@ -168,7 +178,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tomorrow => 'Demain';
 
   @override
+  String get dayAfter => 'Le lendemain';
+
+  @override
   String get yesterday => 'Hier';
+
+  @override
+  String get dayBefore => 'La veille';
 
   @override
   String get beginLearning => 'Je vais apprendre cette figure';

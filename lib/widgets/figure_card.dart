@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/providers/planning_providers.dart';
 import '../models/figure_model.dart';
 import '../providers/figure_providers.dart';
 import '../core/utils/date_utils.dart';
@@ -8,27 +9,53 @@ import '../core/utils/date_utils.dart';
 class FigureCard extends ConsumerWidget {
   final FigureModel figure;
   final VoidCallback onTap;
+  final DateTime? referenceDate;
 
-  const FigureCard({super.key, required this.figure, required this.onTap});
+  const FigureCard({
+    super.key,
+    required this.figure,
+    required this.onTap,
+    this.referenceDate,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final lbl = AppLocalizations.of(context)!;
-    final lastDateAsync = ref.watch(lastTrainingDateProvider(figure.id));
-    final nextDateAsync = ref.watch(nextTrainingDateProvider(figure.id));
     final figureColor = figure.color.color;
 
-    // Si le dernier entraînement est aujourd'hui, on ignore
-    // la première occurrence de TrainingPlanned (qui est aujourd'hui)
-    // et on prend la suivante
-    final lastDate = lastDateAsync.valueOrNull;
-    final nextDate = nextDateAsync.valueOrNull;
-    final lastIsToday = lastDate != null && lastDate.isToday;
-    final displayedNextDate =
-        lastIsToday && nextDate != null && nextDate.isToday
-        ? ref.watch(nextTrainingDateAfterTodayProvider(figure.id)).valueOrNull
-        : nextDate;
+    // Si une date de référence est fournie, on utilise les providers adaptés
+    final DateTime? lastDate;
+    final DateTime? displayedNextDate;
+
+    if (referenceDate != null) {
+      lastDate = ref
+          .watch(
+            effectiveLastTrainingDateProvider((
+              figureId: figure.id,
+              date: referenceDate!,
+            )),
+          )
+          .valueOrNull;
+      displayedNextDate = ref
+          .watch(
+            nextTrainingDateAfterDayProvider((
+              figureId: figure.id,
+              date: referenceDate!,
+            )),
+          )
+          .valueOrNull;
+    } else {
+      final lastDateAsync = ref.watch(lastTrainingDateProvider(figure.id));
+      final nextDateAsync = ref.watch(nextTrainingDateProvider(figure.id));
+      final lastDateValue = lastDateAsync.valueOrNull;
+      final nextDate = nextDateAsync.valueOrNull;
+      final lastIsToday = lastDateValue != null && lastDateValue.isToday;
+      lastDate = lastDateValue;
+      displayedNextDate = lastIsToday && nextDate != null && nextDate.isToday
+          ? ref.watch(nextTrainingDateAfterTodayProvider(figure.id)).valueOrNull
+          : nextDate;
+    }
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -59,14 +86,16 @@ class FigureCard extends ConsumerWidget {
                       const SizedBox(height: 4),
                       _DateRow(
                         icon: Icons.history,
-                        date: lastDateAsync.valueOrNull,
+                        date: lastDate,
                         label: lbl.lastTraining,
+                        referenceDate: referenceDate,
                       ),
                       const SizedBox(height: 2),
                       _DateRow(
                         icon: Icons.event,
                         date: displayedNextDate,
                         label: lbl.nextTraining,
+                        referenceDate: referenceDate,
                       ),
                     ],
                   ],
@@ -85,14 +114,22 @@ class _DateRow extends StatelessWidget {
   final IconData icon;
   final DateTime? date;
   final String label;
+  final DateTime? referenceDate;
 
-  const _DateRow({required this.icon, required this.date, required this.label});
+  const _DateRow({
+    required this.icon,
+    required this.date,
+    required this.label,
+    this.referenceDate,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final lbl = AppLocalizations.of(context)!;
-    final dateText = date != null ? date!.toRelativeLabel(lbl) : '—';
+    final dateText = date != null
+        ? date!.toRelativeLabel(lbl, reference: referenceDate)
+        : '—';
 
     return Row(
       children: [

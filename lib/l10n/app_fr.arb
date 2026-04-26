@@ -62,6 +62,14 @@
             }
         }
     },
+    "daysBefore": "{days} jours plus tôt",
+    "@daysBefore": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
     "inDays": "Dans {days} jours",
     "@inDays": {
         "placeholders": {
@@ -70,8 +78,18 @@
             }
         }
     },
+    "daysAfter": "{days} jours plus tard",
+    "@daysAfter": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
     "today": "Aujourd'hui",
     "tomorrow": "Demain",
+    "dayAfter": "Le lendemain",
     "yesterday": "Hier",
+    "dayBefore": "La veille",
     "beginLearning": "Je vais apprendre cette figure"
 }

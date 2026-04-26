@@ -382,11 +382,23 @@ abstract class AppLocalizations {
   /// **'Il y a {days} jours'**
   String daysAgo(int days);
 
+  /// No description provided for @daysBefore.
+  ///
+  /// In fr, this message translates to:
+  /// **'{days} jours plus tôt'**
+  String daysBefore(int days);
+
   /// No description provided for @inDays.
   ///
   /// In fr, this message translates to:
   /// **'Dans {days} jours'**
   String inDays(int days);
+
+  /// No description provided for @daysAfter.
+  ///
+  /// In fr, this message translates to:
+  /// **'{days} jours plus tard'**
+  String daysAfter(int days);
 
   /// No description provided for @today.
   ///
@@ -400,11 +412,23 @@ abstract class AppLocalizations {
   /// **'Demain'**
   String get tomorrow;
 
+  /// No description provided for @dayAfter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le lendemain'**
+  String get dayAfter;
+
   /// No description provided for @yesterday.
   ///
   /// In fr, this message translates to:
   /// **'Hier'**
   String get yesterday;
+
+  /// No description provided for @dayBefore.
+  ///
+  /// In fr, this message translates to:
+  /// **'La veille'**
+  String get dayBefore;
 
   /// No description provided for @beginLearning.
   ///
