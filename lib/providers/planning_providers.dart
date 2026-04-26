@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/date_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/training_planned_model.dart';
 import '../models/figure_model.dart';
@@ -78,22 +79,74 @@ final figuresForDayProvider =
       });
     });
 
-// Figures disponibles à ajouter à un jour donné, triées selon les règles métier
+// Provider qui calcule la date effective de dernier entraînement
+// pour une figure à une date donnée, en tenant compte des
+// TrainingPlanned entre aujourd'hui et cette date
+final effectiveLastTrainingDateProvider =
+    Provider.family<AsyncValue<DateTime?>, ({String figureId, DateTime date})>((
+      ref,
+      params,
+    ) {
+      final lastDateAsync = ref.watch(
+        lastTrainingDateProvider(params.figureId),
+      );
+      final plannedAsync = ref.watch(
+        trainingPlannedForFigureProvider(params.figureId),
+      );
+      final today = ref.watch(todayProvider);
+
+      return lastDateAsync.whenData((lastDate) {
+        final plannedValue = plannedAsync.valueOrNull ?? [];
+
+        final targetDay = DateTime(
+          params.date.year,
+          params.date.month,
+          params.date.day,
+        );
+
+        // On cherche la dernière séance prévue entre aujourd'hui
+        // et le jour sélectionné (exclu)
+        final plannedBefore = plannedValue
+            .where(
+              (t) =>
+                  (t.date.isToday || t.date.isAfter(today)) &&
+                  t.date.isBefore(targetDay),
+            )
+            .map((t) => t.date)
+            .toList();
+
+        if (plannedBefore.isEmpty) return lastDate;
+
+        plannedBefore.sort((a, b) => b.compareTo(a));
+        final lastPlanned = plannedBefore.first;
+
+        // On retourne la date la plus récente entre lastDate et lastPlanned
+        if (lastDate == null) return lastPlanned;
+        return lastPlanned.isAfter(lastDate) ? lastPlanned : lastDate;
+      });
+    });
+
+// Provider du stream de TrainingPlanned pour une figure
+final trainingPlannedForFigureProvider =
+    StreamProvider.family<List<TrainingPlannedModel>, String>((ref, figureId) {
+      final repository = ref.watch(trainingPlannedRepositoryProvider);
+      if (repository == null) return const Stream.empty();
+      return repository.watchByFigure(figureId);
+    });
+
+// Provider mis à jour avec les nouvelles règles
 final availableFiguresForDayProvider =
     Provider.family<AsyncValue<List<FigureModel>>, DateTime>((ref, date) {
       final figuresAsync = ref.watch(figuresProvider);
       final plannedAsync = ref.watch(plannedForDayProvider(date));
       final showLearned = ref.watch(showLearnedProvider);
-      final lastTrainingDates = <String, DateTime?>{};
-      final nextTrainingDates = <String, DateTime?>{};
 
       return figuresAsync.whenData((figures) {
         final plannedValue = plannedAsync.valueOrNull ?? [];
         final plannedForDayIds = plannedValue.map((t) => t.figureId).toSet();
 
-        // Filtrage : exclure les figures déjà planifiées ce jour
-        // et les figures "à apprendre"
-        var available = figures.where((f) {
+        // Filtrage
+        final available = figures.where((f) {
           if (plannedForDayIds.contains(f.id)) return false;
           if (f.state == FigureState.toLearn) return false;
           if (!showLearned && f.state == FigureState.learned) return false;
@@ -101,9 +154,17 @@ final availableFiguresForDayProvider =
         }).toList();
 
         // Récupération des dates pour le tri
+        final effectiveLastDates = <String, DateTime?>{};
+        final nextTrainingDates = <String, DateTime?>{};
+
         for (final figure in available) {
-          lastTrainingDates[figure.id] = ref
-              .watch(lastTrainingDateProvider(figure.id))
+          effectiveLastDates[figure.id] = ref
+              .watch(
+                effectiveLastTrainingDateProvider((
+                  figureId: figure.id,
+                  date: date,
+                )),
+              )
               .valueOrNull;
           nextTrainingDates[figure.id] = ref
               .watch(nextTrainingDateProvider(figure.id))
@@ -114,28 +175,40 @@ final availableFiguresForDayProvider =
         available.sort((a, b) {
           final aNext = nextTrainingDates[a.id];
           final bNext = nextTrainingDates[b.id];
-          final aLast = lastTrainingDates[a.id];
-          final bLast = lastTrainingDates[b.id];
+          final aLast = effectiveLastDates[a.id];
+          final bLast = effectiveLastDates[b.id];
 
           // Règle 1 : sans date de prochain entraînement en premier
           if (aNext == null && bNext != null) return -1;
           if (aNext != null && bNext == null) return 1;
 
-          // Règle 2 : en apprentissage avant maîtrisées
+          // Règle 2 : dernier entraînement effectif le plus éloigné
+          // du jour sélectionné en premier
+          if (aLast == null && bLast != null) return -1;
+          if (aLast != null && bLast == null) return 1;
+          if (aLast != null && bLast != null) {
+            final aDiff = date.difference(aLast).inDays;
+            final bDiff = date.difference(bLast).inDays;
+            final lastComparison = bDiff.compareTo(aDiff);
+            if (lastComparison != 0) return lastComparison;
+          }
+
+          // Règle 3 : date de prochain entraînement la plus éloignée
+          // du jour sélectionné en premier
+          if (aNext != null && bNext != null) {
+            final aDiff = aNext.difference(date).inDays.abs();
+            final bDiff = bNext.difference(date).inDays.abs();
+            final nextComparison = bDiff.compareTo(aDiff);
+            if (nextComparison != 0) return nextComparison;
+          }
+
+          // Règle 4 : en apprentissage avant apprise
           if (a.state != b.state) {
             if (a.state == FigureState.learning) return -1;
             if (b.state == FigureState.learning) return 1;
           }
 
-          // Règle 3 : dernier entraînement le plus éloigné en premier
-          if (aLast == null && bLast != null) return -1;
-          if (aLast != null && bLast == null) return 1;
-          if (aLast != null && bLast != null) {
-            final lastComparison = aLast.compareTo(bLast);
-            if (lastComparison != 0) return lastComparison;
-          }
-
-          // Règle 4 : ordre alphabétique
+          // Règle 5 : ordre alphabétique
           return a.name.compareTo(b.name);
         });
 
