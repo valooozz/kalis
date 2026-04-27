@@ -4,6 +4,7 @@
 
 - Label du dernier entraînement d'une figure en rouge s'il remonte trop
 - Changement du nom de l'appli avec une majuscule : Kalis
+- Double-tape sur les cartes de la séance du jour montre la dernière entrée de journal
 
 ### v1.2.0
 

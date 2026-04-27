@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/screens/today/last_journal_entry_dialog.dart';
 import '../../models/figure_model.dart';
 import '../../providers/today_providers.dart';
 import '../../providers/core_providers.dart';
@@ -89,6 +90,11 @@ class TodayScreen extends ConsumerWidget {
                               isDone,
                             ),
                             onLongPress: () => _toggleDone(ref, figure, isDone),
+                            onDoubleTap: () => showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  LastJournalEntryDialog(figure: figure),
+                            ),
                           );
                         }, childCount: figures.length),
                       ),

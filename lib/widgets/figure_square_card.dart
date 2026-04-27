@@ -6,6 +6,7 @@ class FigureSquareCard extends StatelessWidget {
   final bool isDone;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
+  final VoidCallback? onDoubleTap;
 
   const FigureSquareCard({
     super.key,
@@ -13,6 +14,7 @@ class FigureSquareCard extends StatelessWidget {
     required this.onTap,
     required this.onLongPress,
     this.isDone = false,
+    this.onDoubleTap,
   });
 
   @override
@@ -22,42 +24,45 @@ class FigureSquareCard extends StatelessWidget {
 
     return Card(
       clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        onLongPress: onLongPress,
-        child: AspectRatio(
-          aspectRatio: 1,
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(color: figureColor, width: 10),
-                bottom: isDone
-                    ? BorderSide(color: figureColor, width: 10)
-                    : BorderSide.none,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            padding: const EdgeInsets.all(8),
-            child: Stack(
-              children: [
-                Center(
-                  child: Text(
-                    figure.name,
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+      child: GestureDetector(
+        onDoubleTap: onDoubleTap,
+        child: InkWell(
+          onTap: onTap,
+          onLongPress: onLongPress,
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: figureColor, width: 10),
+                  bottom: isDone
+                      ? BorderSide(color: figureColor, width: 10)
+                      : BorderSide.none,
                 ),
-                if (isDone)
+                borderRadius: BorderRadius.circular(12),
+              ),
+              padding: const EdgeInsets.all(8),
+              child: Stack(
+                children: [
                   Center(
-                    child: Icon(
-                      Icons.done_outline,
-                      color: figureColor.withValues(alpha: 0.5),
-                      size: 70,
+                    child: Text(
+                      figure.name,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-              ],
+                  if (isDone)
+                    Center(
+                      child: Icon(
+                        Icons.done_outline,
+                        color: figureColor.withValues(alpha: 0.5),
+                        size: 70,
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
         ),
