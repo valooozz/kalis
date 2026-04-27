@@ -58,7 +58,6 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
                 hintText: lbl.fieldNameHint,
               ),
               textCapitalization: TextCapitalization.sentences,
-              autofocus: true,
             ),
             const SizedBox(height: 24),
             // Couleur

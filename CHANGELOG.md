@@ -5,14 +5,16 @@
 - Label du dernier entraînement d'une figure en rouge s'il remonte trop
 - Changement du nom de l'appli avec une majuscule : Kalis
 - Double-tape sur les cartes de la séance du jour montre la dernière entrée de journal
+- Retrait autofocus sur le nom d'une figure quand on la modifie
 
 ### v1.2.0
 
 - Ajout logo et splashscreen
+- Changement titre page Figure "Maîtrisée" en "Maîtrisées"
 
 ### v1.1.0
 
-- Changement état "Apprise" en "Maitrîsée"
+- Changement état "Apprise" en "Maîtrisée"
 - Ajout bouton "Je vais apprendre cette figure"
 - Amélioration de l'ordre d'apparition des figures dans AddFigureToDayDialog
 - Affichage des dates relatives au jours sélectionnés dans AddFigureToDayDialog
