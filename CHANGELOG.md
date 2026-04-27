@@ -1,5 +1,10 @@
 # Version 1
 
+### v1.3.0
+
+- Label du dernier entraînement d'une figure en rouge s'il remonte trop
+- Changement du nom de l'appli avec une majuscule : Kalis
+
 ### v1.2.0
 
 - Ajout logo et splashscreen
