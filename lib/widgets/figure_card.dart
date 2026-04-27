@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/providers/planning_providers.dart';
+import 'package:kalis/providers/today_providers.dart';
 import '../models/figure_model.dart';
 import '../providers/figure_providers.dart';
 import '../core/utils/date_utils.dart';
@@ -57,6 +58,21 @@ class FigureCard extends ConsumerWidget {
           : nextDate;
     }
 
+    // Calcul de l'alerte sur le dernier entraînement
+    final bool lastDateAlert;
+    if (lastDate == null || displayedNextDate != null) {
+      lastDateAlert = false;
+    } else {
+      final today = ref.read(todayProvider);
+      final referenceDateForDateAlert = referenceDate ?? today;
+      final daysSinceLast = referenceDateForDateAlert
+          .difference(lastDate.dateOnly)
+          .inDays;
+      lastDateAlert = figure.state == FigureState.learning
+          ? daysSinceLast >= 4
+          : daysSinceLast >= 15;
+    }
+
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -89,6 +105,7 @@ class FigureCard extends ConsumerWidget {
                         date: lastDate,
                         label: lbl.lastTraining,
                         referenceDate: referenceDate,
+                        isAlert: lastDateAlert,
                       ),
                       const SizedBox(height: 2),
                       _DateRow(
@@ -115,12 +132,14 @@ class _DateRow extends StatelessWidget {
   final DateTime? date;
   final String label;
   final DateTime? referenceDate;
+  final bool isAlert;
 
   const _DateRow({
     required this.icon,
     required this.date,
     required this.label,
     this.referenceDate,
+    this.isAlert = false,
   });
 
   @override
@@ -130,6 +149,7 @@ class _DateRow extends StatelessWidget {
     final dateText = date != null
         ? date!.toRelativeLabel(lbl, reference: referenceDate)
         : '—';
+    final color = isAlert ? theme.colorScheme.error : theme.colorScheme.outline;
 
     return Row(
       children: [
@@ -137,9 +157,7 @@ class _DateRow extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           '$label : $dateText',
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: theme.colorScheme.outline,
-          ),
+          style: theme.textTheme.bodySmall?.copyWith(color: color),
         ),
       ],
     );
