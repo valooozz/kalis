@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/widgets/record_display.dart';
 import '../../models/figure_model.dart';
 import '../../providers/journal_providers.dart';
 import '../../core/utils/date_utils.dart';
@@ -45,6 +46,10 @@ class LastJournalEntryDialog extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               Text(lastEntry.text, style: theme.textTheme.bodyMedium),
+              if (figure.state == FigureState.learned) ...[
+                const Divider(height: 24),
+                RecordDisplay(figure: figure),
+              ],
             ],
           );
         },

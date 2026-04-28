@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/models/training_planned_model.dart';
 import 'package:kalis/providers/today_providers.dart';
+import 'package:kalis/widgets/record_display.dart';
 import '../../models/figure_model.dart';
 import '../../providers/journal_providers.dart';
 import '../../providers/core_providers.dart';
@@ -61,6 +62,11 @@ class FigureDetailDialog extends ConsumerWidget {
                 _InfoRow(
                   label: lbl.fieldMasteredOn,
                   value: figure.endDate!.toShortDate(),
+                ),
+              if (figure.state == FigureState.learned)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: RecordDisplay(figure: figure),
                 ),
 
               if (figure.state == FigureState.toLearn)

@@ -1,5 +1,9 @@
 # Version 1
 
+### v1.6.0
+
+- Système de record pour les figures maîtrisées
+
 ### v1.5.0
 
 - Différenciation des FigureSquareCard entre figures maîtrisées et en apprentissage

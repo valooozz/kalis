@@ -495,6 +495,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Confirmer'**
   String get buttonConfirm;
+
+  /// No description provided for @record.
+  ///
+  /// In fr, this message translates to:
+  /// **'Record'**
+  String get record;
+
+  /// No description provided for @recordDialogTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le record'**
+  String get recordDialogTitle;
+
+  /// No description provided for @recordValue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valeur'**
+  String get recordValue;
+
+  /// No description provided for @recordUnit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Unité'**
+  String get recordUnit;
+
+  /// No description provided for @recordUnitReps.
+  ///
+  /// In fr, this message translates to:
+  /// **'Répétitions'**
+  String get recordUnitReps;
+
+  /// No description provided for @recordUnitSeconds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Secondes'**
+  String get recordUnitSeconds;
+
+  /// No description provided for @noRecord.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun record'**
+  String get noRecord;
 }
 
 class _AppLocalizationsDelegate

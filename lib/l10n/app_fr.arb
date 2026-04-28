@@ -101,5 +101,12 @@
     "settingsLinkGoogleError": "Erreur lors de la liaison au compte Google",
     "settingsAlreadyLinkedTitle": "Compte déjà utilisé",
     "settingsAlreadyLinkedContent": "Ce compte Google est déjà lié à un autre compte Kalis. Voulez-vous vous connecter à ce compte ? Vos données actuelles ne seront pas migrées.",
-    "buttonConfirm": "Confirmer"
+    "buttonConfirm": "Confirmer",
+    "record": "Record",
+    "recordDialogTitle": "Modifier le record",
+    "recordValue": "Valeur",
+    "recordUnit": "Unité",
+    "recordUnitReps": "Répétitions",
+    "recordUnitSeconds": "Secondes",
+    "noRecord": "Aucun record"
 }

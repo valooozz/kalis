@@ -221,4 +221,25 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get buttonConfirm => 'Confirmer';
+
+  @override
+  String get record => 'Record';
+
+  @override
+  String get recordDialogTitle => 'Modifier le record';
+
+  @override
+  String get recordValue => 'Valeur';
+
+  @override
+  String get recordUnit => 'Unité';
+
+  @override
+  String get recordUnitReps => 'Répétitions';
+
+  @override
+  String get recordUnitSeconds => 'Secondes';
+
+  @override
+  String get noRecord => 'Aucun record';
 }

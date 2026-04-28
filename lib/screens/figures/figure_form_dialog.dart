@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/screens/figures/record_form_dialog.dart';
+import 'package:kalis/widgets/record_display.dart';
 import '../../models/figure_model.dart';
 import '../../providers/core_providers.dart';
 import '../../widgets/color_picker_row.dart';
@@ -67,7 +69,7 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
               selected: _selectedColor,
               onChanged: (color) => setState(() => _selectedColor = color),
             ),
-            // Dates et suppression (uniquement en mode édition)
+            // Dates, record, et suppression (uniquement en mode édition)
             if (_isEditing) ...[
               const SizedBox(height: 24),
               _DatePicker(
@@ -83,6 +85,27 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
                 onChanged: (date) => setState(() => _endDate = date),
                 onCleared: () => setState(() => _endDate = null),
               ),
+              if (_isEditing &&
+                  widget.figure!.state == FigureState.learned) ...[
+                const SizedBox(height: 12),
+                _RecordRow(
+                  figure: widget.figure!,
+                  onEdit: () {
+                    Navigator.of(context).pop();
+                    showDialog(
+                      context: context,
+                      builder: (_) => RecordFormDialog(figure: widget.figure!),
+                    );
+                  },
+                  onDelete: () async {
+                    Navigator.of(context).pop();
+                    final repository = ref.read(figureRepositoryProvider);
+                    await repository?.update(
+                      widget.figure!.copyWith(clearRecord: true),
+                    );
+                  },
+                ),
+              ],
             ],
           ],
         ),
@@ -212,6 +235,40 @@ class _DatePicker extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.clear, size: 20, color: theme.colorScheme.error),
             onPressed: onCleared,
+          ),
+      ],
+    );
+  }
+}
+
+class _RecordRow extends StatelessWidget {
+  final FigureModel figure;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
+
+  const _RecordRow({
+    required this.figure,
+    required this.onEdit,
+    required this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final lbl = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+
+    return Row(
+      children: [
+        Expanded(
+          child: figure.recordValue != null
+              ? RecordDisplay(figure: figure)
+              : Text(lbl.noRecord, style: theme.textTheme.bodyMedium),
+        ),
+        IconButton(icon: const Icon(Icons.edit, size: 20), onPressed: onEdit),
+        if (figure.recordValue != null)
+          IconButton(
+            icon: Icon(Icons.clear, size: 20, color: theme.colorScheme.error),
+            onPressed: onDelete,
           ),
       ],
     );

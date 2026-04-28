@@ -47,6 +47,19 @@ extension FigureColorExtension on FigureColor {
   }
 }
 
+enum RecordUnit { reps, seconds }
+
+extension RecordUnitExtension on RecordUnit {
+  String get unit {
+    switch (this) {
+      case RecordUnit.reps:
+        return 'répétitions';
+      case RecordUnit.seconds:
+        return 'secondes';
+    }
+  }
+}
+
 class FigureModel {
   final String id;
   final String name;
@@ -54,6 +67,8 @@ class FigureModel {
   final FigureState state;
   final DateTime? startDate;
   final DateTime? endDate;
+  final int? recordValue;
+  final RecordUnit? recordUnit;
 
   const FigureModel({
     required this.id,
@@ -62,6 +77,8 @@ class FigureModel {
     required this.state,
     this.startDate,
     this.endDate,
+    this.recordValue,
+    this.recordUnit,
   });
 
   factory FigureModel.fromFirestore(Map<String, dynamic> data, String id) {
@@ -82,6 +99,13 @@ class FigureModel {
       endDate: data['endDate'] != null
           ? DateTime.parse(data['endDate'] as String)
           : null,
+      recordValue: data['recordValue'] as int?,
+      recordUnit: data['recordUnit'] != null
+          ? RecordUnit.values.firstWhere(
+              (e) => e.name == data['recordUnit'],
+              orElse: () => RecordUnit.reps,
+            )
+          : null,
     );
   }
 
@@ -92,6 +116,8 @@ class FigureModel {
       'state': state.name,
       'startDate': startDate?.toIso8601String(),
       'endDate': endDate?.toIso8601String(),
+      'recordValue': recordValue,
+      'recordUnit': recordUnit?.name,
     };
   }
 
@@ -102,8 +128,11 @@ class FigureModel {
     FigureState? state,
     DateTime? startDate,
     DateTime? endDate,
+    int? recordValue,
+    RecordUnit? recordUnit,
     bool clearStartDate = false,
     bool clearEndDate = false,
+    bool clearRecord = false,
   }) {
     return FigureModel(
       id: id ?? this.id,
@@ -112,6 +141,8 @@ class FigureModel {
       state: state ?? this.state,
       startDate: clearStartDate ? null : startDate ?? this.startDate,
       endDate: clearEndDate ? null : endDate ?? this.endDate,
+      recordValue: clearRecord ? null : recordValue ?? this.recordValue,
+      recordUnit: clearRecord ? null : recordUnit ?? this.recordUnit,
     );
   }
 

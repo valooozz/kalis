@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/screens/figures/record_form_dialog.dart';
 import '../../models/figure_model.dart';
 import '../../models/training_done_model.dart';
 import '../../models/journal_entry_model.dart';
@@ -49,7 +50,20 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
     });
 
     return AlertDialog(
-      title: Text(widget.figure.name),
+      title: Row(
+        children: [
+          Expanded(child: Text(widget.figure.name)),
+          if (widget.figure.state == FigureState.learned)
+            IconButton(
+              icon: const Icon(Icons.emoji_events),
+              onPressed: () => showDialog(
+                context: context,
+                builder: (_) => RecordFormDialog(figure: widget.figure),
+              ),
+              tooltip: lbl.recordDialogTitle,
+            ),
+        ],
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
