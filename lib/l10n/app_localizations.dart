@@ -435,6 +435,66 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Je vais apprendre cette figure'**
   String get beginLearning;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paramètres'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsAccountSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte'**
+  String get settingsAccountSection;
+
+  /// No description provided for @settingsLinkGoogle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lier à un compte Google'**
+  String get settingsLinkGoogle;
+
+  /// No description provided for @settingsLinkGoogleSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Synchronisez vos données sur tous vos appareils'**
+  String get settingsLinkGoogleSubtitle;
+
+  /// No description provided for @settingsLinkedGoogle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Connecté avec Google'**
+  String get settingsLinkedGoogle;
+
+  /// No description provided for @settingsLinkGoogleSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte Google lié avec succès'**
+  String get settingsLinkGoogleSuccess;
+
+  /// No description provided for @settingsLinkGoogleError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la liaison au compte Google'**
+  String get settingsLinkGoogleError;
+
+  /// No description provided for @settingsAlreadyLinkedTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte déjà utilisé'**
+  String get settingsAlreadyLinkedTitle;
+
+  /// No description provided for @settingsAlreadyLinkedContent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce compte Google est déjà lié à un autre compte Kalis. Voulez-vous vous connecter à ce compte ? Vos données actuelles ne seront pas migrées.'**
+  String get settingsAlreadyLinkedContent;
+
+  /// No description provided for @buttonConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer'**
+  String get buttonConfirm;
 }
 
 class _AppLocalizationsDelegate

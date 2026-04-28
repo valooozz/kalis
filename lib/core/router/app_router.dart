@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kalis/screens/settings/settings_screen.dart';
 import '../../providers/core_providers.dart';
 import '../../screens/today/today_screen.dart';
 import '../../screens/figures/figures_screen.dart';
@@ -27,21 +28,22 @@ final routerProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: '/figures',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: FiguresScreen(),
-            ),
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: FiguresScreen()),
           ),
           GoRoute(
             path: '/today',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: TodayScreen(),
-            ),
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: TodayScreen()),
           ),
           GoRoute(
             path: '/planning',
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: PlanningScreen(),
-            ),
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: PlanningScreen()),
+          ),
+          GoRoute(
+            path: '/settings',
+            builder: (context, state) => const SettingsScreen(),
           ),
         ],
       ),

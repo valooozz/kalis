@@ -1,5 +1,9 @@
 # Version 1
 
+### v1.4.0
+
+- Connexion au compte Google
+
 ### v1.3.0
 
 - Label du dernier entraînement d'une figure en rouge s'il remonte trop

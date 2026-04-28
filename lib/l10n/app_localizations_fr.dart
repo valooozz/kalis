@@ -188,4 +188,37 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get beginLearning => 'Je vais apprendre cette figure';
+
+  @override
+  String get settingsTitle => 'Paramètres';
+
+  @override
+  String get settingsAccountSection => 'Compte';
+
+  @override
+  String get settingsLinkGoogle => 'Lier à un compte Google';
+
+  @override
+  String get settingsLinkGoogleSubtitle =>
+      'Synchronisez vos données sur tous vos appareils';
+
+  @override
+  String get settingsLinkedGoogle => 'Connecté avec Google';
+
+  @override
+  String get settingsLinkGoogleSuccess => 'Compte Google lié avec succès';
+
+  @override
+  String get settingsLinkGoogleError =>
+      'Erreur lors de la liaison au compte Google';
+
+  @override
+  String get settingsAlreadyLinkedTitle => 'Compte déjà utilisé';
+
+  @override
+  String get settingsAlreadyLinkedContent =>
+      'Ce compte Google est déjà lié à un autre compte Kalis. Voulez-vous vous connecter à ce compte ? Vos données actuelles ne seront pas migrées.';
+
+  @override
+  String get buttonConfirm => 'Confirmer';
 }

@@ -91,5 +91,15 @@
     "dayAfter": "Le lendemain",
     "yesterday": "Hier",
     "dayBefore": "La veille",
-    "beginLearning": "Je vais apprendre cette figure"
+    "beginLearning": "Je vais apprendre cette figure",
+    "settingsTitle": "Paramètres",
+    "settingsAccountSection": "Compte",
+    "settingsLinkGoogle": "Lier à un compte Google",
+    "settingsLinkGoogleSubtitle": "Synchronisez vos données sur tous vos appareils",
+    "settingsLinkedGoogle": "Connecté avec Google",
+    "settingsLinkGoogleSuccess": "Compte Google lié avec succès",
+    "settingsLinkGoogleError": "Erreur lors de la liaison au compte Google",
+    "settingsAlreadyLinkedTitle": "Compte déjà utilisé",
+    "settingsAlreadyLinkedContent": "Ce compte Google est déjà lié à un autre compte Kalis. Voulez-vous vous connecter à ce compte ? Vos données actuelles ne seront pas migrées.",
+    "buttonConfirm": "Confirmer"
 }

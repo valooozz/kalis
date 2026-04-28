@@ -6,6 +6,7 @@ import '../../providers/figure_providers.dart';
 import '../../widgets/figure_card.dart';
 import 'figure_detail_dialog.dart';
 import 'figure_form_dialog.dart';
+import 'package:go_router/go_router.dart';
 
 class FiguresScreen extends ConsumerWidget {
   const FiguresScreen({super.key});
@@ -40,6 +41,13 @@ class FiguresScreen extends ConsumerWidget {
               SliverAppBar(
                 pinned: true,
                 expandedHeight: 120,
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.settings),
+                    onPressed: () => context.push('/settings'),
+                    tooltip: lbl.settingsTitle,
+                  ),
+                ],
                 flexibleSpace: FlexibleSpaceBar(
                   title: Text(lbl.figuresScreenTitle),
                   titlePadding: const EdgeInsets.only(left: 16, bottom: 16),

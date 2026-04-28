@@ -7,11 +7,11 @@ class MainScreen extends StatelessWidget {
 
   const MainScreen({super.key, required this.child});
 
-  int _locationToIndex(String location) {
+  int? _locationToIndex(String location) {
     if (location.startsWith('/figures')) return 0;
     if (location.startsWith('/today')) return 1;
     if (location.startsWith('/planning')) return 2;
-    return 1;
+    return null;
   }
 
   void _onItemTapped(BuildContext context, int index) {
@@ -33,21 +33,26 @@ class MainScreen extends StatelessWidget {
 
     return Scaffold(
       body: child,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => _onItemTapped(context, index),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.self_improvement),
-            label: lbl.tabFigures,
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.today), label: lbl.tabToday),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: lbl.tabPlanning,
-          ),
-        ],
-      ),
+      bottomNavigationBar: currentIndex == null
+          ? null
+          : BottomNavigationBar(
+              currentIndex: currentIndex,
+              onTap: (index) => _onItemTapped(context, index),
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.self_improvement),
+                  label: lbl.tabFigures,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.today),
+                  label: lbl.tabToday,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.calendar_month),
+                  label: lbl.tabPlanning,
+                ),
+              ],
+            ),
     );
   }
 }

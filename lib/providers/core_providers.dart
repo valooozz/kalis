@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../repositories/figure_repository.dart';
 import '../repositories/training_done_repository.dart';
 import '../repositories/training_planned_repository.dart';
@@ -45,7 +46,9 @@ final trainingDoneRepositoryProvider = Provider<TrainingDoneRepository?>((ref) {
   );
 });
 
-final trainingPlannedRepositoryProvider = Provider<TrainingPlannedRepository?>((ref) {
+final trainingPlannedRepositoryProvider = Provider<TrainingPlannedRepository?>((
+  ref,
+) {
   final userId = ref.watch(userIdProvider);
   if (userId == null) return null;
   return TrainingPlannedRepository(
@@ -61,4 +64,16 @@ final journalEntryRepositoryProvider = Provider<JournalEntryRepository?>((ref) {
     firestore: ref.watch(firestoreProvider),
     userId: userId,
   );
+});
+
+final googleSignInProvider = Provider<GoogleSignIn>((ref) {
+  return GoogleSignIn();
+});
+
+final isLinkedToGoogleProvider = Provider<bool>((ref) {
+  // On force la relecture à chaque changement d'auth
+  ref.watch(authStateProvider);
+  final user = FirebaseAuth.instance.currentUser;
+  if (user == null) return false;
+  return user.providerData.any((p) => p.providerId == 'google.com');
 });

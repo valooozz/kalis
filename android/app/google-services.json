@@ -12,7 +12,20 @@
           "package_name": "com.valooozz.kalis"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "678094034706-lq9q89lktqogc0t99bjcccjebdnjuth1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.valooozz.kalis",
+            "certificate_hash": "475fccd2e6a4b6d34e78239809f8373233a7aff9"
+          }
+        },
+        {
+          "client_id": "678094034706-snhjmq0lu0qvtocv22ni2q6pgc0at4v5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAcfSQnM2b_Xbi4zyA1X-Si5lrQhyDLDMg"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "678094034706-snhjmq0lu0qvtocv22ni2q6pgc0at4v5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
