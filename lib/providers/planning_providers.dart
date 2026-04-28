@@ -134,7 +134,6 @@ final trainingPlannedForFigureProvider =
       return repository.watchByFigure(figureId);
     });
 
-// Provider mis à jour avec les nouvelles règles
 final availableFiguresForDayProvider =
     Provider.family<AsyncValue<List<FigureModel>>, DateTime>((ref, date) {
       final figuresAsync = ref.watch(figuresProvider);

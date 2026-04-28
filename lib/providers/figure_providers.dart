@@ -12,15 +12,15 @@ final figuresProvider = StreamProvider<List<FigureModel>>((ref) {
   return repository.watchAll().map((figures) {
     figures.sort((a, b) {
       // Tri par statut : learned > learning > toLearn
-      final stateOrder = {
-        FigureState.learned: 0,
-        FigureState.learning: 1,
-        FigureState.toLearn: 2,
-      };
-      final stateComparison = stateOrder[a.state]!.compareTo(
-        stateOrder[b.state]!,
-      );
-      if (stateComparison != 0) return stateComparison;
+      // final stateOrder = {
+      //   FigureState.learned: 0,
+      //   FigureState.learning: 1,
+      //   FigureState.toLearn: 2,
+      // };
+      // final stateComparison = stateOrder[a.state]!.compareTo(
+      //   stateOrder[b.state]!,
+      // );
+      // if (stateComparison != 0) return stateComparison;
 
       // Tri alphabétique au sein du même statut
       return a.name.compareTo(b.name);

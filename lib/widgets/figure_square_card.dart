@@ -35,7 +35,7 @@ class FigureSquareCard extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(color: figureColor, width: 10),
-                  bottom: isDone
+                  bottom: figure.state == FigureState.learned
                       ? BorderSide(color: figureColor, width: 10)
                       : BorderSide.none,
                 ),

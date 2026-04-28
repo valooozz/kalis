@@ -1,5 +1,10 @@
 # Version 1
 
+### v1.5.0
+
+- Différenciation des FigureSquareCard entre figures maîtrisées et en apprentissage
+- Retrait du tri par état sur la liste des figures pour un jour
+
 ### v1.4.0
 
 - Connexion au compte Google
