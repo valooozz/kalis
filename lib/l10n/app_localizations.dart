@@ -537,6 +537,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Aucun record'**
   String get noRecord;
+
+  /// No description provided for @markAsLearned.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer comme maîtrisée'**
+  String get markAsLearned;
+
+  /// No description provided for @markAsLearnedTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer comme maîtrisée'**
+  String get markAsLearnedTitle;
+
+  /// No description provided for @markAsLearnedConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir passer \"{name}\" au statut Maîtrisée ?'**
+  String markAsLearnedConfirm(String name);
 }
 
 class _AppLocalizationsDelegate

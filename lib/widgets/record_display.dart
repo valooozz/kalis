@@ -16,14 +16,12 @@ class RecordDisplay extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final unit = figure.recordUnit!.unit;
-
     return Row(
       children: [
         Icon(Icons.emoji_events, size: 14, color: theme.colorScheme.primary),
         const SizedBox(width: 4),
         Text(
-          '${lbl.record} : ${figure.recordValue} $unit',
+          '${lbl.record} : ${figure.recordValue} ${figure.recordUnit!.unit}',
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.primary,
             fontWeight: FontWeight.bold,

@@ -242,4 +242,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noRecord => 'Aucun record';
+
+  @override
+  String get markAsLearned => 'Marquer comme maîtrisée';
+
+  @override
+  String get markAsLearnedTitle => 'Marquer comme maîtrisée';
+
+  @override
+  String markAsLearnedConfirm(String name) {
+    return 'Êtes-vous sûr de vouloir passer \"$name\" au statut Maîtrisée ?';
+  }
 }

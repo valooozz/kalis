@@ -21,6 +21,7 @@ class TodayTrainingDialog extends ConsumerStatefulWidget {
 
 class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
   late TextEditingController _controller;
+  JournalEntryModel? _existingEntry;
 
   @override
   void initState() {
@@ -47,12 +48,19 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
       if (entry != null && _controller.text.isEmpty) {
         _controller.text = entry.text;
       }
+      _existingEntry = entry;
     });
 
     return AlertDialog(
       title: Row(
         children: [
           Expanded(child: Text(widget.figure.name)),
+          if (widget.figure.state == FigureState.learning)
+            IconButton(
+              icon: const Icon(Icons.workspace_premium),
+              onPressed: () => _markAsLearned(context),
+              tooltip: lbl.markAsLearned,
+            ),
           if (widget.figure.state == FigureState.learned)
             IconButton(
               icon: const Icon(Icons.emoji_events),
@@ -91,7 +99,10 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
     );
   }
 
-  Future<void> _validate(JournalEntryModel? existingEntry) async {
+  Future<void> _validate(
+    JournalEntryModel? existingEntry, {
+    bool pop = true,
+  }) async {
     final repository = ref.read(trainingDoneRepositoryProvider);
     final journalRepository = ref.read(journalEntryRepositoryProvider);
     if (repository == null || journalRepository == null) return;
@@ -122,6 +133,55 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
       }
     }
 
-    if (mounted) Navigator.of(context).pop();
+    if (pop && mounted) Navigator.of(context).pop();
+  }
+
+  Future<void> _markAsLearned(BuildContext context) async {
+    final lbl = AppLocalizations.of(context)!;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(lbl.markAsLearnedTitle),
+        content: Text(lbl.markAsLearnedConfirm(widget.figure.name)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(lbl.buttonCancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(lbl.buttonConfirm),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    // On valide d'abord l'entraînement et le journal
+    await _validate(_existingEntry, pop: false);
+
+    final figureRepository = ref.read(figureRepositoryProvider);
+    if (figureRepository == null) return;
+
+    final today = ref.read(todayProvider);
+
+    // Passage à l'état maîtrisée avec la date du jour
+    final updated = widget.figure.copyWith(
+      state: FigureState.learned,
+      endDate: today,
+    );
+    await figureRepository.update(updated);
+
+    if (!context.mounted) return;
+
+    // Ouverture de RecordFormDialog avec la figure mise à jour
+    await showDialog(
+      context: context,
+      builder: (_) => RecordFormDialog(figure: updated),
+    );
+
+    if (context.mounted) Navigator.of(context).pop();
   }
 }

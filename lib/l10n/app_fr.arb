@@ -108,5 +108,15 @@
     "recordUnit": "Unité",
     "recordUnitReps": "Répétitions",
     "recordUnitSeconds": "Secondes",
-    "noRecord": "Aucun record"
+    "noRecord": "Aucun record",
+    "markAsLearned": "Marquer comme maîtrisée",
+    "markAsLearnedTitle": "Marquer comme maîtrisée",
+    "markAsLearnedConfirm": "Êtes-vous sûr de vouloir passer \"{name}\" au statut Maîtrisée ?",
+    "@markAsLearnedConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    }
 }
