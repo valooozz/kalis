@@ -55,17 +55,17 @@ class FiguresScreen extends ConsumerWidget {
               ),
               if (learned.isNotEmpty) ...[
                 _StickyHeader(label: '${lbl.stateLearned} (${learned.length})'),
-                _FigureSliver(figures: learned),
+                _FigureSliver(figures: learned, state: FigureState.learned),
               ],
               if (learning.isNotEmpty) ...[
                 _StickyHeader(
                   label: '${lbl.stateLearning} (${learning.length})',
                 ),
-                _FigureSliver(figures: learning),
+                _FigureSliver(figures: learning, state: FigureState.learning),
               ],
               if (toLearn.isNotEmpty) ...[
                 _StickyHeader(label: '${lbl.stateToLearn} (${toLearn.length})'),
-                _FigureSliver(figures: toLearn),
+                _FigureSliver(figures: toLearn, state: FigureState.toLearn),
               ],
               // Padding en bas pour le FAB
               const SliverToBoxAdapter(child: SizedBox(height: 80)),
@@ -138,27 +138,40 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
       oldDelegate.child != child;
 }
 
-class _FigureSliver extends StatelessWidget {
+class _FigureSliver extends ConsumerWidget {
   final List<FigureModel> figures;
+  final FigureState state;
 
-  const _FigureSliver({required this.figures});
+  const _FigureSliver({required this.figures, required this.state});
 
   @override
-  Widget build(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate((context, index) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SliverReorderableList(
+      itemCount: figures.length,
+      itemBuilder: (context, index) {
         final figure = figures[index];
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-          child: FigureCard(
-            figure: figure,
-            onTap: () => showDialog(
-              context: context,
-              builder: (_) => FigureDetailDialog(figure: figure),
+        return ReorderableDelayedDragStartListener(
+          key: ValueKey(figure.id),
+          index: index,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            child: FigureCard(
+              figure: figure,
+              onTap: () => showDialog(
+                context: context,
+                builder: (_) => FigureDetailDialog(figure: figure),
+              ),
             ),
           ),
         );
-      }, childCount: figures.length),
+      },
+      onReorder: (oldIndex, newIndex) {
+        if (newIndex > oldIndex) newIndex--;
+        final reordered = List<FigureModel>.from(figures);
+        final item = reordered.removeAt(oldIndex);
+        reordered.insert(newIndex, item);
+        ref.read(figureOrderProvider).reorder(reordered);
+      },
     );
   }
 }
