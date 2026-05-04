@@ -1,5 +1,9 @@
 # Version 1
 
+### v1.8.1
+
+- Fix du flicker lors du reorder
+
 ### v1.8.0
 
 - Possibilité de changer l'ordre des figures au sein d'une catégorie

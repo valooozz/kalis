@@ -138,14 +138,37 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
       oldDelegate.child != child;
 }
 
-class _FigureSliver extends ConsumerWidget {
+class _FigureSliver extends ConsumerStatefulWidget {
   final List<FigureModel> figures;
   final FigureState state;
 
   const _FigureSliver({required this.figures, required this.state});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_FigureSliver> createState() => _FigureSliverState();
+}
+
+class _FigureSliverState extends ConsumerState<_FigureSliver> {
+  List<FigureModel>? _localFigures;
+
+  @override
+  void didUpdateWidget(covariant _FigureSliver oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // On accepte la mise à jour du stream seulement si
+    // elle ne vient pas d'un reorder local en cours
+    if (_localFigures == null) return;
+    final localIds = _localFigures!.map((f) => f.id).toList();
+    final streamIds = widget.figures.map((f) => f.id).toList();
+    if (localIds.join() == streamIds.join()) {
+      // Le stream a rattrapé l'état local, on peut l'effacer
+      _localFigures = null;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final figures = _localFigures ?? widget.figures;
+
     return SliverReorderableList(
       itemCount: figures.length,
       itemBuilder: (context, index) {
@@ -170,6 +193,11 @@ class _FigureSliver extends ConsumerWidget {
         final reordered = List<FigureModel>.from(figures);
         final item = reordered.removeAt(oldIndex);
         reordered.insert(newIndex, item);
+
+        // Mise à jour locale immédiate
+        setState(() => _localFigures = reordered);
+
+        // Mise à jour Firestore en arrière-plan
         ref.read(figureOrderProvider).reorder(reordered);
       },
     );
