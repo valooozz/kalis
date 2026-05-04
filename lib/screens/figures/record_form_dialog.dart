@@ -54,24 +54,24 @@ class _RecordFormDialogState extends ConsumerState<RecordFormDialog> {
           const SizedBox(height: 16),
           Text(lbl.recordUnit, style: theme.textTheme.labelLarge),
           const SizedBox(height: 8),
-          SizedBox(
-            width: double.maxFinite,
-            child: SegmentedButton<RecordUnit>(
-              showSelectedIcon: false,
-              segments: [
-                ButtonSegment(
-                  value: RecordUnit.reps,
-                  label: Text(lbl.recordUnitReps),
-                ),
-                ButtonSegment(
-                  value: RecordUnit.seconds,
-                  label: Text(lbl.recordUnitSeconds),
-                ),
-              ],
-              selected: {_selectedUnit},
-              onSelectionChanged: (value) =>
-                  setState(() => _selectedUnit = value.first),
-            ),
+          Row(
+            children: [
+              ChoiceChip(
+                label: Text(lbl.recordUnitReps),
+                selected: _selectedUnit == RecordUnit.reps,
+                onSelected: (_) =>
+                    setState(() => _selectedUnit = RecordUnit.reps),
+                showCheckmark: false,
+              ),
+              const SizedBox(width: 8),
+              ChoiceChip(
+                label: Text(lbl.recordUnitSeconds),
+                selected: _selectedUnit == RecordUnit.seconds,
+                onSelected: (_) =>
+                    setState(() => _selectedUnit = RecordUnit.seconds),
+                showCheckmark: false,
+              ),
+            ],
           ),
         ],
       ),
