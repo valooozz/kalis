@@ -1,5 +1,9 @@
 # Version 1
 
+### v1.8.0
+
+- Possibilité de changer l'ordre des figures au sein d'une catégorie
+
 ### v1.7.0
 
 - Bouton pour passer une figure à Maîtrisée dans la séance du jour
