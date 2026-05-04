@@ -559,7 +559,7 @@ abstract class AppLocalizations {
   /// No description provided for @allFiguresDone.
   ///
   /// In fr, this message translates to:
-  /// **'Toutes les figures ont été révisées !'**
+  /// **'Toutes les figures ont été travaillées !'**
   String get allFiguresDone;
 }
 

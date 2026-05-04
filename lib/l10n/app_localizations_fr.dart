@@ -255,5 +255,5 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get allFiguresDone => 'Toutes les figures ont été révisées !';
+  String get allFiguresDone => 'Toutes les figures ont été travaillées !';
 }

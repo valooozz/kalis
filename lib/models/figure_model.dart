@@ -50,12 +50,12 @@ extension FigureColorExtension on FigureColor {
 enum RecordUnit { reps, seconds }
 
 extension RecordUnitExtension on RecordUnit {
-  String get unit {
+  String getUnit(int? nb) {
     switch (this) {
       case RecordUnit.reps:
-        return 'répétitions';
+        return nb == 1 ? 'répétition' : 'répétitions';
       case RecordUnit.seconds:
-        return 'secondes';
+        return nb == 1 ? 'seconde' : 'secondes';
     }
   }
 }

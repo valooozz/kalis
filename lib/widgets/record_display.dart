@@ -21,7 +21,7 @@ class RecordDisplay extends StatelessWidget {
         Icon(Icons.emoji_events, size: 14, color: theme.colorScheme.primary),
         const SizedBox(width: 4),
         Text(
-          '${lbl.record} : ${figure.recordValue} ${figure.recordUnit!.unit}',
+          '${lbl.record} : ${figure.recordValue} ${figure.recordUnit!.getUnit(figure.recordValue)}',
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.primary,
             fontWeight: FontWeight.bold,
