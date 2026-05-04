@@ -78,4 +78,12 @@ class FigureRepository {
 
     await batch.commit();
   }
+
+  Future<void> updateOrder(List<FigureModel> figures) async {
+    final batch = _firestore.batch();
+    for (int i = 0; i < figures.length; i++) {
+      batch.update(_collection.doc(figures[i].id), {'order': i});
+    }
+    await batch.commit();
+  }
 }

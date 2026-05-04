@@ -38,7 +38,7 @@
 - Changement état "Apprise" en "Maîtrisée"
 - Ajout bouton "Je vais apprendre cette figure"
 - Amélioration de l'ordre d'apparition des figures dans AddFigureToDayDialog
-- Affichage des dates relatives au jours sélectionnés dans AddFigureToDayDialog
+- Affichage des dates relatives aux jours sélectionnés dans AddFigureToDayDialog
 
 ### v1.0.0
 

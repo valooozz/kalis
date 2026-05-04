@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/core/utils/date_utils.dart';
 import 'package:kalis/providers/today_providers.dart';
+import 'package:kalis/repositories/figure_repository.dart';
 import '../models/figure_model.dart';
 import 'core_providers.dart';
 
@@ -11,19 +12,7 @@ final figuresProvider = StreamProvider<List<FigureModel>>((ref) {
 
   return repository.watchAll().map((figures) {
     figures.sort((a, b) {
-      // Tri par statut : learned > learning > toLearn
-      // final stateOrder = {
-      //   FigureState.learned: 0,
-      //   FigureState.learning: 1,
-      //   FigureState.toLearn: 2,
-      // };
-      // final stateComparison = stateOrder[a.state]!.compareTo(
-      //   stateOrder[b.state]!,
-      // );
-      // if (stateComparison != 0) return stateComparison;
-
-      // Tri alphabétique au sein du même statut
-      return a.name.compareTo(b.name);
+      return a.order.compareTo(b.order);
     });
     return figures;
   });
@@ -131,3 +120,19 @@ final nextTrainingDateAfterDayProvider =
         return upcoming.first.date;
       });
     });
+
+// Ordre des figures
+final figureOrderProvider = Provider<FigureOrderNotifier>((ref) {
+  final repository = ref.watch(figureRepositoryProvider);
+  return FigureOrderNotifier(repository);
+});
+
+class FigureOrderNotifier {
+  final FigureRepository? _repository;
+
+  FigureOrderNotifier(this._repository);
+
+  Future<void> reorder(List<FigureModel> figures) async {
+    await _repository?.updateOrder(figures);
+  }
+}

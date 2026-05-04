@@ -69,6 +69,7 @@ class FigureModel {
   final DateTime? endDate;
   final int? recordValue;
   final RecordUnit? recordUnit;
+  final int order;
 
   const FigureModel({
     required this.id,
@@ -79,6 +80,7 @@ class FigureModel {
     this.endDate,
     this.recordValue,
     this.recordUnit,
+    this.order = 0,
   });
 
   factory FigureModel.fromFirestore(Map<String, dynamic> data, String id) {
@@ -106,6 +108,7 @@ class FigureModel {
               orElse: () => RecordUnit.reps,
             )
           : null,
+      order: (data['order'] as int?) ?? 0,
     );
   }
 
@@ -118,6 +121,7 @@ class FigureModel {
       'endDate': endDate?.toIso8601String(),
       'recordValue': recordValue,
       'recordUnit': recordUnit?.name,
+      'order': order,
     };
   }
 
@@ -130,6 +134,7 @@ class FigureModel {
     DateTime? endDate,
     int? recordValue,
     RecordUnit? recordUnit,
+    int? order,
     bool clearStartDate = false,
     bool clearEndDate = false,
     bool clearRecord = false,
@@ -143,6 +148,7 @@ class FigureModel {
       endDate: clearEndDate ? null : endDate ?? this.endDate,
       recordValue: clearRecord ? null : recordValue ?? this.recordValue,
       recordUnit: clearRecord ? null : recordUnit ?? this.recordUnit,
+      order: order ?? this.order,
     );
   }
 
