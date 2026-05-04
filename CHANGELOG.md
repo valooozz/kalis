@@ -1,5 +1,13 @@
 # Version 1
 
+### v1.7.0
+
+- Bouton pour passer une figure à Maîtrisée dans la séance du jour
+- Suppression du record quand on quitte l'état Maîtrisée
+- Bandeau de séance du jour terminée
+- Gestion du singulier/pluriel sur les unités de record
+- Changement de style du choix de l'unité de record
+
 ### v1.6.0
 
 - Système de record pour les figures maîtrisées
