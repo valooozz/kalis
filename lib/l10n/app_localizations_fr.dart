@@ -253,4 +253,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String markAsLearnedConfirm(String name) {
     return 'Êtes-vous sûr de vouloir passer \"$name\" au statut Maîtrisée ?';
   }
+
+  @override
+  String get allFiguresDone => 'Toutes les figures ont été révisées !';
 }

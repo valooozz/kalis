@@ -28,6 +28,9 @@ class TodayScreen extends ConsumerWidget {
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (e, _) => Center(child: Text('Erreur : $e')),
             data: (doneIds) {
+              final allDone =
+                  figures.isNotEmpty &&
+                  figures.every((f) => doneIds.contains(f.id));
               return CustomScrollView(
                 slivers: [
                   SliverAppBar(
@@ -67,38 +70,65 @@ class TodayScreen extends ConsumerWidget {
                         ),
                       ),
                     )
-                  else
-                    SliverPadding(
-                      padding: const EdgeInsets.all(16),
-                      sliver: SliverGrid(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 8,
-                              mainAxisSpacing: 8,
+                  else if (allDone)
+                    SliverToBoxAdapter(
+                      child: Container(
+                        margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.green.shade50,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.green.shade200),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.done_outline,
+                              color: Colors.green.shade700,
+                              size: 20,
                             ),
-                        delegate: SliverChildBuilderDelegate((context, index) {
-                          final figure = figures[index];
-                          final isDone = doneIds.contains(figure.id);
-                          return FigureSquareCard(
-                            figure: figure,
-                            isDone: isDone,
-                            onTap: () => _openTrainingDialog(
-                              context,
-                              ref,
-                              figure,
-                              isDone,
+                            const SizedBox(width: 8),
+                            Text(
+                              lbl.allFiguresDone,
+                              style: TextStyle(
+                                color: Colors.green.shade700,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            onLongPress: () => _toggleDone(ref, figure, isDone),
-                            onDoubleTap: () => showDialog(
-                              context: context,
-                              builder: (_) =>
-                                  LastJournalEntryDialog(figure: figure),
-                            ),
-                          );
-                        }, childCount: figures.length),
+                          ],
+                        ),
                       ),
                     ),
+                  SliverPadding(
+                    padding: const EdgeInsets.all(16),
+                    sliver: SliverGrid(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
+                          ),
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final figure = figures[index];
+                        final isDone = doneIds.contains(figure.id);
+                        return FigureSquareCard(
+                          figure: figure,
+                          isDone: isDone,
+                          onTap: () =>
+                              _openTrainingDialog(context, ref, figure, isDone),
+                          onLongPress: () => _toggleDone(ref, figure, isDone),
+                          onDoubleTap: () => showDialog(
+                            context: context,
+                            builder: (_) =>
+                                LastJournalEntryDialog(figure: figure),
+                          ),
+                        );
+                      }, childCount: figures.length),
+                    ),
+                  ),
                 ],
               );
             },

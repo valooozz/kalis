@@ -118,5 +118,6 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "allFiguresDone": "Toutes les figures ont été travaillées !"
 }

@@ -555,6 +555,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Êtes-vous sûr de vouloir passer \"{name}\" au statut Maîtrisée ?'**
   String markAsLearnedConfirm(String name);
+
+  /// No description provided for @allFiguresDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes les figures ont été révisées !'**
+  String get allFiguresDone;
 }
 
 class _AppLocalizationsDelegate
