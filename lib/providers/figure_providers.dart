@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/core/utils/date_utils.dart';
 import 'package:kalis/providers/today_providers.dart';
@@ -159,4 +161,65 @@ final trainingPlannedDatesProvider =
       return repository.watchByFigure(figureId).map((trainings) {
         return trainings.map((t) => t.date.dateOnly).toSet();
       });
+    });
+
+// Provider qui récupère toutes les dates d'entraînement effectué
+// pour toutes les figures, avec leur couleur associée
+final allTrainingDoneDatesProvider = StreamProvider<Map<DateTime, List<Color>>>(
+  (ref) {
+    final figuresAsync = ref.watch(figuresProvider);
+    final repository = ref.watch(trainingDoneRepositoryProvider);
+    if (repository == null) return const Stream.empty();
+
+    return figuresAsync.when(
+      data: (figures) {
+        if (figures.isEmpty) return Stream.value({});
+        return Stream.periodic(const Duration(milliseconds: 100)).asyncMap((
+          _,
+        ) async {
+          final result = <DateTime, List<Color>>{};
+          for (final figure in figures) {
+            final trainings = await repository.watchByFigure(figure.id).first;
+            for (final t in trainings) {
+              result.putIfAbsent(t.date.dateOnly, () => []);
+              result[t.date.dateOnly]!.add(figure.color.color);
+            }
+          }
+          return result;
+        });
+      },
+      loading: () => const Stream.empty(),
+      error: (_, __) => const Stream.empty(),
+    );
+  },
+);
+
+// Provider qui récupère toutes les dates d'entraînement planifié
+// pour toutes les figures, avec leur couleur associée
+final allTrainingPlannedDatesProvider =
+    StreamProvider<Map<DateTime, List<Color>>>((ref) {
+      final figuresAsync = ref.watch(figuresProvider);
+      final repository = ref.watch(trainingPlannedRepositoryProvider);
+      if (repository == null) return const Stream.empty();
+
+      return figuresAsync.when(
+        data: (figures) {
+          if (figures.isEmpty) return Stream.value({});
+          return Stream.periodic(const Duration(milliseconds: 100)).asyncMap((
+            _,
+          ) async {
+            final result = <DateTime, List<Color>>{};
+            for (final figure in figures) {
+              final trainings = await repository.watchByFigure(figure.id).first;
+              for (final t in trainings) {
+                result.putIfAbsent(t.date.dateOnly, () => []);
+                result[t.date.dateOnly]!.add(figure.color.color);
+              }
+            }
+            return result;
+          });
+        },
+        loading: () => const Stream.empty(),
+        error: (_, __) => const Stream.empty(),
+      );
     });

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/screens/figures/figure_calendar_dialog.dart';
+import 'package:kalis/widgets/global_calendar_dialog.dart';
 import '../../models/figure_model.dart';
 import '../../providers/figure_providers.dart';
 import '../../widgets/figure_card.dart';
@@ -43,6 +44,14 @@ class FiguresScreen extends ConsumerWidget {
                 pinned: true,
                 expandedHeight: 120,
                 actions: [
+                  IconButton(
+                    icon: const Icon(Icons.calendar_month),
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (_) => GlobalCalendarDialog(),
+                    ),
+                    tooltip: lbl.globalCalendarTitle,
+                  ),
                   IconButton(
                     icon: const Icon(Icons.emoji_events),
                     onPressed: () => context.push('/records'),
