@@ -591,6 +591,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Records'**
   String get recordsTitle;
+
+  /// No description provided for @calendarMonthCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{Aucun entraînement ce mois-ci} =1{1 entraînement ce mois-ci} other{{count} entraînements ce mois-ci}}'**
+  String calendarMonthCount(int count);
 }
 
 class _AppLocalizationsDelegate

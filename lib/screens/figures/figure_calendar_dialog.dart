@@ -44,87 +44,111 @@ class _FigureCalendarDialogState extends ConsumerState<FigureCalendarDialog> {
     final plannedDates = plannedDatesAsync.valueOrNull ?? {};
     final figureColor = widget.figure.color.color;
 
+    // Calcul des entraînements du mois affiché
+    final firstOfMonth = DateTime(_focusedDay.year, _focusedDay.month, 1);
+    final lastOfMonth = DateTime(_focusedDay.year, _focusedDay.month + 1, 0);
+    final trainingDaysInMonth = {
+      ...doneDates,
+      ...plannedDates,
+    }.where((d) => !d.isBefore(firstOfMonth) && !d.isAfter(lastOfMonth)).length;
+
     return AlertDialog(
       title: Text(widget.figure.name),
       contentPadding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
       content: SizedBox(
         width: double.maxFinite,
-        height: 400,
-        child: TableCalendar(
-          firstDay: _firstDay,
-          lastDay: _lastDay,
-          focusedDay: _focusedDay,
-          locale: lbl.localeName,
-          startingDayOfWeek: StartingDayOfWeek.monday,
-          headerStyle: HeaderStyle(
-            formatButtonVisible: false,
-            titleCentered: true,
-            titleTextStyle: theme.textTheme.titleSmall!.copyWith(
-              fontWeight: FontWeight.bold,
+        height: 440,
+        child: Column(
+          children: [
+            Expanded(
+              child: TableCalendar(
+                firstDay: _firstDay,
+                lastDay: _lastDay,
+                focusedDay: _focusedDay,
+                locale: lbl.localeName,
+                startingDayOfWeek: StartingDayOfWeek.monday,
+                headerStyle: HeaderStyle(
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                  titleTextStyle: theme.textTheme.titleSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                daysOfWeekStyle: DaysOfWeekStyle(
+                  weekdayStyle: theme.textTheme.bodySmall!,
+                  weekendStyle: theme.textTheme.bodySmall!,
+                ),
+                calendarStyle: CalendarStyle(
+                  outsideDaysVisible: false,
+                  todayDecoration: BoxDecoration(
+                    border: Border.all(color: theme.colorScheme.primary),
+                    shape: BoxShape.circle,
+                  ),
+                  todayTextStyle: TextStyle(color: theme.colorScheme.primary),
+                  defaultTextStyle: theme.textTheme.bodySmall!,
+                  weekendTextStyle: theme.textTheme.bodySmall!,
+                ),
+                calendarBuilders: CalendarBuilders(
+                  defaultBuilder: (context, day, focusedDay) {
+                    final dateOnly = day.dateOnly;
+                    final isDone = doneDates.contains(dateOnly);
+                    final isPlanned = plannedDates.contains(dateOnly);
+
+                    if (!isDone && !isPlanned) return null;
+
+                    return _CalendarDay(
+                      day: day,
+                      color: isDone
+                          ? figureColor
+                          : figureColor.withValues(alpha: 0.35),
+                      textColor: isDone
+                          ? _contrastColor(figureColor)
+                          : theme.colorScheme.onSurface,
+                    );
+                  },
+                  todayBuilder: (context, day, focusedDay) {
+                    final dateOnly = day.dateOnly;
+                    final isDone = doneDates.contains(dateOnly);
+                    final isPlanned = plannedDates.contains(dateOnly);
+
+                    if (isDone || isPlanned) {
+                      return _CalendarDay(
+                        day: day,
+                        color: isDone
+                            ? figureColor
+                            : figureColor.withValues(alpha: 0.35),
+                        textColor: isDone
+                            ? _contrastColor(figureColor)
+                            : theme.colorScheme.onSurface,
+                        isToday: true,
+                      );
+                    }
+
+                    return _CalendarDay(
+                      day: day,
+                      color: Colors.transparent,
+                      textColor: theme.colorScheme.primary,
+                      isToday: true,
+                      borderColor: theme.colorScheme.primary,
+                    );
+                  },
+                ),
+                onPageChanged: (focusedDay) {
+                  setState(() => _focusedDay = focusedDay);
+                },
+              ),
             ),
-          ),
-          daysOfWeekStyle: DaysOfWeekStyle(
-            weekdayStyle: theme.textTheme.bodySmall!,
-            weekendStyle: theme.textTheme.bodySmall!,
-          ),
-          calendarStyle: CalendarStyle(
-            outsideDaysVisible: false,
-            todayDecoration: BoxDecoration(
-              border: Border.all(color: theme.colorScheme.primary),
-              shape: BoxShape.circle,
+            const Divider(height: 1),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Text(
+                lbl.calendarMonthCount(trainingDaysInMonth),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.outline,
+                ),
+              ),
             ),
-            todayTextStyle: TextStyle(color: theme.colorScheme.primary),
-            defaultTextStyle: theme.textTheme.bodySmall!,
-            weekendTextStyle: theme.textTheme.bodySmall!,
-          ),
-          calendarBuilders: CalendarBuilders(
-            defaultBuilder: (context, day, focusedDay) {
-              final dateOnly = day.dateOnly;
-              final isDone = doneDates.contains(dateOnly);
-              final isPlanned = plannedDates.contains(dateOnly);
-
-              if (!isDone && !isPlanned) return null;
-
-              return _CalendarDay(
-                day: day,
-                color: isDone
-                    ? figureColor
-                    : figureColor.withValues(alpha: 0.35),
-                textColor: isDone
-                    ? _contrastColor(figureColor)
-                    : theme.colorScheme.onSurface,
-              );
-            },
-            todayBuilder: (context, day, focusedDay) {
-              final dateOnly = day.dateOnly;
-              final isDone = doneDates.contains(dateOnly);
-              final isPlanned = plannedDates.contains(dateOnly);
-
-              if (isDone || isPlanned) {
-                return _CalendarDay(
-                  day: day,
-                  color: isDone
-                      ? figureColor
-                      : figureColor.withValues(alpha: 0.35),
-                  textColor: isDone
-                      ? _contrastColor(figureColor)
-                      : theme.colorScheme.onSurface,
-                  isToday: true,
-                );
-              }
-
-              return _CalendarDay(
-                day: day,
-                color: Colors.transparent,
-                textColor: theme.colorScheme.primary,
-                isToday: true,
-                borderColor: theme.colorScheme.primary,
-              );
-            },
-          ),
-          onPageChanged: (focusedDay) {
-            setState(() => _focusedDay = focusedDay);
-          },
+          ],
         ),
       ),
       actions: [

@@ -271,4 +271,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get recordsTitle => 'Records';
+
+  @override
+  String calendarMonthCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count entraînements ce mois-ci',
+      one: '1 entraînement ce mois-ci',
+      zero: 'Aucun entraînement ce mois-ci',
+    );
+    return '$_temp0';
+  }
 }

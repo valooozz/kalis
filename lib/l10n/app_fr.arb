@@ -124,5 +124,13 @@
     "followingTraining": "Suivant",
     "calendarLegendDone": "Effectué",
     "calendarLegendPlanned": "Planifié",
-    "recordsTitle": "Records"
+    "recordsTitle": "Records",
+    "calendarMonthCount": "{count, plural, =0{Aucun entraînement ce mois-ci} =1{1 entraînement ce mois-ci} other{{count} entraînements ce mois-ci}}",
+    "@calendarMonthCount": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    }
 }
