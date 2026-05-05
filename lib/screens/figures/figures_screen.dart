@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/models/figure_model.dart';
+import 'package:kalis/providers/figure_providers.dart';
 import 'package:kalis/screens/figures/figure_calendar_dialog.dart';
-import 'package:kalis/widgets/global_calendar_dialog.dart';
-import '../../models/figure_model.dart';
-import '../../providers/figure_providers.dart';
-import '../../widgets/figure_card.dart';
+import 'package:kalis/screens/figures/global_calendar_dialog.dart';
+import 'package:kalis/widgets/figure_card.dart';
 import 'figure_detail_dialog.dart';
 import 'figure_form_dialog.dart';
 import 'package:go_router/go_router.dart';
