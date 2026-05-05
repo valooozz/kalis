@@ -2,7 +2,8 @@
 
 ### v1.9.0
 
-- Un clic sur une figure dans Planification montre les dates des entraînements précédent et suivant
+- Un tap sur une figure dans Planification montre les dates des entraînements précédent et suivant
+- Un double tap sur une figure dans Figures ou Planification montre le calendrier complet de ses entraînements passés et futurs
 
 ### v1.8.1
 
