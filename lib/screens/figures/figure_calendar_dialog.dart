@@ -65,9 +65,7 @@ class _FigureCalendarDialogState extends ConsumerState<FigureCalendarDialog> {
           ),
           daysOfWeekStyle: DaysOfWeekStyle(
             weekdayStyle: theme.textTheme.bodySmall!,
-            weekendStyle: theme.textTheme.bodySmall!.copyWith(
-              color: theme.colorScheme.outline,
-            ),
+            weekendStyle: theme.textTheme.bodySmall!,
           ),
           calendarStyle: CalendarStyle(
             outsideDaysVisible: false,
