@@ -1,5 +1,10 @@
 # Version 1
 
+### v1.10.1
+
+- Fix : Retrait des figures sans record dans RecordsScreen
+- Retrait des doubleTap pour plus de fluidité, accès à ce qu'ils ouvraient par d'autres moyens
+
 ### v1.10.0
 
 - Page de records
