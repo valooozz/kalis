@@ -121,5 +121,7 @@
     },
     "allFiguresDone": "Toutes les figures ont été travaillées !",
     "previousTraining": "Précédent",
-    "followingTraining": "Suivant"
+    "followingTraining": "Suivant",
+    "calendarLegendDone": "Effectué",
+    "calendarLegendPlanned": "Planifié"
 }

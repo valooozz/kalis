@@ -136,3 +136,27 @@ class FigureOrderNotifier {
     await _repository?.updateOrder(figures);
   }
 }
+
+// Toutes les dates d'entraînement effectué pour une figure
+final trainingDoneDatesProvider = StreamProvider.family<Set<DateTime>, String>((
+  ref,
+  figureId,
+) {
+  final repository = ref.watch(trainingDoneRepositoryProvider);
+  if (repository == null) return const Stream.empty();
+
+  return repository.watchByFigure(figureId).map((trainings) {
+    return trainings.map((t) => t.date.dateOnly).toSet();
+  });
+});
+
+// Toutes les dates d'entraînement planifié pour une figure
+final trainingPlannedDatesProvider =
+    StreamProvider.family<Set<DateTime>, String>((ref, figureId) {
+      final repository = ref.watch(trainingPlannedRepositoryProvider);
+      if (repository == null) return const Stream.empty();
+
+      return repository.watchByFigure(figureId).map((trainings) {
+        return trainings.map((t) => t.date.dateOnly).toSet();
+      });
+    });

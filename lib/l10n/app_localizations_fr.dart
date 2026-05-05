@@ -262,4 +262,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get followingTraining => 'Suivant';
+
+  @override
+  String get calendarLegendDone => 'Effectué';
+
+  @override
+  String get calendarLegendPlanned => 'Planifié';
 }

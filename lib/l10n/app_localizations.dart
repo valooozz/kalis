@@ -573,6 +573,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Suivant'**
   String get followingTraining;
+
+  /// No description provided for @calendarLegendDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Effectué'**
+  String get calendarLegendDone;
+
+  /// No description provided for @calendarLegendPlanned.
+  ///
+  /// In fr, this message translates to:
+  /// **'Planifié'**
+  String get calendarLegendPlanned;
 }
 
 class _AppLocalizationsDelegate

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/screens/figures/figure_calendar_dialog.dart';
 import '../../models/figure_model.dart';
 import '../../providers/figure_providers.dart';
 import '../../widgets/figure_card.dart';
@@ -183,6 +184,10 @@ class _FigureSliverState extends ConsumerState<_FigureSliver> {
               onTap: () => showDialog(
                 context: context,
                 builder: (_) => FigureDetailDialog(figure: figure),
+              ),
+              onDoubleTap: () => showDialog(
+                context: context,
+                builder: (_) => FigureCalendarDialog(figure: figure),
               ),
             ),
           ),
