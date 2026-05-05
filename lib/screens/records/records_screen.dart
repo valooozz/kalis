@@ -60,6 +60,10 @@ class _RecordCard extends StatelessWidget {
     final figureRecordValue = figure.recordValue;
     final figureRecordUnit = figure.recordUnit?.getUnit(figureRecordValue);
 
+    if (figureRecordValue == null || figureRecordUnit == null) {
+      return const SizedBox.shrink();
+    }
+
     return Card(
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
