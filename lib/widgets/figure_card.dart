@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/providers/planning_providers.dart';
 import 'package:kalis/providers/today_providers.dart';
+import 'package:kalis/widgets/date_row.dart';
 import '../models/figure_model.dart';
 import '../providers/figure_providers.dart';
 import '../core/utils/date_utils.dart';
@@ -100,7 +101,7 @@ class FigureCard extends ConsumerWidget {
                     ),
                     if (figure.state != FigureState.toLearn) ...[
                       const SizedBox(height: 4),
-                      _DateRow(
+                      DateRow(
                         icon: Icons.history,
                         date: lastDate,
                         label: lbl.lastTraining,
@@ -108,7 +109,7 @@ class FigureCard extends ConsumerWidget {
                         isAlert: lastDateAlert,
                       ),
                       const SizedBox(height: 2),
-                      _DateRow(
+                      DateRow(
                         icon: Icons.event,
                         date: displayedNextDate,
                         label: lbl.nextTraining,
@@ -123,43 +124,6 @@ class FigureCard extends ConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _DateRow extends StatelessWidget {
-  final IconData icon;
-  final DateTime? date;
-  final String label;
-  final DateTime? referenceDate;
-  final bool isAlert;
-
-  const _DateRow({
-    required this.icon,
-    required this.date,
-    required this.label,
-    this.referenceDate,
-    this.isAlert = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final lbl = AppLocalizations.of(context)!;
-    final dateText = date != null
-        ? date!.toRelativeLabel(lbl, reference: referenceDate)
-        : '—';
-    final color = isAlert ? theme.colorScheme.error : theme.colorScheme.outline;
-
-    return Row(
-      children: [
-        Icon(icon, size: 14, color: theme.colorScheme.outline),
-        const SizedBox(width: 4),
-        Text(
-          '$label : $dateText',
-          style: theme.textTheme.bodySmall?.copyWith(color: color),
-        ),
-      ],
     );
   }
 }

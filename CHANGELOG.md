@@ -1,5 +1,9 @@
 # Version 1
 
+### v1.9.0
+
+- Un clic sur une figure dans Planification montre les dates des entraînements précédent et suivant
+
 ### v1.8.1
 
 - Fix du flicker lors du reorder

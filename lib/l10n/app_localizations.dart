@@ -561,6 +561,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Toutes les figures ont été travaillées !'**
   String get allFiguresDone;
+
+  /// No description provided for @previousTraining.
+  ///
+  /// In fr, this message translates to:
+  /// **'Précédent'**
+  String get previousTraining;
+
+  /// No description provided for @followingTraining.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivant'**
+  String get followingTraining;
 }
 
 class _AppLocalizationsDelegate

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/screens/planning/training_dates_dialog.dart';
 import '../../models/figure_model.dart';
 import '../../providers/planning_providers.dart';
 import '../../providers/today_providers.dart';
@@ -150,7 +151,7 @@ class _DayContent extends ConsumerWidget {
                     height: _cardSize(context),
                     child: FigureSquareCard(
                       figure: figure,
-                      onTap: () {},
+                      onTap: () => _openDatesDialog(context, ref, figure, date),
                       onLongPress: () => _removeFigure(ref, figure, date),
                     ),
                   ),
@@ -190,6 +191,18 @@ class _DayContent extends ConsumerWidget {
     if (exists) {
       await doneRepository.remove(figure.id, date);
     }
+  }
+
+  Future<void> _openDatesDialog(
+    BuildContext context,
+    WidgetRef ref,
+    FigureModel figure,
+    DateTime date,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (_) => TrainingDatesDialog(figure: figure, date: date),
+    );
   }
 }
 

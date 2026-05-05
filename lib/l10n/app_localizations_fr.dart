@@ -256,4 +256,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get allFiguresDone => 'Toutes les figures ont été travaillées !';
+
+  @override
+  String get previousTraining => 'Précédent';
+
+  @override
+  String get followingTraining => 'Suivant';
 }

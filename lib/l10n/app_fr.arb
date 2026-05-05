@@ -119,5 +119,7 @@
             }
         }
     },
-    "allFiguresDone": "Toutes les figures ont été travaillées !"
+    "allFiguresDone": "Toutes les figures ont été travaillées !",
+    "previousTraining": "Précédent",
+    "followingTraining": "Suivant"
 }
