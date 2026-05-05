@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
-import 'package:kalis/screens/figures/figure_calendar_dialog.dart';
 import 'package:kalis/screens/planning/training_dates_dialog.dart';
 import '../../models/figure_model.dart';
 import '../../providers/planning_providers.dart';
@@ -153,8 +152,6 @@ class _DayContent extends ConsumerWidget {
                     child: FigureSquareCard(
                       figure: figure,
                       onTap: () => _openDatesDialog(context, ref, figure, date),
-                      onDoubleTap: () =>
-                          _openCalendarDialog(context, ref, figure),
                       onLongPress: () => _removeFigure(ref, figure, date),
                     ),
                   ),
@@ -205,17 +202,6 @@ class _DayContent extends ConsumerWidget {
     await showDialog(
       context: context,
       builder: (_) => TrainingDatesDialog(figure: figure, date: date),
-    );
-  }
-
-  Future<void> _openCalendarDialog(
-    BuildContext context,
-    WidgetRef ref,
-    FigureModel figure,
-  ) async {
-    await showDialog(
-      context: context,
-      builder: (_) => FigureCalendarDialog(figure: figure),
     );
   }
 }

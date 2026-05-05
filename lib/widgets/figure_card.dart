@@ -11,14 +11,12 @@ import '../core/utils/date_utils.dart';
 class FigureCard extends ConsumerWidget {
   final FigureModel figure;
   final VoidCallback onTap;
-  final VoidCallback? onDoubleTap;
   final DateTime? referenceDate;
 
   const FigureCard({
     super.key,
     required this.figure,
     required this.onTap,
-    this.onDoubleTap,
     this.referenceDate,
   });
 
@@ -78,54 +76,51 @@ class FigureCard extends ConsumerWidget {
 
     return Card(
       clipBehavior: Clip.antiAlias,
-      child: GestureDetector(
-        onDoubleTap: onDoubleTap,
-        child: InkWell(
-          onTap: onTap,
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(left: BorderSide(color: figureColor, width: 10)),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(12),
-                bottomLeft: Radius.circular(12),
-              ),
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(left: BorderSide(color: figureColor, width: 10)),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(12),
+              bottomLeft: Radius.circular(12),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        figure.name,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      figure.name,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
-                      if (figure.state != FigureState.toLearn) ...[
-                        const SizedBox(height: 4),
-                        DateRow(
-                          icon: Icons.history,
-                          date: lastDate,
-                          label: lbl.lastTraining,
-                          referenceDate: referenceDate,
-                          isAlert: lastDateAlert,
-                        ),
-                        const SizedBox(height: 2),
-                        DateRow(
-                          icon: Icons.event,
-                          date: displayedNextDate,
-                          label: lbl.nextTraining,
-                          referenceDate: referenceDate,
-                        ),
-                      ],
+                    ),
+                    if (figure.state != FigureState.toLearn) ...[
+                      const SizedBox(height: 4),
+                      DateRow(
+                        icon: Icons.history,
+                        date: lastDate,
+                        label: lbl.lastTraining,
+                        referenceDate: referenceDate,
+                        isAlert: lastDateAlert,
+                      ),
+                      const SizedBox(height: 2),
+                      DateRow(
+                        icon: Icons.event,
+                        date: displayedNextDate,
+                        label: lbl.nextTraining,
+                        referenceDate: referenceDate,
+                      ),
                     ],
-                  ),
+                  ],
                 ),
-                _StateIcon(state: figure.state, color: figure.color.color),
-              ],
-            ),
+              ),
+              _StateIcon(state: figure.state, color: figure.color.color),
+            ],
           ),
         ),
       ),

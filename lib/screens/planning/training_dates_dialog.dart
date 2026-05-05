@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/providers/figure_providers.dart';
 import 'package:kalis/providers/planning_providers.dart';
+import 'package:kalis/screens/figures/figure_calendar_dialog.dart';
 import 'package:kalis/widgets/date_row.dart';
 import '../../models/figure_model.dart';
 
@@ -29,7 +30,24 @@ class TrainingDatesDialog extends ConsumerWidget {
     );
 
     return AlertDialog(
-      title: Text(figure.name),
+      title: Row(
+        children: [
+          Container(
+            width: 16,
+            height: 16,
+            decoration: BoxDecoration(
+              color: figure.color.color,
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(child: Text(figure.name)),
+          IconButton(
+            onPressed: () => _openCalendarDialog(context, ref, figure),
+            icon: Icon(Icons.calendar_month),
+          ),
+        ],
+      ),
       content: lastDateAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Text('Erreur : $e'),
@@ -69,6 +87,17 @@ class TrainingDatesDialog extends ConsumerWidget {
           child: Text(lbl.buttonClose),
         ),
       ],
+    );
+  }
+
+  Future<void> _openCalendarDialog(
+    BuildContext context,
+    WidgetRef ref,
+    FigureModel figure,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (_) => FigureCalendarDialog(figure: figure),
     );
   }
 }

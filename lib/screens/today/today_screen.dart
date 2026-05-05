@@ -5,7 +5,6 @@ import 'package:kalis/screens/today/last_journal_entry_dialog.dart';
 import '../../models/figure_model.dart';
 import '../../providers/today_providers.dart';
 import '../../providers/core_providers.dart';
-import '../../models/training_done_model.dart';
 import '../../widgets/figure_square_card.dart';
 import 'today_training_dialog.dart';
 
@@ -119,12 +118,8 @@ class TodayScreen extends ConsumerWidget {
                           isDone: isDone,
                           onTap: () =>
                               _openTrainingDialog(context, ref, figure, isDone),
-                          onLongPress: () => _toggleDone(ref, figure, isDone),
-                          onDoubleTap: () => showDialog(
-                            context: context,
-                            builder: (_) =>
-                                LastJournalEntryDialog(figure: figure),
-                          ),
+                          onLongPress: () =>
+                              _handleLongPress(context, ref, figure, isDone),
                         );
                       }, childCount: figures.length),
                     ),
@@ -150,20 +145,24 @@ class TodayScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _toggleDone(
+  Future<void> _handleLongPress(
+    BuildContext context,
     WidgetRef ref,
     FigureModel figure,
     bool isDone,
   ) async {
-    final repository = ref.read(trainingDoneRepositoryProvider);
-    if (repository == null) return;
-
-    final today = ref.read(todayProvider);
-
     if (isDone) {
+      final repository = ref.read(trainingDoneRepositoryProvider);
+      if (repository == null) return;
+
+      final today = ref.read(todayProvider);
+
       await repository.remove(figure.id, today);
     } else {
-      await repository.add(TrainingDoneModel(figureId: figure.id, date: today));
+      showDialog(
+        context: context,
+        builder: (_) => LastJournalEntryDialog(figure: figure),
+      );
     }
   }
 }

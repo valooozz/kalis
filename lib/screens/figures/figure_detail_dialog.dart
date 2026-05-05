@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/models/training_planned_model.dart';
 import 'package:kalis/providers/today_providers.dart';
+import 'package:kalis/screens/figures/figure_calendar_dialog.dart';
 import 'package:kalis/widgets/record_display.dart';
 import '../../models/figure_model.dart';
 import '../../providers/journal_providers.dart';
@@ -37,7 +38,10 @@ class FigureDetailDialog extends ConsumerWidget {
           ),
           const SizedBox(width: 8),
           Expanded(child: Text(figure.name)),
-          // Bouton changement de statut
+          IconButton(
+            onPressed: () => _openCalendarDialog(context, ref, figure),
+            icon: Icon(Icons.calendar_month),
+          ),
           IconButton(
             icon: _stateIcon(figure.state, theme),
             onPressed: () => _openStatusPicker(context, ref),
@@ -161,6 +165,17 @@ class FigureDetailDialog extends ConsumerWidget {
 
   Widget _stateIcon(FigureState state, ThemeData theme) {
     return Icon(figure.state.icon, color: figure.color.color);
+  }
+
+  Future<void> _openCalendarDialog(
+    BuildContext context,
+    WidgetRef ref,
+    FigureModel figure,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (_) => FigureCalendarDialog(figure: figure),
+    );
   }
 
   void _openStatusPicker(BuildContext context, WidgetRef ref) {
