@@ -1,5 +1,12 @@
 # Version 1
 
+### v1.10.0
+
+- Page de records
+- Affichage du nombre d'entraînement pour chaque mois du calendrier d'une figure
+- Calendrier global montrant les séances de chaque jour
+- Retrait grisage sur les labels des jours du weekend dans FigureCalendarDialog
+
 ### v1.9.0
 
 - Un tap sur une figure dans Planification montre les dates des entraînements précédent et suivant
