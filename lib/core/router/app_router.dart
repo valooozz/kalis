@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kalis/screens/records/records_screen.dart';
 import 'package:kalis/screens/settings/settings_screen.dart';
 import '../../providers/core_providers.dart';
 import '../../screens/today/today_screen.dart';
@@ -44,6 +45,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/settings',
             builder: (context, state) => const SettingsScreen(),
+          ),
+          GoRoute(
+            path: '/records',
+            builder: (context, state) => const RecordsScreen(),
           ),
         ],
       ),

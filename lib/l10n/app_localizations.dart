@@ -585,6 +585,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Planifié'**
   String get calendarLegendPlanned;
+
+  /// No description provided for @recordsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Records'**
+  String get recordsTitle;
 }
 
 class _AppLocalizationsDelegate

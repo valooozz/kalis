@@ -44,6 +44,11 @@ class FiguresScreen extends ConsumerWidget {
                 expandedHeight: 120,
                 actions: [
                   IconButton(
+                    icon: const Icon(Icons.emoji_events),
+                    onPressed: () => context.push('/records'),
+                    tooltip: lbl.recordsTitle,
+                  ),
+                  IconButton(
                     icon: const Icon(Icons.settings),
                     onPressed: () => context.push('/settings'),
                     tooltip: lbl.settingsTitle,

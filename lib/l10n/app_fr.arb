@@ -123,5 +123,6 @@
     "previousTraining": "Précédent",
     "followingTraining": "Suivant",
     "calendarLegendDone": "Effectué",
-    "calendarLegendPlanned": "Planifié"
+    "calendarLegendPlanned": "Planifié",
+    "recordsTitle": "Records"
 }
