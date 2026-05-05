@@ -173,6 +173,7 @@ class FigureDetailDialog extends ConsumerWidget {
     WidgetRef ref,
     FigureModel figure,
   ) async {
+    Navigator.of(context).pop();
     await showDialog(
       context: context,
       builder: (_) => FigureCalendarDialog(figure: figure),
