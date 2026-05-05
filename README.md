@@ -1,8 +1,8 @@
-# Kalis
+# 🏅 Kalis
 
 Kalis est une application mobile de suivi et d'organisation de séances de callisthénie. Elle permet de gérer les figures à maîtriser, de planifier ses entraînements et de suivre sa progression grâce à un journal.
 
-## Fonctionnalités
+## ✨ Fonctionnalités
 
 - **Figures** — Organisez vos figures en trois catégories : à apprendre, en apprentissage, et maîtrisées. Assignez une couleur à chaque figure et suivez les dates de début et de maîtrise.
 - **Séance du jour** — Visualisez les figures prévues pour aujourd'hui, validez-les et ajoutez des notes de séance.
@@ -10,7 +10,7 @@ Kalis est une application mobile de suivi et d'organisation de séances de calli
 - **Journal** — Gardez une trace de vos progrès grâce à des entrées de journal associées à chaque figure.
 - **Synchronisation cloud** — Vos données sont synchronisées en temps réel via Firebase Firestore et accessibles sur tous vos appareils.
 
-## Stack technique
+## 🏗️ Stack technique
 
 - [Flutter](https://flutter.dev/) — Framework mobile multiplateforme
 - [Riverpod](https://riverpod.dev/) — Gestion d'état
@@ -19,7 +19,7 @@ Kalis est une application mobile de suivi et d'organisation de séances de calli
 - [go_router](https://pub.dev/packages/go_router) — Navigation
 - [shared_preferences](https://pub.dev/packages/shared_preferences) — Persistance locale
 
-## Architecture
+## 🗃️ Architecture
 
 Le projet suit un **Repository pattern** avec une séparation claire des responsabilités :
 
@@ -34,11 +34,11 @@ lib/
 └── widgets/       # Widgets réutilisables
 ```
 
-## Localisation
+## 🌐 Localisation
 
 L'application est disponible pour l'instant uniquement en français. Les traductions sont gérées via le système officiel Flutter avec des fichiers `.arb`.
 
-## Installation
+## 🚀 Installation
 
 ### Prérequis
 
@@ -68,7 +68,7 @@ flutter run
 flutter build apk --release --split-per-abi
 ```
 
-## Règles de sécurité Firestore
+## 🔒️ Règles de sécurité Firestore
 
 Les données de chaque utilisateur sont isolées grâce aux règles suivantes :
 
