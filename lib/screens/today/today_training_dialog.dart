@@ -92,7 +92,7 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
         ),
         FilledButton.icon(
           onPressed: () => _validate(entryAsync.valueOrNull),
-          icon: const Icon(Icons.check),
+          icon: const Icon(Icons.done_outline),
           label: Text(lbl.buttonValidate),
         ),
       ],
