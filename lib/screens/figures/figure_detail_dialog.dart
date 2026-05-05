@@ -38,10 +38,11 @@ class FigureDetailDialog extends ConsumerWidget {
           ),
           const SizedBox(width: 8),
           Expanded(child: Text(figure.name)),
-          IconButton(
-            onPressed: () => _openCalendarDialog(context, ref, figure),
-            icon: Icon(Icons.calendar_month),
-          ),
+          if (figure.state != FigureState.toLearn)
+            IconButton(
+              onPressed: () => _openCalendarDialog(context, ref, figure),
+              icon: Icon(Icons.calendar_month),
+            ),
           IconButton(
             icon: _stateIcon(figure.state, theme),
             onPressed: () => _openStatusPicker(context, ref),
