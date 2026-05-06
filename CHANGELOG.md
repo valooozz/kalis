@@ -1,5 +1,13 @@
 # Version 1
 
+### v1.10.2
+
+- Retrait de l'icône de calendrier pour les figures à apprendre
+- Modification de l'icône de validation de l'entraînement du jour
+- Fermeture de FigureDetailDialog lors de l'ouverture du calendrier d'une figure
+- Forçage du mode portrait, rotation désactivée
+- Retrait de l'effet Splash sur les FigureCard de AddFigureToDayDialog
+
 ### v1.10.1
 
 - Fix : Retrait des figures sans record dans RecordsScreen
