@@ -65,6 +65,7 @@ class AddFigureToDayDialog extends ConsumerWidget {
                         figure: figure,
                         onTap: () => _addFigure(context, ref, figure),
                         referenceDate: date,
+                        inkEffect: false,
                       );
                     },
                   );

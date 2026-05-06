@@ -12,12 +12,14 @@ class FigureCard extends ConsumerWidget {
   final FigureModel figure;
   final VoidCallback onTap;
   final DateTime? referenceDate;
+  final bool inkEffect;
 
   const FigureCard({
     super.key,
     required this.figure,
     required this.onTap,
     this.referenceDate,
+    this.inkEffect = true,
   });
 
   @override
@@ -78,6 +80,7 @@ class FigureCard extends ConsumerWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
+        splashColor: inkEffect ? null : Colors.transparent,
         child: Container(
           decoration: BoxDecoration(
             border: Border(left: BorderSide(color: figureColor, width: 10)),
