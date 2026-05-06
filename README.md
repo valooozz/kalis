@@ -10,6 +10,47 @@ Kalis est une application mobile de suivi et d'organisation de séances de calli
 - **Journal** — Gardez une trace de vos progrès grâce à des entrées de journal associées à chaque figure.
 - **Synchronisation cloud** — Vos données sont synchronisées en temps réel via Firebase Firestore et accessibles sur tous vos appareils.
 
+<table>
+  <tr>
+    <td><img src="./screenshots/FiguresLearnedLight.jpg" width="200"/></td>
+    <td><img src="./screenshots/FiguresLearningDark.jpg" width="200"/></td>
+    <td><img src="./screenshots/FiguresToLearnDark.jpg" width="200"/></td>
+    <td><img src="./screenshots/PlanningLight.jpg" width="200"/></td>
+    <td><img src="./screenshots/AddFigureLight.jpg" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center">Figures maîtrisées</td>
+    <td align="center">Figures en apprentissage</td>
+    <td align="center">Figures à apprendre</td>
+    <td align="center">Planification des séances</td>
+    <td align="center">Ajout de figures à une séance</td>
+  </tr>
+  <tr>
+    <td><img src="./screenshots/TodayLight.jpg" width="200"/></td>
+    <td><img src="./screenshots/LastEntryLight.jpg" width="200"/></td>
+    <td><img src="./screenshots/ValidateTrainingLight.jpg" width="200"/></td>
+    <td><img src="./screenshots/TodayDark.jpg" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center">Séance du jour</td>
+    <td align="center">Dernière entrée de journal</td>
+    <td align="center">Validation de l'entraînement</td>
+    <td align="center">Séance terminée</td>
+  </tr>
+  <tr>
+    <td><img src="./screenshots/FigureDetailLight.jpg" width="200"/></td>
+    <td><img src="./screenshots/FigureCalendarDark.jpg" width="200"/></td>
+    <td><img src="./screenshots/GlobalCalendarLight.jpg" width="200"/></td>
+    <td><img src="./screenshots/RecordsLight.jpg" width="200"/></td>
+  </tr>
+  <tr>
+    <td align="center">Détails sur la figure</td>
+    <td align="center">Calendrier d'une figure</td>
+    <td align="center">Calendrier des entraînements</td>
+    <td align="center">Records</td>
+  </tr>
+</table>
+
 ## 🏗️ Stack technique
 
 - [Flutter](https://flutter.dev/) — Framework mobile multiplateforme
