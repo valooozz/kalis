@@ -26,6 +26,7 @@ class FigureDetailDialog extends ConsumerWidget {
     final entriesAsync = ref.watch(journalEntriesForFigureProvider(figure.id));
 
     return AlertDialog(
+      insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
       title: Row(
         children: [
           Container(
@@ -101,7 +102,7 @@ class FigureDetailDialog extends ConsumerWidget {
                         children: [
                           Text(
                             lbl.journal,
-                            style: theme.textTheme.titleSmall?.copyWith(
+                            style: theme.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                           ),

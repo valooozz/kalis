@@ -21,7 +21,7 @@ class JournalEntryTile extends StatelessWidget {
     final lbl = AppLocalizations.of(context)!;
 
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       title: Text(entry.text),
       subtitle: Text(
         entry.date.toShortDate(),

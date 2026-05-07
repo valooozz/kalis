@@ -21,6 +21,7 @@ class AddFigureToDayDialog extends ConsumerWidget {
     final showLearned = ref.watch(showLearnedProvider);
 
     return AlertDialog(
+      insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
       title: Text(
         '${lbl.addFigure}\n${date.toShortLabel(Localizations.localeOf(context))}',
         style: theme.textTheme.titleMedium,
