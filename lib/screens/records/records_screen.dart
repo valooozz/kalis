@@ -39,10 +39,7 @@ class _FigureSliver extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
         final figure = figures[index];
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-          child: _RecordCard(figure: figure),
-        );
+        return _RecordCard(figure: figure);
       }, childCount: figures.length),
     );
   }
@@ -64,41 +61,44 @@ class _RecordCard extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: SizedBox(
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              left: BorderSide(color: figureColor, width: 10),
-              right: BorderSide(color: figureColor, width: 10),
-            ),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Row(
-            children: [
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      figure.name,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '$figureRecordValue $figureRecordUnit',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: SizedBox(
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(color: figureColor, width: 10),
+                right: BorderSide(color: figureColor, width: 10),
               ),
-            ],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        figure.name,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '$figureRecordValue $figureRecordUnit',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
