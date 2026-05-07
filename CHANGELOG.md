@@ -1,5 +1,11 @@
 # Version 1
 
+### v1.10.3
+
+- Fix : Retrait de l'espace vide dans RecordsScreen quand il y a une figure sans record
+- Quand on passe une figure à l'état suivant ou précédent, elle apparaît respectivement en bas ou en haut de la liste
+- Élargissement de certains Dialog, et légère modification du style du journal
+
 ### v1.10.2
 
 - Retrait de l'icône de calendrier pour les figures à apprendre
