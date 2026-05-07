@@ -86,4 +86,26 @@ class FigureRepository {
     }
     await batch.commit();
   }
+
+  Future<int> getMaxOrder(FigureState state) async {
+    final snapshot = await _collection
+        .where('state', isEqualTo: state.name)
+        .get();
+    if (snapshot.docs.isEmpty) return 0;
+    final orders = snapshot.docs
+        .map((d) => (d.data()['order'] as int?) ?? 0)
+        .toList();
+    return orders.reduce((a, b) => a > b ? a : b) + 1;
+  }
+
+  Future<int> getMinOrder(FigureState state) async {
+    final snapshot = await _collection
+        .where('state', isEqualTo: state.name)
+        .get();
+    if (snapshot.docs.isEmpty) return 0;
+    final orders = snapshot.docs
+        .map((d) => (d.data()['order'] as int?) ?? 0)
+        .toList();
+    return orders.reduce((a, b) => a < b ? a : b) - 1;
+  }
 }

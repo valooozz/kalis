@@ -224,9 +224,11 @@ class FigureDetailDialog extends ConsumerWidget {
     final plannedRepository = ref.read(trainingPlannedRepositoryProvider);
     if (figureRepository == null || plannedRepository == null) return;
 
+    final newOrder = await figureRepository.getMaxOrder(FigureState.learning);
     final updated = figure.copyWith(
       state: FigureState.learning,
       startDate: picked,
+      order: newOrder,
     );
     await figureRepository.update(updated);
 

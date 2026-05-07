@@ -115,8 +115,13 @@ class FigureStatusPickerDialog extends ConsumerWidget {
 
     final today = ref.read(todayProvider);
 
+    final isUpgrade = stateOrder[newState]! > stateOrder[figure.state]!;
+    final newOrder = isUpgrade
+        ? await figureRepository.getMaxOrder(newState)
+        : await figureRepository.getMinOrder(newState);
+
     // Mise à jour des dates selon le nouveau statut
-    FigureModel updated = figure.copyWith(state: newState);
+    FigureModel updated = figure.copyWith(state: newState, order: newOrder);
     if (newState == FigureState.toLearn) {
       updated = updated.copyWith(
         clearStartDate: true,

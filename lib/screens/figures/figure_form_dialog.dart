@@ -135,8 +135,8 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
     final name = _nameController.text.trim();
     if (name.isEmpty) return;
 
-    final repository = ref.read(figureRepositoryProvider);
-    if (repository == null) return;
+    final figureRepository = ref.read(figureRepositoryProvider);
+    if (figureRepository == null) return;
 
     if (_isEditing) {
       final updated = widget.figure!.copyWith(
@@ -147,15 +147,17 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
         clearStartDate: _startDate == null,
         clearEndDate: _endDate == null,
       );
-      await repository.update(updated);
+      await figureRepository.update(updated);
     } else {
+      final newOrder = await figureRepository.getMaxOrder(FigureState.toLearn);
       final figure = FigureModel(
         id: '',
         name: name,
         color: _selectedColor,
         state: FigureState.toLearn,
+        order: newOrder,
       );
-      await repository.create(figure);
+      await figureRepository.create(figure);
     }
 
     if (mounted) Navigator.of(context).pop();

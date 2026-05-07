@@ -26,6 +26,13 @@ extension FigureStateExtension on FigureState {
   }
 }
 
+// Ordre des statuts pour déterminer la direction
+const stateOrder = {
+  FigureState.toLearn: 0,
+  FigureState.learning: 1,
+  FigureState.learned: 2,
+};
+
 enum FigureColor { red, orange, yellow, green, blue, purple }
 
 extension FigureColorExtension on FigureColor {

@@ -167,10 +167,12 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
 
     final today = ref.read(todayProvider);
 
-    // Passage à l'état maîtrisée avec la date du jour
+    // Passage à l'état maîtrisée avec la date du jour, et en bas de la liste
+    final newOrder = await figureRepository.getMaxOrder(FigureState.learned);
     final updated = widget.figure.copyWith(
       state: FigureState.learned,
       endDate: today,
+      order: newOrder,
     );
     await figureRepository.update(updated);
 
