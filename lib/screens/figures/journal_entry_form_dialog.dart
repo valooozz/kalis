@@ -3,18 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/providers/today_providers.dart';
 import '../../models/journal_entry_model.dart';
-import '../../providers/journal_providers.dart';
 import '../../providers/core_providers.dart';
 
 class JournalEntryFormDialog extends ConsumerStatefulWidget {
   final String figureId;
-  final String? entryId;
+  final JournalEntryModel? entry;
 
-  const JournalEntryFormDialog({
-    super.key,
-    required this.figureId,
-    this.entryId,
-  });
+  const JournalEntryFormDialog({super.key, required this.figureId, this.entry});
 
   @override
   ConsumerState<JournalEntryFormDialog> createState() =>
@@ -24,14 +19,13 @@ class JournalEntryFormDialog extends ConsumerStatefulWidget {
 class _JournalEntryFormDialogState
     extends ConsumerState<JournalEntryFormDialog> {
   late TextEditingController _controller;
-  bool _initialized = false;
 
-  bool get _isEditing => widget.entryId != null;
+  bool get _isEditing => widget.entry != null;
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    _controller = TextEditingController(text: widget.entry?.text);
   }
 
   @override
@@ -44,22 +38,6 @@ class _JournalEntryFormDialogState
   Widget build(BuildContext context) {
     final lbl = AppLocalizations.of(context)!;
     final today = ref.read(todayProvider);
-
-    // Chargement de l'entrée existante si on est en mode édition
-    if (_isEditing) {
-      final entryAsync = ref.read(
-        journalEntryForFigureAndDateProvider((
-          figureId: widget.figureId,
-          date: today,
-        )),
-      );
-      entryAsync.whenData((entry) {
-        if (entry != null && !_initialized) {
-          _controller.text = entry.text;
-          _initialized = true;
-        }
-      });
-    }
 
     return AlertDialog(
       title: Text(_isEditing ? lbl.editJournalEntry : lbl.newJournalEntry),
@@ -89,11 +67,8 @@ class _JournalEntryFormDialogState
     final repository = ref.read(journalEntryRepositoryProvider);
     if (repository == null) return;
 
-    if (_isEditing) {
-      final entry = await repository.getById(widget.entryId!);
-      if (entry != null) {
-        await repository.update(entry.copyWith(text: text));
-      }
+    if (_isEditing && widget.entry != null) {
+      await repository.update(widget.entry!.copyWith(text: text));
     } else {
       await repository.create(
         JournalEntryModel(

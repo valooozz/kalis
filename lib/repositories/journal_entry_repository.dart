@@ -8,8 +8,8 @@ class JournalEntryRepository {
   JournalEntryRepository({
     required FirebaseFirestore firestore,
     required String userId,
-  })  : _firestore = firestore,
-        _userId = userId;
+  }) : _firestore = firestore,
+       _userId = userId;
 
   CollectionReference<Map<String, dynamic>> get _collection =>
       _firestore.collection('users').doc(_userId).collection('journalEntries');
@@ -19,26 +19,33 @@ class JournalEntryRepository {
         .where('figureId', isEqualTo: figureId)
         .orderBy('date', descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => JournalEntryModel.fromFirestore(doc.data(), doc.id))
-            .toList());
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => JournalEntryModel.fromFirestore(doc.data(), doc.id))
+              .toList(),
+        );
   }
 
-  Stream<JournalEntryModel?> watchByFigureAndDate(String figureId, DateTime date) {
-  final dayStart = DateTime(date.year, date.month, date.day);
-  final dayEnd = DateTime(date.year, date.month, date.day, 23, 59, 59);
+  Stream<JournalEntryModel?> watchByFigureAndDate(
+    String figureId,
+    DateTime date,
+  ) {
+    final dayStart = DateTime(date.year, date.month, date.day);
+    final dayEnd = DateTime(date.year, date.month, date.day, 23, 59, 59);
 
-  return _collection
-      .where('figureId', isEqualTo: figureId)
-      .where('date', isGreaterThanOrEqualTo: dayStart.toIso8601String())
-      .where('date', isLessThanOrEqualTo: dayEnd.toIso8601String())
-      .snapshots()
-      .map((snapshot) {
-        if (snapshot.docs.isEmpty) return null;
-        final doc = snapshot.docs.first;
-        return JournalEntryModel.fromFirestore(doc.data(), doc.id);
-      });
-}
+    print('date: $date - dayStart: $dayStart - dayEnd: $dayEnd');
+
+    return _collection
+        .where('figureId', isEqualTo: figureId)
+        .where('date', isGreaterThanOrEqualTo: dayStart.toIso8601String())
+        .where('date', isLessThanOrEqualTo: dayEnd.toIso8601String())
+        .snapshots()
+        .map((snapshot) {
+          if (snapshot.docs.isEmpty) return null;
+          final doc = snapshot.docs.first;
+          return JournalEntryModel.fromFirestore(doc.data(), doc.id);
+        });
+  }
 
   Future<JournalEntryModel?> getById(String id) async {
     final doc = await _collection.doc(id).get();

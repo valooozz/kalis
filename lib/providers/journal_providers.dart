@@ -12,18 +12,6 @@ final journalEntriesForFigureProvider =
       return repository.watchByFigure(figureId);
     });
 
-// Stream de l'entrée de journal pour une figure à une date donnée
-final journalEntryForFigureAndDateProvider =
-    StreamProvider.family<
-      JournalEntryModel?,
-      ({String figureId, DateTime date})
-    >((ref, params) {
-      final repository = ref.watch(journalEntryRepositoryProvider);
-      if (repository == null) return const Stream.empty();
-
-      return repository.watchByFigureAndDate(params.figureId, params.date);
-    });
-
 // Stream de l'entrée de journal pour une figure aujourd'hui
 final todayJournalEntryForFigureProvider =
     StreamProvider.family<JournalEntryModel?, String>((ref, figureId) {
