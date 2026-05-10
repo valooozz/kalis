@@ -27,28 +27,39 @@ class FigureDetailDialog extends ConsumerWidget {
     final entriesAsync = ref.watch(journalEntriesForFigureProvider(figure.id));
 
     return AlertDialog(
+      backgroundColor: figure.paused ? theme.colorScheme.outlineVariant : null,
       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-      title: Row(
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            width: 16,
-            height: 16,
-            decoration: BoxDecoration(
-              color: figure.color.color,
-              shape: BoxShape.circle,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(child: Text(figure.name)),
-          if (figure.state != FigureState.toLearn)
-            IconButton(
-              onPressed: () => _openCalendarDialog(context, ref, figure),
-              icon: Icon(Icons.calendar_month),
-            ),
-          IconButton(
-            icon: _stateIcon(figure.state, theme),
-            onPressed: () => _openStatusPicker(context, ref),
-            tooltip: lbl.changeStatus,
+          Row(
+            children: [
+              Container(
+                width: 16,
+                height: 16,
+                decoration: BoxDecoration(
+                  color: figure.color.color,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(child: Text(figure.name)),
+              if (figure.state != FigureState.toLearn) ...[
+                IconButton(
+                  onPressed: () => _openCalendarDialog(context, ref, figure),
+                  icon: Icon(Icons.calendar_month),
+                ),
+                IconButton(
+                  onPressed: () => _togglePaused(context, ref, lbl, figure),
+                  icon: Icon(figure.paused ? Icons.play_arrow : Icons.pause),
+                ),
+              ],
+              IconButton(
+                icon: _stateIcon(figure.state, theme),
+                onPressed: () => _openStatusPicker(context, ref),
+                tooltip: lbl.changeStatus,
+              ),
+            ],
           ),
         ],
       ),
@@ -242,6 +253,45 @@ class FigureDetailDialog extends ConsumerWidget {
     );
 
     if (context.mounted) Navigator.of(context).pop();
+  }
+
+  Future<void> _togglePaused(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations lbl,
+    FigureModel figure,
+  ) async {
+    bool? confirmed = true;
+
+    if (!figure.paused) {
+      confirmed = await showDialog<bool>(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(lbl.pauseFigureTitle),
+          content: Text(lbl.pauseFigureConfirm(figure.name)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(lbl.buttonCancel),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(lbl.buttonPause),
+            ),
+          ],
+        ),
+      );
+    }
+    if (confirmed != true) return;
+
+    if (context.mounted) Navigator.of(context).pop();
+
+    final figureRepository = ref.read(figureRepositoryProvider);
+
+    final newPaused = !figure.paused;
+    final newFigure = figure.copyWith(paused: newPaused);
+
+    await figureRepository?.update(newFigure);
   }
 }
 

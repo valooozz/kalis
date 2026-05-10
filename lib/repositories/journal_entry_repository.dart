@@ -33,8 +33,6 @@ class JournalEntryRepository {
     final dayStart = DateTime(date.year, date.month, date.day);
     final dayEnd = DateTime(date.year, date.month, date.day, 23, 59, 59);
 
-    print('date: $date - dayStart: $dayStart - dayEnd: $dayEnd');
-
     return _collection
         .where('figureId', isEqualTo: figureId)
         .where('date', isGreaterThanOrEqualTo: dayStart.toIso8601String())

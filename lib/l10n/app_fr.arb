@@ -134,5 +134,16 @@
         }
     },
     "globalCalendarTitle": "Calendrier global",
-    "filterByColor": "Filtrer par couleur"
+    "filterByColor": "Filtrer par couleur",
+    "pausedFigure": "Figure en pause",
+    "pauseFigureTitle": "Mettre en pause",
+    "pauseFigureConfirm": "Êtes-vous sûr de vouloir mettre en pause la figure \"{name}\" ?",
+    "@pauseFigureConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "buttonPause": "Mettre en pause"
 }

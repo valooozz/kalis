@@ -609,6 +609,30 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Filtrer par couleur'**
   String get filterByColor;
+
+  /// No description provided for @pausedFigure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Figure en pause'**
+  String get pausedFigure;
+
+  /// No description provided for @pauseFigureTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mettre en pause'**
+  String get pauseFigureTitle;
+
+  /// No description provided for @pauseFigureConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir mettre en pause la figure \"{name}\" ?'**
+  String pauseFigureConfirm(String name);
+
+  /// No description provided for @buttonPause.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mettre en pause'**
+  String get buttonPause;
 }
 
 class _AppLocalizationsDelegate

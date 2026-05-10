@@ -289,4 +289,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get filterByColor => 'Filtrer par couleur';
+
+  @override
+  String get pausedFigure => 'Figure en pause';
+
+  @override
+  String get pauseFigureTitle => 'Mettre en pause';
+
+  @override
+  String pauseFigureConfirm(String name) {
+    return 'Êtes-vous sûr de vouloir mettre en pause la figure \"$name\" ?';
+  }
+
+  @override
+  String get buttonPause => 'Mettre en pause';
 }

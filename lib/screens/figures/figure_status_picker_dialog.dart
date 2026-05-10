@@ -124,6 +124,7 @@ class FigureStatusPickerDialog extends ConsumerWidget {
     FigureModel updated = figure.copyWith(state: newState, order: newOrder);
     if (newState == FigureState.toLearn) {
       updated = updated.copyWith(
+        paused: false,
         clearStartDate: true,
         clearEndDate: true,
         clearRecord: true,

@@ -76,6 +76,10 @@ class FigureCard extends ConsumerWidget {
           : daysSinceLast >= 15;
     }
 
+    final cardColor = figure.paused
+        ? figureColor.withValues(alpha: 0.5)
+        : figureColor;
+
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -83,7 +87,7 @@ class FigureCard extends ConsumerWidget {
         splashColor: inkEffect ? null : Colors.transparent,
         child: Container(
           decoration: BoxDecoration(
-            border: Border(left: BorderSide(color: figureColor, width: 10)),
+            border: Border(left: BorderSide(color: cardColor, width: 10)),
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(12),
               bottomLeft: Radius.circular(12),
@@ -122,7 +126,7 @@ class FigureCard extends ConsumerWidget {
                   ],
                 ),
               ),
-              _StateIcon(state: figure.state, color: figure.color.color),
+              _StateIcon(state: figure.state, color: cardColor),
             ],
           ),
         ),
