@@ -29,12 +29,7 @@ class FigureSquareCard extends StatelessWidget {
           aspectRatio: 1,
           child: Container(
             decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(color: figureColor, width: 10),
-                bottom: figure.state == FigureState.learned
-                    ? BorderSide(color: figureColor, width: 10)
-                    : BorderSide.none,
-              ),
+              border: Border(top: BorderSide(color: figureColor, width: 10)),
               borderRadius: BorderRadius.circular(12),
             ),
             padding: const EdgeInsets.all(8),
@@ -57,6 +52,11 @@ class FigureSquareCard extends StatelessWidget {
                       size: 70,
                     ),
                   ),
+                Positioned(
+                  bottom: 4,
+                  right: 4,
+                  child: Icon(figure.state.icon, size: 20, color: figureColor),
+                ),
               ],
             ),
           ),
