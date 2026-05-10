@@ -4,6 +4,7 @@ import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/models/figure_model.dart';
 import 'package:kalis/providers/figure_providers.dart';
 import 'package:kalis/screens/figures/global_calendar_dialog.dart';
+import 'package:kalis/widgets/color_filter_dialog.dart';
 import 'package:kalis/widgets/figure_card.dart';
 import 'figure_detail_dialog.dart';
 import 'figure_form_dialog.dart';
@@ -43,6 +44,14 @@ class FiguresScreen extends ConsumerWidget {
                 pinned: true,
                 expandedHeight: 120,
                 actions: [
+                  IconButton(
+                    icon: const Icon(Icons.palette),
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (_) => const ColorFilterDialog(),
+                    ),
+                    tooltip: lbl.globalCalendarTitle,
+                  ),
                   IconButton(
                     icon: const Icon(Icons.calendar_month),
                     onPressed: () => showDialog(

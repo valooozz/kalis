@@ -133,5 +133,6 @@
             }
         }
     },
-    "globalCalendarTitle": "Calendrier global"
+    "globalCalendarTitle": "Calendrier global",
+    "filterByColor": "Filtrer par couleur"
 }

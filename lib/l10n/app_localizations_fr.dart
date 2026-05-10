@@ -286,4 +286,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get globalCalendarTitle => 'Calendrier global';
+
+  @override
+  String get filterByColor => 'Filtrer par couleur';
 }

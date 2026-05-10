@@ -603,6 +603,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Calendrier global'**
   String get globalCalendarTitle;
+
+  /// No description provided for @filterByColor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer par couleur'**
+  String get filterByColor;
 }
 
 class _AppLocalizationsDelegate

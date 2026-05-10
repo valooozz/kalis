@@ -2,21 +2,26 @@ import 'dart:ui';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/core/utils/date_utils.dart';
+import 'package:kalis/providers/filter_providers.dart';
 import 'package:kalis/providers/today_providers.dart';
 import 'package:kalis/repositories/figure_repository.dart';
 import '../models/figure_model.dart';
 import 'core_providers.dart';
 
-// Stream de toutes les figures, triées par statut puis alphabétiquement
+// Stream de toutes les figures, triées par statut puis alphabétiquement, en tenant compte du filtre de couleur
 final figuresProvider = StreamProvider<List<FigureModel>>((ref) {
   final repository = ref.watch(figureRepositoryProvider);
   if (repository == null) return const Stream.empty();
 
+  final selectedColor = ref.watch(colorFilterProvider);
+
   return repository.watchAll().map((figures) {
-    figures.sort((a, b) {
-      return a.order.compareTo(b.order);
-    });
-    return figures;
+    final filtered = selectedColor == null
+        ? figures
+        : figures.where((f) => f.color == selectedColor).toList();
+
+    filtered.sort((a, b) => a.order.compareTo(b.order));
+    return filtered;
   });
 });
 
