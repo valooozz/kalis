@@ -145,10 +145,11 @@ final availableFiguresForDayProvider =
         final plannedForDayIds = plannedValue.map((t) => t.figureId).toSet();
 
         // Filtrage
-        final available = figures.where((f) {
-          if (plannedForDayIds.contains(f.id)) return false;
-          if (f.state == FigureState.toLearn) return false;
-          if (!showLearned && f.state == FigureState.learned) return false;
+        final available = figures.where((figure) {
+          if (plannedForDayIds.contains(figure.id)) return false;
+          if (figure.state == FigureState.toLearn) return false;
+          if (!showLearned && figure.state == FigureState.learned) return false;
+          if (figure.paused) return false;
           return true;
         }).toList();
 

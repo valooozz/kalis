@@ -31,7 +31,6 @@ class AddFigureToDayDialog extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Case à cocher
             CheckboxListTile(
               value: showLearned,
               onChanged: (_) => ref.read(showLearnedProvider.notifier).toggle(),

@@ -287,11 +287,15 @@ class FigureDetailDialog extends ConsumerWidget {
     if (context.mounted) Navigator.of(context).pop();
 
     final figureRepository = ref.read(figureRepositoryProvider);
+    final trainingPlannedRepository = ref.read(
+      trainingPlannedRepositoryProvider,
+    );
 
     final newPaused = !figure.paused;
     final newFigure = figure.copyWith(paused: newPaused);
 
     await figureRepository?.update(newFigure);
+    await trainingPlannedRepository?.removeAllForFigure(figure.id);
   }
 }
 
