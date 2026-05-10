@@ -1,5 +1,13 @@
 # Version 1
 
+### v1.11.0
+
+- Possibilité de placer l'apprentissage de figures en pause
+- Filtre sur la couleur dans l'onglet Figures
+- Icônes sur FigureSquareCard pour indiquer le statut de la figure
+- Possibilité de swiper entre les onglets
+- Fix : Insertion de l'entrée de journal dans le champ de texte pour les entrées dans le passé
+
 ### v1.10.3
 
 - Fix : Retrait de l'espace vide dans RecordsScreen quand il y a une figure sans record
