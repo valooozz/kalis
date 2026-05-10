@@ -157,13 +157,13 @@ abstract class AppLocalizations {
   /// No description provided for @noFiguresToday.
   ///
   /// In fr, this message translates to:
-  /// **'Aucune figure prévue aujourd\'hui'**
+  /// **'Aujourd\'hui on recharge les batteries'**
   String get noFiguresToday;
 
   /// No description provided for @noFiguresTodaySubtitle.
   ///
   /// In fr, this message translates to:
-  /// **'Profites-en pour te reposer !'**
+  /// **'Ton corps a besoin de se reposer !'**
   String get noFiguresTodaySubtitle;
 
   /// No description provided for @noFigures.

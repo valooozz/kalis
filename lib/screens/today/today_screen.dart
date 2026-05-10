@@ -47,11 +47,11 @@ class TodayScreen extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.celebration,
-                              size: 64,
+                              Icons.battery_3_bar,
+                              size: 88,
                               color: theme.colorScheme.outline,
                             ),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 24),
                             Text(
                               lbl.noFiguresToday,
                               style: theme.textTheme.titleMedium?.copyWith(

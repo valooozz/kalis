@@ -39,10 +39,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stateToLearn => 'À apprendre';
 
   @override
-  String get noFiguresToday => 'Aucune figure prévue aujourd\'hui';
+  String get noFiguresToday => 'Aujourd\'hui on recharge les batteries';
 
   @override
-  String get noFiguresTodaySubtitle => 'Profites-en pour te reposer !';
+  String get noFiguresTodaySubtitle => 'Ton corps a besoin de se reposer !';
 
   @override
   String get noFigures => 'Aucune figure pour le moment';
