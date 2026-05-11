@@ -76,8 +76,9 @@ class FigureCard extends ConsumerWidget {
           : daysSinceLast >= 15;
     }
 
+    final alphaValue = figure.paused ? 0.5 : 1.0;
     final cardColor = figure.paused
-        ? figureColor.withValues(alpha: 0.5)
+        ? figureColor.withValues(alpha: alphaValue)
         : figureColor;
 
     return Card(
@@ -104,9 +105,13 @@ class FigureCard extends ConsumerWidget {
                       figure.name,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.onPrimaryContainer.withValues(
+                          alpha: alphaValue,
+                        ),
                       ),
                     ),
-                    if (figure.state != FigureState.toLearn) ...[
+                    if (figure.state != FigureState.toLearn &&
+                        !figure.paused) ...[
                       const SizedBox(height: 4),
                       DateRow(
                         icon: Icons.history,
