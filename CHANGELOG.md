@@ -1,5 +1,11 @@
 # Version 1
 
+### v1.11.1
+
+- Pastille de couleur sur tous les Dialog concernant une figure
+- Changement design de FigureCard pour les figures en pause
+- Modification du style du bandeau de fin de séance
+
 ### v1.11.0
 
 - Possibilité de placer l'apprentissage de figures en pause
