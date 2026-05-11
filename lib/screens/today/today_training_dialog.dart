@@ -43,7 +43,6 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
       todayJournalEntryForFigureProvider(widget.figure.id),
     );
 
-    // Quand l'entrée est chargée, on initialise le controller
     entryAsync.whenData((entry) {
       if (entry != null && _controller.text.isEmpty) {
         _controller.text = entry.text;
@@ -54,6 +53,15 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
     return AlertDialog(
       title: Row(
         children: [
+          Container(
+            width: 16,
+            height: 16,
+            decoration: BoxDecoration(
+              color: widget.figure.color.color,
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 8),
           Expanded(child: Text(widget.figure.name)),
           if (widget.figure.state == FigureState.learning)
             IconButton(

@@ -18,7 +18,20 @@ class LastJournalEntryDialog extends ConsumerWidget {
     final entriesAsync = ref.watch(journalEntriesForFigureProvider(figure.id));
 
     return AlertDialog(
-      title: Text(figure.name),
+      title: Row(
+        children: [
+          Container(
+            width: 16,
+            height: 16,
+            decoration: BoxDecoration(
+              color: figure.color.color,
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(child: Text(figure.name)),
+        ],
+      ),
       content: entriesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Text('Erreur : $e'),

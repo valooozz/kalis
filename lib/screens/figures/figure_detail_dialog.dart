@@ -29,37 +29,32 @@ class FigureDetailDialog extends ConsumerWidget {
     return AlertDialog(
       backgroundColor: figure.paused ? theme.colorScheme.outlineVariant : null,
       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      title: Row(
         children: [
-          Row(
-            children: [
-              Container(
-                width: 16,
-                height: 16,
-                decoration: BoxDecoration(
-                  color: figure.color.color,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(child: Text(figure.name)),
-              if (figure.state != FigureState.toLearn) ...[
-                IconButton(
-                  onPressed: () => _openCalendarDialog(context, ref, figure),
-                  icon: Icon(Icons.calendar_month),
-                ),
-                IconButton(
-                  onPressed: () => _togglePaused(context, ref, lbl, figure),
-                  icon: Icon(figure.paused ? Icons.play_arrow : Icons.pause),
-                ),
-              ],
-              IconButton(
-                icon: _stateIcon(figure.state, theme),
-                onPressed: () => _openStatusPicker(context, ref),
-                tooltip: lbl.changeStatus,
-              ),
-            ],
+          Container(
+            width: 16,
+            height: 16,
+            decoration: BoxDecoration(
+              color: figure.color.color,
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(child: Text(figure.name)),
+          if (figure.state != FigureState.toLearn) ...[
+            IconButton(
+              onPressed: () => _openCalendarDialog(context, ref, figure),
+              icon: Icon(Icons.calendar_month),
+            ),
+            IconButton(
+              onPressed: () => _togglePaused(context, ref, lbl, figure),
+              icon: Icon(figure.paused ? Icons.play_arrow : Icons.pause),
+            ),
+          ],
+          IconButton(
+            icon: _stateIcon(figure.state, theme),
+            onPressed: () => _openStatusPicker(context, ref),
+            tooltip: lbl.changeStatus,
           ),
         ],
       ),
