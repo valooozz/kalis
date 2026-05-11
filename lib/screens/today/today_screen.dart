@@ -72,17 +72,12 @@ class TodayScreen extends ConsumerWidget {
                   else if (allDone)
                     SliverToBoxAdapter(
                       child: Container(
-                        margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 12,
                         ),
-                        decoration: BoxDecoration(
-                          color: Colors.green.shade50,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.green.shade200),
-                        ),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(
                               Icons.done_outline,
