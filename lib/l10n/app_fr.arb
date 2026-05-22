@@ -100,7 +100,7 @@
     "settingsLinkGoogleSuccess": "Compte Google lié avec succès",
     "settingsLinkGoogleError": "Erreur lors de la liaison au compte Google",
     "settingsAlreadyLinkedTitle": "Compte déjà utilisé",
-    "settingsAlreadyLinkedContent": "Ce compte Google est déjà lié à un autre compte Kalis. Voulez-vous vous connecter à ce compte ? Vos données actuelles ne seront pas migrées.",
+    "settingsAlreadyLinkedContent": "Ce compte Google est déjà lié à un autre compte Kalis. Veux-tu te connecter à ce compte ? Tes données actuelles ne seront pas migrées.",
     "buttonConfirm": "Confirmer",
     "record": "Record",
     "recordDialogTitle": "Modifier le record",
@@ -111,7 +111,7 @@
     "noRecord": "Aucun record",
     "markAsLearned": "Marquer comme maîtrisée",
     "markAsLearnedTitle": "Marquer comme maîtrisée",
-    "markAsLearnedConfirm": "Êtes-vous sûr de vouloir passer \"{name}\" au statut Maîtrisée ?",
+    "markAsLearnedConfirm": "Passer \"{name}\" au statut Maîtrisée ?",
     "@markAsLearnedConfirm": {
         "placeholders": {
             "name": {
@@ -137,7 +137,7 @@
     "filterByColor": "Filtrer par couleur",
     "pausedFigure": "Figure en pause",
     "pauseFigureTitle": "Mettre en pause",
-    "pauseFigureConfirm": "Êtes-vous sûr de vouloir mettre en pause la figure \"{name}\" ?",
+    "pauseFigureConfirm": "Mettre en pause la figure \"{name}\" ?",
     "@pauseFigureConfirm": {
         "placeholders": {
             "name": {
