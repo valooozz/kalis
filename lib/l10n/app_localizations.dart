@@ -633,6 +633,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Mettre en pause'**
   String get buttonPause;
+
+  /// No description provided for @cannotRemoveDoneFigure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette figure a déjà été travaillée aujourd\'hui et ne peut pas être retirée'**
+  String get cannotRemoveDoneFigure;
 }
 
 class _AppLocalizationsDelegate

@@ -303,4 +303,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get buttonPause => 'Mettre en pause';
+
+  @override
+  String get cannotRemoveDoneFigure =>
+      'Cette figure a déjà été travaillée aujourd\'hui et ne peut pas être retirée';
 }

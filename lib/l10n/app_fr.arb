@@ -145,5 +145,6 @@
             }
         }
     },
-    "buttonPause": "Mettre en pause"
+    "buttonPause": "Mettre en pause",
+    "cannotRemoveDoneFigure": "Cette figure a déjà été travaillée aujourd'hui et ne peut pas être retirée"
 }

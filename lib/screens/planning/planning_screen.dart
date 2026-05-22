@@ -152,7 +152,8 @@ class _DayContent extends ConsumerWidget {
                     child: FigureSquareCard(
                       figure: figure,
                       onTap: () => _openDatesDialog(context, ref, figure, date),
-                      onLongPress: () => _removeFigure(ref, figure, date),
+                      onLongPress: () =>
+                          _removeFigure(context, ref, figure, date),
                     ),
                   ),
                 ),
@@ -176,6 +177,7 @@ class _DayContent extends ConsumerWidget {
   }
 
   Future<void> _removeFigure(
+    BuildContext context,
     WidgetRef ref,
     FigureModel figure,
     DateTime date,
@@ -184,13 +186,25 @@ class _DayContent extends ConsumerWidget {
     final doneRepository = ref.read(trainingDoneRepositoryProvider);
     if (plannedRepository == null || doneRepository == null) return;
 
-    await plannedRepository.remove(figure.id, date);
-
-    // Si la figure a été validée ce jour, on supprime aussi le TrainingDone
-    final exists = await doneRepository.exists(figure.id, date);
-    if (exists) {
-      await doneRepository.remove(figure.id, date);
+    // Vérification uniquement pour aujourd'hui
+    final today = ref.read(todayProvider);
+    if (date.isSameDay(today)) {
+      final isDone = await doneRepository.exists(figure.id, date);
+      if (isDone) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                AppLocalizations.of(context)!.cannotRemoveDoneFigure,
+              ),
+            ),
+          );
+        }
+        return;
+      }
     }
+
+    await plannedRepository.remove(figure.id, date);
   }
 
   Future<void> _openDatesDialog(
