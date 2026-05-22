@@ -31,12 +31,18 @@ class AddFigureToDayDialog extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CheckboxListTile(
-              value: showLearned,
-              onChanged: (_) => ref.read(showLearnedProvider.notifier).toggle(),
-              title: Text(lbl.showLearnedFigures),
-              contentPadding: EdgeInsets.zero,
-              controlAffinity: ListTileControlAffinity.leading,
+            Material(
+              borderRadius: BorderRadius.circular(8),
+              clipBehavior: Clip.antiAlias,
+              color: Colors.transparent,
+              child: CheckboxListTile(
+                value: showLearned,
+                onChanged: (_) =>
+                    ref.read(showLearnedProvider.notifier).toggle(),
+                title: Text(lbl.showLearnedFigures),
+                contentPadding: EdgeInsets.zero,
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
             ),
             const Divider(),
             Flexible(
