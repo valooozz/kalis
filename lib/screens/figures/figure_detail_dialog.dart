@@ -35,7 +35,9 @@ class FigureDetailDialog extends ConsumerWidget {
             width: 16,
             height: 16,
             decoration: BoxDecoration(
-              color: figure.color.color,
+              color: figure.color.color.withValues(
+                alpha: figure.paused ? 0.4 : 1,
+              ),
               shape: BoxShape.circle,
             ),
           ),
