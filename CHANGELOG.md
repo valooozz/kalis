@@ -1,5 +1,13 @@
 # Version 1
 
+### v1.12.0
+
+- Message d'erreur quand on tente de retirer une figure planifiée aujourd'hui qui a été travaillée
+- Headers de l'onglet Figures ne se chevauchent plus
+- Pastille de couleur transparente sur les figures en pause
+- Bords arrondis sur l'effet splash de la case à cocher
+- Uniformisation tutoiement
+
 ### v1.11.1
 
 - Pastille de couleur sur tous les Dialog concernant une figure
