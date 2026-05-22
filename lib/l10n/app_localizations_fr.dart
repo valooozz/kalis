@@ -217,7 +217,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsAlreadyLinkedContent =>
-      'Ce compte Google est déjà lié à un autre compte Kalis. Voulez-vous vous connecter à ce compte ? Vos données actuelles ne seront pas migrées.';
+      'Ce compte Google est déjà lié à un autre compte Kalis. Veux-tu te connecter à ce compte ? Tes données actuelles ne seront pas migrées.';
 
   @override
   String get buttonConfirm => 'Confirmer';
@@ -251,7 +251,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String markAsLearnedConfirm(String name) {
-    return 'Êtes-vous sûr de vouloir passer \"$name\" au statut Maîtrisée ?';
+    return 'Passer \"$name\" au statut Maîtrisée ?';
   }
 
   @override
@@ -298,7 +298,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String pauseFigureConfirm(String name) {
-    return 'Êtes-vous sûr de vouloir mettre en pause la figure \"$name\" ?';
+    return 'Mettre en pause la figure \"$name\" ?';
   }
 
   @override

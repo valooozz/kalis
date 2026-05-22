@@ -487,7 +487,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsAlreadyLinkedContent.
   ///
   /// In fr, this message translates to:
-  /// **'Ce compte Google est déjà lié à un autre compte Kalis. Voulez-vous vous connecter à ce compte ? Vos données actuelles ne seront pas migrées.'**
+  /// **'Ce compte Google est déjà lié à un autre compte Kalis. Veux-tu te connecter à ce compte ? Tes données actuelles ne seront pas migrées.'**
   String get settingsAlreadyLinkedContent;
 
   /// No description provided for @buttonConfirm.
@@ -553,7 +553,7 @@ abstract class AppLocalizations {
   /// No description provided for @markAsLearnedConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Êtes-vous sûr de vouloir passer \"{name}\" au statut Maîtrisée ?'**
+  /// **'Passer \"{name}\" au statut Maîtrisée ?'**
   String markAsLearnedConfirm(String name);
 
   /// No description provided for @allFiguresDone.
@@ -625,7 +625,7 @@ abstract class AppLocalizations {
   /// No description provided for @pauseFigureConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Êtes-vous sûr de vouloir mettre en pause la figure \"{name}\" ?'**
+  /// **'Mettre en pause la figure \"{name}\" ?'**
   String pauseFigureConfirm(String name);
 
   /// No description provided for @buttonPause.

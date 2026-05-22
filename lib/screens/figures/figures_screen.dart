@@ -76,20 +76,23 @@ class FiguresScreen extends ConsumerWidget {
                   titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
                 ),
               ),
-              if (learned.isNotEmpty) ...[
-                _StickyHeader(label: '${lbl.stateLearned} (${learned.length})'),
-                _FigureSliver(figures: learned, state: FigureState.learned),
-              ],
-              if (learning.isNotEmpty) ...[
-                _StickyHeader(
-                  label: '${lbl.stateLearning} (${learning.length})',
-                ),
-                _FigureSliver(figures: learning, state: FigureState.learning),
-              ],
-              if (toLearn.isNotEmpty) ...[
-                _StickyHeader(label: '${lbl.stateToLearn} (${toLearn.length})'),
-                _FigureSliver(figures: toLearn, state: FigureState.toLearn),
-              ],
+              _FigureSection(
+                label: '${lbl.stateLearned} (${learned.length})',
+                figures: learned,
+                state: FigureState.learned,
+              ),
+
+              _FigureSection(
+                label: '${lbl.stateLearning} (${learning.length})',
+                figures: learning,
+                state: FigureState.learning,
+              ),
+
+              _FigureSection(
+                label: '${lbl.stateToLearn} (${toLearn.length})',
+                figures: toLearn,
+                state: FigureState.toLearn,
+              ),
               // Padding en bas pour le FAB
               const SliverToBoxAdapter(child: SizedBox(height: 80)),
             ],
@@ -105,6 +108,32 @@ class FiguresScreen extends ConsumerWidget {
 
   void _openAddDialog(BuildContext context) {
     showDialog(context: context, builder: (_) => const FigureFormDialog());
+  }
+}
+
+class _FigureSection extends StatelessWidget {
+  final String label;
+  final List<FigureModel> figures;
+  final FigureState state;
+
+  const _FigureSection({
+    required this.label,
+    required this.figures,
+    required this.state,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (figures.isEmpty) {
+      return const SliverToBoxAdapter(child: SizedBox.shrink());
+    }
+
+    return SliverMainAxisGroup(
+      slivers: [
+        _StickyHeader(label: label),
+        _FigureSliver(figures: figures, state: state),
+      ],
+    );
   }
 }
 
