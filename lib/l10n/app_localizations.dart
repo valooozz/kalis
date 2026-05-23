@@ -639,6 +639,66 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Cette figure a déjà été travaillée aujourd\'hui et ne peut pas être retirée'**
   String get cannotRemoveDoneFigure;
+
+  /// No description provided for @pastPlanningTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Séances passées'**
+  String get pastPlanningTitle;
+
+  /// No description provided for @pastPlanningMarkDoneTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer comme travaillée'**
+  String get pastPlanningMarkDoneTitle;
+
+  /// No description provided for @pastPlanningMarkDoneConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer \"{name}\" comme travaillée ce jour ?'**
+  String pastPlanningMarkDoneConfirm(String name);
+
+  /// No description provided for @pastPlanningMarkNotDoneTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer comme non travaillée'**
+  String get pastPlanningMarkNotDoneTitle;
+
+  /// No description provided for @pastPlanningMarkNotDoneConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer \"{name}\" des figures travaillées ce jour ?'**
+  String pastPlanningMarkNotDoneConfirm(String name);
+
+  /// No description provided for @pastPlanningRemoveTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer la figure'**
+  String get pastPlanningRemoveTitle;
+
+  /// No description provided for @pastPlanningRemoveConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer \"{name}\" de ce jour ?'**
+  String pastPlanningRemoveConfirm(String name);
+
+  /// No description provided for @noFiguresPast.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune figure'**
+  String get noFiguresPast;
+
+  /// No description provided for @errorRemovalTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retrait impossible'**
+  String get errorRemovalTitle;
+
+  /// No description provided for @errorRemoval.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette figure a été travaillée et ne peut donc pas être retirée.'**
+  String get errorRemoval;
 }
 
 class _AppLocalizationsDelegate

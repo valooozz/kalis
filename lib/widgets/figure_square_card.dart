@@ -4,6 +4,7 @@ import '../models/figure_model.dart';
 class FigureSquareCard extends StatelessWidget {
   final FigureModel figure;
   final bool isDone;
+  final bool showStateIcon;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
 
@@ -13,6 +14,7 @@ class FigureSquareCard extends StatelessWidget {
     required this.onTap,
     required this.onLongPress,
     this.isDone = false,
+    this.showStateIcon = true,
   });
 
   @override
@@ -52,11 +54,16 @@ class FigureSquareCard extends StatelessWidget {
                       size: 70,
                     ),
                   ),
-                Positioned(
-                  bottom: 4,
-                  right: 4,
-                  child: Icon(figure.state.icon, size: 20, color: figureColor),
-                ),
+                if (showStateIcon)
+                  Positioned(
+                    bottom: 4,
+                    right: 4,
+                    child: Icon(
+                      figure.state.icon,
+                      size: 20,
+                      color: figureColor,
+                    ),
+                  ),
               ],
             ),
           ),

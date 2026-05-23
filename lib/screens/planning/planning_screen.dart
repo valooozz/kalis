@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/screens/planning/past_planning_dialog.dart';
 import 'package:kalis/screens/planning/training_dates_dialog.dart';
 import '../../models/figure_model.dart';
 import '../../providers/planning_providers.dart';
@@ -25,6 +26,16 @@ class PlanningScreen extends ConsumerWidget {
           SliverAppBar(
             pinned: true,
             expandedHeight: 120,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.history),
+                onPressed: () => showDialog(
+                  context: context,
+                  builder: (_) => const PastPlanningDialog(),
+                ),
+                tooltip: lbl.pastPlanningTitle,
+              ),
+            ],
             flexibleSpace: FlexibleSpaceBar(
               title: Text(lbl.planningScreenTitle),
               titlePadding: const EdgeInsets.only(left: 16, bottom: 16),

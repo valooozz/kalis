@@ -146,5 +146,36 @@
         }
     },
     "buttonPause": "Mettre en pause",
-    "cannotRemoveDoneFigure": "Cette figure a déjà été travaillée aujourd'hui et ne peut pas être retirée"
+    "cannotRemoveDoneFigure": "Cette figure a déjà été travaillée aujourd'hui et ne peut pas être retirée",
+    "pastPlanningTitle": "Séances passées",
+    "pastPlanningMarkDoneTitle": "Marquer comme travaillée",
+    "pastPlanningMarkDoneConfirm": "Marquer \"{name}\" comme travaillée ce jour ?",
+    "@pastPlanningMarkDoneConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "pastPlanningMarkNotDoneTitle": "Marquer comme non travaillée",
+    "pastPlanningMarkNotDoneConfirm": "Retirer \"{name}\" des figures travaillées ce jour ?",
+    "@pastPlanningMarkNotDoneConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "pastPlanningRemoveTitle": "Retirer la figure",
+    "pastPlanningRemoveConfirm": "Retirer \"{name}\" de ce jour ?",
+    "@pastPlanningRemoveConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "noFiguresPast": "Aucune figure",
+    "errorRemovalTitle": "Retrait impossible",
+    "errorRemoval": "Cette figure a été travaillée et ne peut donc pas être retirée."
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/core/utils/date_utils.dart';
+import 'package:kalis/models/training_done_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/training_planned_model.dart';
 import '../models/figure_model.dart';
@@ -218,5 +219,36 @@ final availableFiguresForDayProvider =
         });
 
         return available;
+      });
+    });
+
+// Stream des entraînements effectués pour une date donnée (générique)
+final trainingDoneForDateProvider =
+    StreamProvider.family<List<TrainingDoneModel>, DateTime>((ref, date) {
+      final repository = ref.watch(trainingDoneRepositoryProvider);
+      if (repository == null) return const Stream.empty();
+      return repository.watchByDate(date);
+    });
+
+// Provider pour les figures planifiées à une date passée
+final plannedForPastDateProvider =
+    StreamProvider.family<List<TrainingPlannedModel>, DateTime>((ref, date) {
+      final repository = ref.watch(trainingPlannedRepositoryProvider);
+      if (repository == null) return const Stream.empty();
+      return repository.watchByDate(date);
+    });
+
+// Figures planifiées pour une date passée avec leurs données complètes
+final figuresForPastDateProvider =
+    Provider.family<AsyncValue<List<FigureModel>>, DateTime>((ref, date) {
+      final plannedAsync = ref.watch(plannedForPastDateProvider(date));
+      final figuresAsync = ref.watch(figuresProvider);
+
+      return plannedAsync.whenData((planned) {
+        final figuresValue = figuresAsync.whenData((figures) {
+          final plannedIds = planned.map((t) => t.figureId).toSet();
+          return figures.where((f) => plannedIds.contains(f.id)).toList();
+        });
+        return figuresValue.valueOrNull ?? [];
       });
     });

@@ -307,4 +307,41 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get cannotRemoveDoneFigure =>
       'Cette figure a déjà été travaillée aujourd\'hui et ne peut pas être retirée';
+
+  @override
+  String get pastPlanningTitle => 'Séances passées';
+
+  @override
+  String get pastPlanningMarkDoneTitle => 'Marquer comme travaillée';
+
+  @override
+  String pastPlanningMarkDoneConfirm(String name) {
+    return 'Marquer \"$name\" comme travaillée ce jour ?';
+  }
+
+  @override
+  String get pastPlanningMarkNotDoneTitle => 'Marquer comme non travaillée';
+
+  @override
+  String pastPlanningMarkNotDoneConfirm(String name) {
+    return 'Retirer \"$name\" des figures travaillées ce jour ?';
+  }
+
+  @override
+  String get pastPlanningRemoveTitle => 'Retirer la figure';
+
+  @override
+  String pastPlanningRemoveConfirm(String name) {
+    return 'Retirer \"$name\" de ce jour ?';
+  }
+
+  @override
+  String get noFiguresPast => 'Aucune figure';
+
+  @override
+  String get errorRemovalTitle => 'Retrait impossible';
+
+  @override
+  String get errorRemoval =>
+      'Cette figure a été travaillée et ne peut donc pas être retirée.';
 }
