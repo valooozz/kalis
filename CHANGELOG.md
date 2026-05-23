@@ -1,5 +1,9 @@
 # Version 1
 
+### v1.14.0
+
+- Appui long sur + de l'onglet Plannification pour démarrer l'apprentissage d'une figure
+
 ### v1.13.0
 
 - Possibilité de visualiser et de modifier les séances des quatorze derniers jours
