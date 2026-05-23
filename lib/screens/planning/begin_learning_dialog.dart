@@ -109,9 +109,5 @@ class BeginLearningDialog extends ConsumerWidget {
     await plannedRepository.add(
       TrainingPlannedModel(figureId: figure.id, date: date),
     );
-
-    if (context.mounted) {
-      Navigator.of(context).pop();
-    }
   }
 }
