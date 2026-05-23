@@ -177,5 +177,16 @@
     },
     "noFiguresPast": "Aucune figure",
     "errorRemovalTitle": "Retrait impossible",
-    "errorRemoval": "Cette figure a été travaillée et ne peut donc pas être retirée."
+    "errorRemoval": "Cette figure a été travaillée et ne peut donc pas être retirée.",
+    "beginLearningDialogTitle": "Commencer une figure",
+    "beginLearningConfirmTitle": "Commencer l'apprentissage",
+    "beginLearningConfirm": "Passer \"{name}\" en apprentissage et l'ajouter à ce jour ?",
+    "@beginLearningConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "noFiguresToLearn": "Aucune figure à apprendre"
 }

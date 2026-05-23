@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/screens/planning/begin_learning_dialog.dart';
 import 'package:kalis/screens/planning/past_planning_dialog.dart';
 import 'package:kalis/screens/planning/training_dates_dialog.dart';
 import '../../models/figure_model.dart';
@@ -231,7 +232,6 @@ class _DayContent extends ConsumerWidget {
   }
 }
 
-// Bouton "+" pour ajouter une figure à un jour
 class _AddFigureButton extends StatelessWidget {
   final DateTime date;
 
@@ -246,6 +246,10 @@ class _AddFigureButton extends StatelessWidget {
         onTap: () => showDialog(
           context: context,
           builder: (_) => AddFigureToDayDialog(date: date),
+        ),
+        onLongPress: () => showDialog(
+          context: context,
+          builder: (_) => BeginLearningDialog(date: date),
         ),
         borderRadius: BorderRadius.circular(12),
         child: Center(

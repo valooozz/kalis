@@ -699,6 +699,30 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Cette figure a été travaillée et ne peut donc pas être retirée.'**
   String get errorRemoval;
+
+  /// No description provided for @beginLearningDialogTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commencer une figure'**
+  String get beginLearningDialogTitle;
+
+  /// No description provided for @beginLearningConfirmTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commencer l\'apprentissage'**
+  String get beginLearningConfirmTitle;
+
+  /// No description provided for @beginLearningConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passer \"{name}\" en apprentissage et l\'ajouter à ce jour ?'**
+  String beginLearningConfirm(String name);
+
+  /// No description provided for @noFiguresToLearn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune figure à apprendre'**
+  String get noFiguresToLearn;
 }
 
 class _AppLocalizationsDelegate

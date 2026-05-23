@@ -344,4 +344,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get errorRemoval =>
       'Cette figure a été travaillée et ne peut donc pas être retirée.';
+
+  @override
+  String get beginLearningDialogTitle => 'Commencer une figure';
+
+  @override
+  String get beginLearningConfirmTitle => 'Commencer l\'apprentissage';
+
+  @override
+  String beginLearningConfirm(String name) {
+    return 'Passer \"$name\" en apprentissage et l\'ajouter à ce jour ?';
+  }
+
+  @override
+  String get noFiguresToLearn => 'Aucune figure à apprendre';
 }
