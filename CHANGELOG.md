@@ -1,5 +1,9 @@
 # Version 1
 
+### v1.13.0
+
+- Possibilité de visualiser et de modifier les séances des quatorze derniers jours
+
 ### v1.12.0
 
 - Message d'erreur quand on tente de retirer une figure planifiée aujourd'hui qui a été travaillée
