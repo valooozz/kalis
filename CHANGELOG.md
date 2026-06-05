@@ -1,5 +1,11 @@
 # Version 1
 
+### v1.15.0
+
+- Reprise des figures en pause depuis l'onglet Plannification
+- Retrait des Dividers du Dialog des figures passées
+- Changement de la couleur du Divider des figures en pause pour qu'il soit visible
+
 ### v1.14.0
 
 - Appui long sur + de l'onglet Plannification pour démarrer l'apprentissage d'une figure
