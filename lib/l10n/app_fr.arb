@@ -188,5 +188,16 @@
             }
         }
     },
-    "noFiguresToLearn": "Aucune figure à apprendre"
+    "noFiguresToLearn": "Aucune figure à apprendre",
+    "resumeFigureConfirmTitle": "Reprendre la figure",
+    "resumeFigureConfirm": "Reprendre \"{name}\" et l'ajouter à ce jour ?",
+    "@resumeFigureConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "pausedFiguresSection": "Figures en pause",
+    "toLearnFiguresSection": "Figures à apprendre"
 }

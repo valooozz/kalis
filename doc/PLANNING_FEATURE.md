@@ -262,78 +262,109 @@ Figure 🔵 apparaît dans grille du jour
 ### 3. BeginLearningDialog
 
 **Fichier** : `lib/screens/planning/begin_learning_dialog.dart`
-
-**Contexte** : Commencer l'apprentissage d'une figure directement depuis la planification
+**Contexte** : Commencer l'apprentissage d'une figure, ou reprendre une figure en pause, directement depuis la planification
 
 **UI**
-
 ```
 ┌──────────────────────────────────────────────┐
 │ AlertDialog                                  │
 ├──────────────────────────────────────────────┤
-│ Title: "Commencer l'apprentissage"           │
+│ Title: "Commencer une figure"                │
 │         "15 mars 2026"                       │
 ├──────────────────────────────────────────────┤
 │ Content:                                     │
 │ ┌──────────────────────────────────────────┐ │
-│ │ ListView de FigureCard (toLearn):        │ │
+│ │ Figures en pause                         │ │
+│ │                                          │ │
+│ │ ░ Figure en pause 1 (grisée)             │ │
+│ │ ░ Figure en pause 2 (grisée)             │ │
+│ │                                          │ │
+│ │ Figures à apprendre                      │ │
 │ │                                          │ │
 │ │ 📌 Figure à apprendre 1                  │ │
 │ │ 📌 Figure à apprendre 2                  │ │
 │ │                                          │ │
-│ │ (Cliquer pour commencer)                 │ │
+│ │ (Cliquer pour commencer / reprendre)     │ │
 │ └──────────────────────────────────────────┘ │
 ├──────────────────────────────────────────────┤
 │ Actions: [Fermer]                            │
 └──────────────────────────────────────────────┘
 
-[Si sélection]
+[Si sélection d'une figure à apprendre]
 ┌──────────────────────────────────────────────┐
-│ Confirmation Dialog                          │
+│ "Commencer l'apprentissage"                  │
 ├──────────────────────────────────────────────┤
-│ "Commencer l'apprentissage de 'Handstand'?" │
+│ "Passer 'Handstand' en apprentissage         │
+│  et l'ajouter à ce jour ?"                  │
+├──────────────────────────────────────────────┤
+│ [Annuler] [Confirmer]                        │
+└──────────────────────────────────────────────┘
+
+[Si sélection d'une figure en pause]
+┌──────────────────────────────────────────────┐
+│ "Reprendre la figure"                        │
+├──────────────────────────────────────────────┤
+│ "Reprendre 'Handstand' et l'ajouter          │
+│  à ce jour ?"                               │
 ├──────────────────────────────────────────────┤
 │ [Annuler] [Confirmer]                        │
 └──────────────────────────────────────────────┘
 ```
 
-**Workflow**
-
+**Workflow — figure à apprendre**
 ```
-User clique sur figure "à apprendre"
+User clique sur une figure "à apprendre"
         ↓
-Confirmation dialog (AlertDialog imbriqué)
+Confirmation dialog
         ↓
 User clique "Confirmer"
         ↓
-Deux opérations en parallèle:
-├─ figureRepository.update(figure.copyWith(
-│    state: FigureState.learning,
-│    startDate: date,      // Date sélectionnée
-│    order: newOrder       // Position dans learning
-│  ))
-│
-└─ trainingPlannedRepository.add(
-   TrainingPlannedModel(
-     figureId: figure.id,
-     date: date           // Ajout entraînement ce jour
-   )
- )
+figureRepository.update(figure.copyWith(
+   state: FigureState.learning,
+   startDate: date,      // Date sélectionnée
+   order: newOrder       // Position dans learning
+))
++
+trainingPlannedRepository.add(
+   TrainingPlannedModel(figureId: figure.id, date: date)
+)
         ↓
-Firestore met à jour figure + crée training_planned
-        ↓
-UI se reconstruit
-        ↓
-• Figure disparaît de "toLearn"
-• Figure apparaît dans "learning"
+• Figure disparaît de "À apprendre"
+• Figure apparaît dans "En apprentissage"
 • Figure est ajoutée à la planification du jour
 ```
+
+**Workflow — figure en pause**
+```
+User clique sur une figure "en pause"
+        ↓
+Confirmation dialog
+        ↓
+User clique "Confirmer"
+        ↓
+figureRepository.update(figure.copyWith(paused: false))
++
+trainingPlannedRepository.add(
+   TrainingPlannedModel(figureId: figure.id, date: date)
+)
+        ↓
+• Figure n'est plus grisée (paused: false)
+• Figure est ajoutée à la planification du jour
+• Le state de la figure est inchangé
+```
+
+**Providers utilisés**
+
+| Provider | Rôle |
+|---|---|
+| `figuresByStateProvider(FigureState.toLearn)` | Figures à apprendre (non pausées) |
+| `pausedFiguresProvider` | Figures en pause (tous états, sans filtre couleur) |
 
 **Différence vs FigureDetailDialog**
 
 | Dialog | Contexte | startDate | Ajout planning |
 |--------|----------|-----------|----------------|
-| **BeginLearningDialog** | Depuis Planning | Date sélectionnée | ✅ Oui (automais) |
+| **BeginLearningDialog** | Depuis Planning | Date sélectionnée | ✅ Oui (automatique) |
 | **FigureDetailDialog** | Depuis Figures | Aujourd'hui toujours | ❌ Non |
 
 ---

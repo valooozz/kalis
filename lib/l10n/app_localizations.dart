@@ -723,6 +723,30 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Aucune figure à apprendre'**
   String get noFiguresToLearn;
+
+  /// No description provided for @resumeFigureConfirmTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reprendre la figure'**
+  String get resumeFigureConfirmTitle;
+
+  /// No description provided for @resumeFigureConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reprendre \"{name}\" et l\'ajouter à ce jour ?'**
+  String resumeFigureConfirm(String name);
+
+  /// No description provided for @pausedFiguresSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Figures en pause'**
+  String get pausedFiguresSection;
+
+  /// No description provided for @toLearnFiguresSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Figures à apprendre'**
+  String get toLearnFiguresSection;
 }
 
 class _AppLocalizationsDelegate

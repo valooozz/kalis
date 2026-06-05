@@ -35,6 +35,15 @@ final figuresByStateProvider =
           );
     });
 
+/// Figures actuellement en pause (tous états confondus, sans filtre couleur).
+final pausedFiguresProvider = StreamProvider<List<FigureModel>>((ref) {
+  final repository = ref.watch(figureRepositoryProvider);
+  if (repository == null) return const Stream.empty();
+  return repository.watchAll().map(
+    (figures) => figures.where((f) => f.paused).toList(),
+  );
+});
+
 // Une figure par son id
 final figureByIdProvider = Provider.family<AsyncValue<FigureModel?>, String>((
   ref,

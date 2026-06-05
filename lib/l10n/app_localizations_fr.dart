@@ -358,4 +358,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noFiguresToLearn => 'Aucune figure à apprendre';
+
+  @override
+  String get resumeFigureConfirmTitle => 'Reprendre la figure';
+
+  @override
+  String resumeFigureConfirm(String name) {
+    return 'Reprendre \"$name\" et l\'ajouter à ce jour ?';
+  }
+
+  @override
+  String get pausedFiguresSection => 'Figures en pause';
+
+  @override
+  String get toLearnFiguresSection => 'Figures à apprendre';
 }

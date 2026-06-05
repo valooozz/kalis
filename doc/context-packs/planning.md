@@ -21,11 +21,10 @@ PlanningScreen
 ```
 
 **Dialogs:**
-
 | Dialog | Trigger | Purpose |
 |---|---|---|
 | `AddFigureToDayDialog` | [+] button | Pick an available figure to add to a day |
-| `BeginLearningDialog` | Tap a `toLearn` figure in AddFigureToDayDialog | Transition figure to `learning` + add to plan |
+| `BeginLearningDialog` | Tap a `toLearn` figure in AddFigureToDayDialog | Transition a `toLearn` figure to `learning` + add to plan, or resume a `paused` figure + add to plan |
 | `TrainingDatesDialog` | Tap a `FigureSquareCard` | Show last/next training dates for that figure |
 | `PastPlanningDialog` | 📜 icon in AppBar | Browse the past 14 days |
 
@@ -57,14 +56,20 @@ Relevant `FigureModel` fields: `state`, `startDate`, `paused`, `order`.
 **`showLearnedProvider`**: bool persisted in SharedPreferences (`showLearnedFigures` key). Toggled via checkbox in `AddFigureToDayDialog`.
 
 **`BeginLearningDialog`** vs starting learning from the Figures tab:
-
 | Entry point | `startDate` | Auto-adds to plan |
 |---|---|---|
-| `BeginLearningDialog` (Planning tab) | The selected planning date | ✅ Yes |
+| `BeginLearningDialog` — `toLearn` figure (Planning tab) | The selected planning date | ✅ Yes |
+| `BeginLearningDialog` — `paused` figure (Planning tab) | Unchanged | ✅ Yes |
 | "Start learning" in `FigureDetailDialog` (Figures tab) | Today | ❌ No |
 
-`BeginLearningDialog` performs two writes atomically:
+`BeginLearningDialog` performs two writes depending on the figure type:
+
+**`toLearn` figure:**
 1. `figureRepository.update(figure.copyWith(state: learning, startDate: date, order: newOrder))`
+2. `trainingPlannedRepository.add(TrainingPlannedModel(figureId, date))`
+
+**`paused` figure:**
+1. `figureRepository.update(figure.copyWith(paused: false))`
 2. `trainingPlannedRepository.add(TrainingPlannedModel(figureId, date))`
 
 ---
@@ -97,6 +102,7 @@ Both display results as relative strings ("yesterday", "in 3 days").
 | `plannedForDayProvider(date)` | Planned entries for one day |
 | `figuresForDayProvider(date)` | Full `FigureModel` list for planned entries on a day |
 | `availableFiguresForDayProvider(date)` | Figures eligible to add to a day (filtered + sorted) |
+| `pausedFiguresProvider` | All paused figures across all states (no color filter) |
 | `showLearnedProvider` | Checkbox state, persisted in SharedPreferences |
 | `effectiveLastTrainingDateProvider({figureId, date})` | Last training date (done + planned) |
 | `trainingPlannedForFigureProvider(figureId)` | All planned entries for one figure |
