@@ -95,7 +95,12 @@ class FigureDetailDialog extends ConsumerWidget {
                   ),
                 ),
 
-              const Divider(height: 24),
+              Divider(
+                height: 24,
+                color: figure.paused
+                    ? theme.colorScheme.onSurfaceVariant
+                    : null,
+              ),
 
               entriesAsync.when(
                 loading: () => const Center(child: CircularProgressIndicator()),
