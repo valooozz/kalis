@@ -128,7 +128,6 @@ class _PastDaySection extends ConsumerWidget {
             );
           },
         ),
-        const Divider(height: 1),
       ],
     );
   }
