@@ -199,5 +199,7 @@
         }
     },
     "pausedFiguresSection": "Figures en pause",
-    "toLearnFiguresSection": "Figures à apprendre"
+    "toLearnFiguresSection": "Figures à apprendre",
+    "deactivateFigure": "Désactiver la figure",
+    "activateFigure": "Garder la figure active"
 }

@@ -1,5 +1,9 @@
 # Version 1
 
+### v1.16.0
+
+- Possibilité d'indiquer si une figure maîtrisée doit rester active ou non
+
 ### v1.15.0
 
 - Reprise des figures en pause depuis l'onglet Plannification

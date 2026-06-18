@@ -372,4 +372,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get toLearnFiguresSection => 'Figures à apprendre';
+
+  @override
+  String get deactivateFigure => 'Désactiver la figure';
+
+  @override
+  String get activateFigure => 'Garder la figure active';
 }

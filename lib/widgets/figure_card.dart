@@ -80,6 +80,9 @@ class FigureCard extends ConsumerWidget {
     final cardColor = figure.paused
         ? figureColor.withValues(alpha: alphaValue)
         : figureColor;
+    final bool _showTrainingDates =
+        figure.state == FigureState.learning ||
+        (figure.state == FigureState.learned && figure.active);
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -110,8 +113,7 @@ class FigureCard extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    if (figure.state != FigureState.toLearn &&
-                        !figure.paused) ...[
+                    if (_showTrainingDates && !figure.paused) ...[
                       const SizedBox(height: 4),
                       DateRow(
                         icon: Icons.history,

@@ -125,6 +125,7 @@ class FigureStatusPickerDialog extends ConsumerWidget {
     if (newState == FigureState.toLearn) {
       updated = updated.copyWith(
         paused: false,
+        active: false,
         clearStartDate: true,
         clearEndDate: true,
         clearRecord: true,
@@ -133,6 +134,7 @@ class FigureStatusPickerDialog extends ConsumerWidget {
     } else if (newState == FigureState.learning) {
       updated = updated.copyWith(
         startDate: today,
+        active: false,
         clearEndDate: true,
         clearRecord: true,
       );

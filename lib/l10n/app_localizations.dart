@@ -747,6 +747,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Figures à apprendre'**
   String get toLearnFiguresSection;
+
+  /// No description provided for @deactivateFigure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactiver la figure'**
+  String get deactivateFigure;
+
+  /// No description provided for @activateFigure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Garder la figure active'**
+  String get activateFigure;
 }
 
 class _AppLocalizationsDelegate

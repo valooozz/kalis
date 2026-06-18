@@ -46,13 +46,27 @@ class FigureDetailDialog extends ConsumerWidget {
           if (figure.state != FigureState.toLearn) ...[
             IconButton(
               onPressed: () => _openCalendarDialog(context, ref, figure),
-              icon: Icon(Icons.calendar_month),
+              icon: const Icon(Icons.calendar_month),
             ),
             IconButton(
               onPressed: () => _togglePaused(context, ref, lbl, figure),
               icon: Icon(figure.paused ? Icons.play_arrow : Icons.pause),
             ),
           ],
+          if (figure.state == FigureState.learned)
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _toggleActive(ref);
+              },
+              icon: Icon(
+                figure.active ? Icons.loop : Icons.loop_outlined,
+                color: figure.active ? figure.color.color : null,
+              ),
+              tooltip: figure.active
+                  ? lbl.deactivateFigure
+                  : lbl.activateFigure,
+            ),
           IconButton(
             icon: _stateIcon(figure.state, theme),
             onPressed: () => _openStatusPicker(context, ref),
@@ -298,6 +312,11 @@ class FigureDetailDialog extends ConsumerWidget {
 
     await figureRepository?.update(newFigure);
     await trainingPlannedRepository?.removeAllForFigure(figure.id);
+  }
+
+  Future<void> _toggleActive(WidgetRef ref) async {
+    final figureRepository = ref.read(figureRepositoryProvider);
+    await figureRepository?.update(figure.copyWith(active: !figure.active));
   }
 }
 

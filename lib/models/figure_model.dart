@@ -78,6 +78,7 @@ class FigureModel {
   final RecordUnit? recordUnit;
   final int order;
   final bool paused;
+  final bool active;
 
   const FigureModel({
     required this.id,
@@ -90,6 +91,7 @@ class FigureModel {
     this.recordUnit,
     this.order = 0,
     this.paused = false,
+    this.active = false,
   });
 
   factory FigureModel.fromFirestore(Map<String, dynamic> data, String id) {
@@ -119,6 +121,7 @@ class FigureModel {
           : null,
       order: (data['order'] as int?) ?? 0,
       paused: data['paused'] ?? false,
+      active: data['active'] ?? false,
     );
   }
 
@@ -133,6 +136,7 @@ class FigureModel {
       'recordUnit': recordUnit?.name,
       'order': order,
       'paused': paused,
+      'active': active,
     };
   }
 
@@ -147,6 +151,7 @@ class FigureModel {
     RecordUnit? recordUnit,
     int? order,
     bool? paused,
+    bool? active,
     bool clearStartDate = false,
     bool clearEndDate = false,
     bool clearRecord = false,
@@ -162,6 +167,7 @@ class FigureModel {
       recordUnit: clearRecord ? null : recordUnit ?? this.recordUnit,
       order: order ?? this.order,
       paused: paused ?? this.paused,
+      active: active ?? this.active,
     );
   }
 
