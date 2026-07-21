@@ -7,6 +7,7 @@ import '../models/figure_model.dart';
 import 'core_providers.dart';
 import 'figure_providers.dart';
 import 'today_providers.dart';
+import 'place_providers.dart';
 
 // Clé pour la persistance de la case à cocher
 const _showLearnedKey = 'showLearnedFigures';
@@ -135,18 +136,27 @@ final trainingPlannedForFigureProvider =
       return repository.watchByFigure(figureId);
     });
 
+// Provider des figures disponibles pour un jour donné
+// Optionnellement filtré par `placeId` pour ne garder que les figures
+// associées à ce lieu.
 final availableFiguresForDayProvider =
-    Provider.family<AsyncValue<List<FigureModel>>, DateTime>((ref, date) {
+    Provider.family<
+      AsyncValue<List<FigureModel>>,
+      ({DateTime date, String? placeId})
+    >((ref, params) {
+      final date = params.date;
+      final placeId = params.placeId;
       final figuresAsync = ref.watch(figuresProvider);
       final plannedAsync = ref.watch(plannedForDayProvider(date));
       final showLearned = ref.watch(showLearnedProvider);
+      final placesAsync = ref.watch(placesProvider);
 
       return figuresAsync.whenData((figures) {
         final plannedValue = plannedAsync.valueOrNull ?? [];
         final plannedForDayIds = plannedValue.map((t) => t.figureId).toSet();
 
-        // Filtrage
-        final available = figures.where((figure) {
+        // Filtrage initial
+        var available = figures.where((figure) {
           if (plannedForDayIds.contains(figure.id)) return false;
           if (figure.state == FigureState.toLearn) return false;
           if (figure.paused) return false;
@@ -155,6 +165,20 @@ final availableFiguresForDayProvider =
           }
           return true;
         }).toList();
+
+        // Si un placeId est fourni, restreindre aux figures présentes dans le lieu
+        if (placeId != null) {
+          final place = placesAsync.maybeWhen(
+            data: (places) => places.where((p) => p.id == placeId).firstOrNull,
+            orElse: () => null,
+          );
+          if (place == null) {
+            available = [];
+          } else {
+            final allowed = place.figureIds.toSet();
+            available = available.where((f) => allowed.contains(f.id)).toList();
+          }
+        }
 
         // Récupération des dates pour le tri
         final effectiveLastDates = <String, DateTime?>{};

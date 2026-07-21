@@ -7,23 +7,38 @@ import '../../providers/planning_providers.dart';
 import '../../providers/core_providers.dart';
 import '../../core/utils/date_utils.dart';
 import '../../widgets/figure_card.dart';
+import '../../providers/place_providers.dart';
 
-class AddFigureToDayDialog extends ConsumerWidget {
+class AddFigureToDayDialog extends ConsumerStatefulWidget {
   final DateTime date;
 
   const AddFigureToDayDialog({super.key, required this.date});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AddFigureToDayDialog> createState() =>
+      _AddFigureToDayDialogState();
+}
+
+class _AddFigureToDayDialogState extends ConsumerState<AddFigureToDayDialog> {
+  String? _selectedPlaceId;
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final lbl = AppLocalizations.of(context)!;
-    final availableAsync = ref.watch(availableFiguresForDayProvider(date));
+    final availableAsync = ref.watch(
+      availableFiguresForDayProvider((
+        date: widget.date,
+        placeId: _selectedPlaceId,
+      )),
+    );
     final showLearned = ref.watch(showLearnedProvider);
+    final placesAsync = ref.watch(placesProvider);
 
     return AlertDialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
       title: Text(
-        '${lbl.addFigure}\n${date.toShortLabel(Localizations.localeOf(context))}',
+        '${lbl.addFigure}\n${widget.date.toShortLabel(Localizations.localeOf(context))}',
         style: theme.textTheme.titleMedium,
       ),
       content: SizedBox(
@@ -31,6 +46,43 @@ class AddFigureToDayDialog extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Places chips
+            placesAsync.when(
+              loading: () => const SizedBox.shrink(),
+              error: (_, __) => const SizedBox.shrink(),
+              data: (places) {
+                if (places.isEmpty) return const SizedBox.shrink();
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: places.map((p) {
+                        final selected = p.id == _selectedPlaceId;
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: ChoiceChip(
+                            label: Text(p.name),
+                            selected: selected,
+                            onSelected: (v) {
+                              setState(() {
+                                if (v) {
+                                  _selectedPlaceId = p.id;
+                                } else {
+                                  // toggle off
+                                  _selectedPlaceId = null;
+                                }
+                              });
+                            },
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                );
+              },
+            ),
+
             Material(
               borderRadius: BorderRadius.circular(8),
               clipBehavior: Clip.antiAlias,
@@ -61,6 +113,7 @@ class AddFigureToDayDialog extends ConsumerWidget {
                       ),
                     );
                   }
+
                   return ListView.separated(
                     shrinkWrap: true,
                     itemCount: figures.length,
@@ -70,7 +123,7 @@ class AddFigureToDayDialog extends ConsumerWidget {
                       return FigureCard(
                         figure: figure,
                         onTap: () => _addFigure(context, ref, figure),
-                        referenceDate: date,
+                        referenceDate: widget.date,
                         inkEffect: false,
                       );
                     },
@@ -98,6 +151,8 @@ class AddFigureToDayDialog extends ConsumerWidget {
     final repository = ref.read(trainingPlannedRepositoryProvider);
     if (repository == null) return;
 
-    await repository.add(TrainingPlannedModel(figureId: figure.id, date: date));
+    await repository.add(
+      TrainingPlannedModel(figureId: figure.id, date: widget.date),
+    );
   }
 }
