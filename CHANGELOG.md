@@ -1,5 +1,10 @@
 # Version 1
 
+### v1.17.0
+
+- Système de lieux auxquels on peut associer des figures
+- Choix de lieu pour filtrer les figures lors de la plannification
+
 ### v1.16.0
 
 - Possibilité d'indiquer si une figure maîtrisée doit rester active ou non
