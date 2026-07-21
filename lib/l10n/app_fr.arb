@@ -91,6 +91,20 @@
     "dayAfter": "Le lendemain",
     "yesterday": "Hier",
     "dayBefore": "La veille",
+    "placesTitle": "Lieux",
+    "addPlace": "Ajouter un lieu",
+    "newPlace": "Nouveau lieu",
+    "editPlace": "Modifier le lieu",
+    "deletePlace": "Supprimer le lieu",
+    "deletePlaceConfirm": "Supprimer \"{name}\" ? Cette action est irréversible.",
+    "@deletePlaceConfirm": {
+        "placeholders": {
+            "name": { "type": "String" }
+        }
+    },
+    "fieldPlaceName": "Nom",
+    "noPlaces": "Aucun lieu pour le moment",
+    "placesFigures": "figures",
     "beginLearning": "Je vais apprendre cette figure",
     "settingsTitle": "Paramètres",
     "settingsAccountSection": "Compte",

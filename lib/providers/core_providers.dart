@@ -6,6 +6,7 @@ import '../repositories/figure_repository.dart';
 import '../repositories/training_done_repository.dart';
 import '../repositories/training_planned_repository.dart';
 import '../repositories/journal_entry_repository.dart';
+import '../repositories/place_repository.dart';
 
 // Provider de l'instance Firestore
 final firestoreProvider = Provider<FirebaseFirestore>((ref) {
@@ -32,6 +33,16 @@ final figureRepositoryProvider = Provider<FigureRepository?>((ref) {
   final userId = ref.watch(userIdProvider);
   if (userId == null) return null;
   return FigureRepository(
+    firestore: ref.watch(firestoreProvider),
+    userId: userId,
+  );
+});
+
+// Provider pour les lieux (places)
+final placeRepositoryProvider = Provider<PlaceRepository?>((ref) {
+  final userId = ref.watch(userIdProvider);
+  if (userId == null) return null;
+  return PlaceRepository(
     firestore: ref.watch(firestoreProvider),
     userId: userId,
   );

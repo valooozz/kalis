@@ -187,6 +187,35 @@ class AppLocalizationsFr extends AppLocalizations {
   String get dayBefore => 'La veille';
 
   @override
+  String get placesTitle => 'Lieux';
+
+  @override
+  String get addPlace => 'Ajouter un lieu';
+
+  @override
+  String get newPlace => 'Nouveau lieu';
+
+  @override
+  String get editPlace => 'Modifier le lieu';
+
+  @override
+  String get deletePlace => 'Supprimer le lieu';
+
+  @override
+  String deletePlaceConfirm(String name) {
+    return 'Supprimer \"$name\" ? Cette action est irréversible.';
+  }
+
+  @override
+  String get fieldPlaceName => 'Nom';
+
+  @override
+  String get noPlaces => 'Aucun lieu pour le moment';
+
+  @override
+  String get placesFigures => 'figures';
+
+  @override
   String get beginLearning => 'Je vais apprendre cette figure';
 
   @override

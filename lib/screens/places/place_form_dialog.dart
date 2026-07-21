@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/models/place_model.dart';
+import 'package:kalis/providers/core_providers.dart';
+
+class PlaceFormDialog extends ConsumerStatefulWidget {
+  final PlaceModel? initial;
+  const PlaceFormDialog({this.initial, super.key});
+
+  @override
+  ConsumerState<PlaceFormDialog> createState() => _PlaceFormDialogState();
+}
+
+class _PlaceFormDialogState extends ConsumerState<PlaceFormDialog> {
+  final _controller = TextEditingController();
+  bool _saving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.text = widget.initial?.name ?? '';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final lbl = AppLocalizations.of(context)!;
+    return AlertDialog(
+      title: Text(widget.initial == null ? lbl.newPlace : lbl.editPlace),
+      content: TextField(
+        controller: _controller,
+        decoration: InputDecoration(labelText: lbl.fieldPlaceName),
+      ),
+      actions: [
+        TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(lbl.buttonCancel)),
+        FilledButton(
+          onPressed: _saving
+              ? null
+              : () async {
+                  final repo = ref.read(placeRepositoryProvider);
+                  if (repo == null) return;
+                  setState(() => _saving = true);
+                  final name = _controller.text.trim();
+                  if (name.isEmpty) return;
+                  if (widget.initial == null) {
+                    final created = await repo.create(PlaceModel(id: '', name: name));
+                    Navigator.of(context).pop(created);
+                  } else {
+                    final updated = widget.initial!.copyWith(name: name);
+                    await repo.update(updated);
+                    Navigator.of(context).pop(updated);
+                  }
+                },
+          child: Text(lbl.buttonSave),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+}

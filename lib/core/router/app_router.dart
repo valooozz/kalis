@@ -5,6 +5,7 @@ import 'package:kalis/screens/settings/settings_screen.dart';
 import '../../providers/core_providers.dart';
 import '../../screens/today/today_screen.dart';
 import '../../screens/figures/figures_screen.dart';
+import '../../screens/places/places_screen.dart';
 import '../../screens/planning/planning_screen.dart';
 import '../../screens/main/main_screen.dart';
 
@@ -31,6 +32,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: '/figures',
             pageBuilder: (context, state) =>
                 const NoTransitionPage(child: FiguresScreen()),
+          ),
+          GoRoute(
+            path: '/places',
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: PlacesScreen()),
           ),
           GoRoute(
             path: '/today',

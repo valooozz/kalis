@@ -430,6 +430,60 @@ abstract class AppLocalizations {
   /// **'La veille'**
   String get dayBefore;
 
+  /// No description provided for @placesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lieux'**
+  String get placesTitle;
+
+  /// No description provided for @addPlace.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un lieu'**
+  String get addPlace;
+
+  /// No description provided for @newPlace.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau lieu'**
+  String get newPlace;
+
+  /// No description provided for @editPlace.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le lieu'**
+  String get editPlace;
+
+  /// No description provided for @deletePlace.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le lieu'**
+  String get deletePlace;
+
+  /// No description provided for @deletePlaceConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer \"{name}\" ? Cette action est irréversible.'**
+  String deletePlaceConfirm(String name);
+
+  /// No description provided for @fieldPlaceName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom'**
+  String get fieldPlaceName;
+
+  /// No description provided for @noPlaces.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun lieu pour le moment'**
+  String get noPlaces;
+
+  /// No description provided for @placesFigures.
+  ///
+  /// In fr, this message translates to:
+  /// **'figures'**
+  String get placesFigures;
+
   /// No description provided for @beginLearning.
   ///
   /// In fr, this message translates to:
