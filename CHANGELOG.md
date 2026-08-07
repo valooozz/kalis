@@ -1,5 +1,11 @@
 # Version 1
 
+### v1.17.1
+
+- Amélioration du design du système de lieux
+- Filtre et tri des figures affichées pour être liées à un lieu
+- Modification style des titres de pages annexes
+
 ### v1.17.0
 
 - Système de lieux auxquels on peut associer des figures

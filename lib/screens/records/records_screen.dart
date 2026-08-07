@@ -19,9 +19,18 @@ class RecordsScreen extends ConsumerWidget {
       error: (e, _) => Text('Erreur : $e'),
       data: (learnedFigures) {
         return Scaffold(
-          appBar: AppBar(title: Text(lbl.recordsTitle)),
           body: CustomScrollView(
-            slivers: [_FigureSliver(figures: learnedFigures)],
+            slivers: [
+              SliverAppBar(
+                pinned: true,
+                expandedHeight: 120,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Text(lbl.recordsTitle),
+                  titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
+                ),
+              ),
+              _FigureSliver(figures: learnedFigures),
+            ],
           ),
         );
       },

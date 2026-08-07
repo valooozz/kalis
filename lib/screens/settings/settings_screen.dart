@@ -13,26 +13,38 @@ class SettingsScreen extends ConsumerWidget {
     final isLinkedToGoogle = ref.watch(isLinkedToGoogleProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(lbl.settingsTitle)),
-      body: ListView(
-        children: [
-          // Section compte
-          _SectionHeader(label: lbl.settingsAccountSection),
-          if (!isLinkedToGoogle)
-            _SettingsTile(
-              icon: Icons.account_circle,
-              title: lbl.settingsLinkGoogle,
-              subtitle: lbl.settingsLinkGoogleSubtitle,
-              onTap: () => _linkGoogle(context, ref, lbl),
-            )
-          else
-            _SettingsTile(
-              icon: Icons.check_circle,
-              title: lbl.settingsLinkedGoogle,
-              subtitle: ref.watch(authStateProvider).valueOrNull?.email ?? '',
-              iconColor: Colors.green,
-              onTap: null,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 120,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(lbl.settingsTitle),
+              titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
             ),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              // Section compte
+              _SectionHeader(label: lbl.settingsAccountSection),
+              if (!isLinkedToGoogle)
+                _SettingsTile(
+                  icon: Icons.account_circle,
+                  title: lbl.settingsLinkGoogle,
+                  subtitle: lbl.settingsLinkGoogleSubtitle,
+                  onTap: () => _linkGoogle(context, ref, lbl),
+                )
+              else
+                _SettingsTile(
+                  icon: Icons.check_circle,
+                  title: lbl.settingsLinkedGoogle,
+                  subtitle:
+                      ref.watch(authStateProvider).valueOrNull?.email ?? '',
+                  iconColor: Colors.green,
+                  onTap: null,
+                ),
+            ]),
+          ),
         ],
       ),
     );
@@ -121,7 +133,7 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
       child: Text(
         label,
         style: theme.textTheme.labelLarge?.copyWith(
