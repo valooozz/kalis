@@ -64,15 +64,32 @@ class _AddFigureToDayDialogState extends ConsumerState<AddFigureToDayDialog> {
                           child: ChoiceChip(
                             label: Text(p.name),
                             selected: selected,
+                            showCheckmark: false,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              side: BorderSide(
+                                color: selected
+                                    ? Colors.transparent
+                                    : theme.colorScheme.outlineVariant,
+                              ),
+                            ),
+                            selectedColor: theme.colorScheme.primaryContainer,
+                            backgroundColor: theme
+                                .colorScheme
+                                .surfaceContainerHighest
+                                .withValues(alpha: 0.4),
+                            labelStyle: theme.textTheme.bodyMedium?.copyWith(
+                              color: selected
+                                  ? theme.colorScheme.onPrimaryContainer
+                                  : theme.colorScheme.onSurface,
+                              fontWeight: selected
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                            ),
                             onSelected: (v) {
-                              setState(() {
-                                if (v) {
-                                  _selectedPlaceId = p.id;
-                                } else {
-                                  // toggle off
-                                  _selectedPlaceId = null;
-                                }
-                              });
+                              setState(
+                                () => _selectedPlaceId = v ? p.id : null,
+                              );
                             },
                           ),
                         );

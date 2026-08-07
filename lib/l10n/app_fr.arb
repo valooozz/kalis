@@ -99,7 +99,9 @@
     "deletePlaceConfirm": "Supprimer \"{name}\" ? Cette action est irréversible.",
     "@deletePlaceConfirm": {
         "placeholders": {
-            "name": { "type": "String" }
+            "name": {
+                "type": "String"
+            }
         }
     },
     "fieldPlaceName": "Nom",
