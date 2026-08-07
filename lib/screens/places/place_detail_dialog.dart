@@ -78,7 +78,7 @@ class _PlaceDetailDialogState extends ConsumerState<PlaceDetailDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final lbl = AppLocalizations.of(context)!;
-    final figuresAsync = ref.watch(figuresProvider);
+    final figuresAsync = ref.watch(linkableFiguresProvider);
 
     return AlertDialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),

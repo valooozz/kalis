@@ -7,6 +7,7 @@ import 'package:kalis/providers/today_providers.dart';
 import 'package:kalis/repositories/figure_repository.dart';
 import '../models/figure_model.dart';
 import 'core_providers.dart';
+import 'package:collection/collection.dart';
 
 // Stream de toutes les figures, triées par statut puis alphabétiquement, en tenant compte du filtre de couleur
 final figuresProvider = StreamProvider<List<FigureModel>>((ref) {
@@ -34,6 +35,23 @@ final figuresByStateProvider =
             (figures) => figures.where((f) => f.state == state).toList(),
           );
     });
+
+// Figures pouvant être liées à un lieu (apprises ou en apprentissage,
+// on exclut celles encore "à apprendre"), triées : apprises d'abord,
+// puis en apprentissage, et dans chaque groupe par "order"
+final linkableFiguresProvider = Provider<AsyncValue<List<FigureModel>>>((ref) {
+  return ref
+      .watch(figuresProvider)
+      .whenData(
+        (figures) =>
+            figures.where((f) => f.state != FigureState.toLearn).sorted((a, b) {
+              if (a.state != b.state) {
+                return a.state == FigureState.learned ? -1 : 1;
+              }
+              return a.order.compareTo(b.order);
+            }),
+      );
+});
 
 /// Figures actuellement en pause (tous états confondus, sans filtre couleur).
 final pausedFiguresProvider = StreamProvider<List<FigureModel>>((ref) {
