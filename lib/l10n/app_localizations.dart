@@ -466,6 +466,12 @@ abstract class AppLocalizations {
   /// **'Supprimer \"{name}\" ? Cette action est irréversible.'**
   String deletePlaceConfirm(String name);
 
+  /// No description provided for @placeAlreadyExistError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce lieu existe déjà.'**
+  String get placeAlreadyExistError;
+
   /// No description provided for @fieldPlaceName.
   ///
   /// In fr, this message translates to:

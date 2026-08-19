@@ -207,6 +207,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get placeAlreadyExistError => 'Ce lieu existe déjà.';
+
+  @override
   String get fieldPlaceName => 'Nom';
 
   @override

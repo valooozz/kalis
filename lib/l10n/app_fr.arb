@@ -104,6 +104,7 @@
             }
         }
     },
+    "placeAlreadyExistError": "Ce lieu existe déjà.",
     "fieldPlaceName": "Nom",
     "noPlaces": "Aucun lieu pour le moment",
     "placesFigures": "figures",
