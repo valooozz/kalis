@@ -1,5 +1,10 @@
 # Version 1
 
+### v1.17.2
+
+- Tri alphabétique des lieux
+- Impossible d'ajouter deux lieux avec le même nom
+
 ### v1.17.1
 
 - Amélioration du design du système de lieux
