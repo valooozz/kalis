@@ -410,4 +410,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get activateFigure => 'Garder la figure active';
+
+  @override
+  String get favoriteFigure => 'Ajouter la figure aux favoris';
+
+  @override
+  String get unfavoriteFigure => 'Retirer la figure des favoris';
 }

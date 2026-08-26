@@ -29,48 +29,57 @@ class FigureDetailDialog extends ConsumerWidget {
     return AlertDialog(
       backgroundColor: figure.paused ? theme.colorScheme.outlineVariant : null,
       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-      title: Row(
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 16,
-            height: 16,
-            decoration: BoxDecoration(
-              color: figure.color.color.withValues(
-                alpha: figure.paused ? 0.4 : 1,
+          Row(
+            children: [
+              Container(
+                width: 16,
+                height: 16,
+                decoration: BoxDecoration(
+                  color: figure.color.color.withValues(
+                    alpha: figure.paused ? 0.4 : 1,
+                  ),
+                  shape: BoxShape.circle,
+                ),
               ),
-              shape: BoxShape.circle,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(child: Text(figure.name)),
-          if (figure.state != FigureState.toLearn) ...[
-            IconButton(
-              onPressed: () => _openCalendarDialog(context, ref, figure),
-              icon: const Icon(Icons.calendar_month),
-            ),
-            IconButton(
-              onPressed: () => _togglePaused(context, ref, lbl, figure),
-              icon: Icon(figure.paused ? Icons.play_arrow : Icons.pause),
-            ),
-          ],
-          if (figure.state == FigureState.learned)
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                _toggleActive(ref);
-              },
-              icon: Icon(
-                figure.active ? Icons.loop : Icons.loop_outlined,
-                color: figure.active ? figure.color.color : null,
+              const SizedBox(width: 8),
+              Expanded(child: Text(figure.name)),
+              if (figure.state == FigureState.learned)
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _toggleActive(ref);
+                  },
+                  icon: Icon(
+                    figure.active ? Icons.loop : Icons.loop_outlined,
+                    color: figure.active ? figure.color.color : null,
+                  ),
+                  tooltip: figure.active
+                      ? lbl.deactivateFigure
+                      : lbl.activateFigure,
+                ),
+              if (figure.state != FigureState.toLearn)
+                IconButton(
+                  icon: Icon(
+                    figure.favorite ? Icons.star : Icons.star_outline,
+                    color: figure.favorite ? figure.color.color : null,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _toggleFavorite(ref);
+                  },
+                  tooltip: figure.favorite
+                      ? lbl.unfavoriteFigure
+                      : lbl.favoriteFigure,
+                ),
+              IconButton(
+                icon: _stateIcon(figure.state, theme),
+                onPressed: () => _openStatusPicker(context, ref),
+                tooltip: lbl.changeStatus,
               ),
-              tooltip: figure.active
-                  ? lbl.deactivateFigure
-                  : lbl.activateFigure,
-            ),
-          IconButton(
-            icon: _stateIcon(figure.state, theme),
-            onPressed: () => _openStatusPicker(context, ref),
-            tooltip: lbl.changeStatus,
+            ],
           ),
         ],
       ),
@@ -174,20 +183,44 @@ class FigureDetailDialog extends ConsumerWidget {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(lbl.buttonClose),
-        ),
-        FilledButton.icon(
-          onPressed: () {
-            Navigator.of(context).pop();
-            showDialog(
-              context: context,
-              builder: (_) => FigureFormDialog(figure: figure),
-            );
-          },
-          icon: const Icon(Icons.edit),
-          label: Text(lbl.buttonEdit),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Wrap(
+              children: [
+                if (figure.state != FigureState.toLearn) ...[
+                  IconButton(
+                    onPressed: () => _openCalendarDialog(context, ref, figure),
+                    icon: const Icon(Icons.calendar_month),
+                  ),
+                  IconButton(
+                    onPressed: () => _togglePaused(context, ref, lbl, figure),
+                    icon: Icon(figure.paused ? Icons.play_arrow : Icons.pause),
+                  ),
+                ],
+              ],
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(lbl.buttonClose),
+                ),
+                FilledButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    showDialog(
+                      context: context,
+                      builder: (_) => FigureFormDialog(figure: figure),
+                    );
+                  },
+                  icon: const Icon(Icons.edit),
+                  label: Text(lbl.buttonEdit),
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     );
@@ -317,6 +350,11 @@ class FigureDetailDialog extends ConsumerWidget {
   Future<void> _toggleActive(WidgetRef ref) async {
     final figureRepository = ref.read(figureRepositoryProvider);
     await figureRepository?.update(figure.copyWith(active: !figure.active));
+  }
+
+  Future<void> _toggleFavorite(WidgetRef ref) async {
+    final figureRepository = ref.read(figureRepositoryProvider);
+    await figureRepository?.update(figure.copyWith(favorite: !figure.favorite));
   }
 }
 

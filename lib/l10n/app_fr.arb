@@ -218,5 +218,7 @@
     "pausedFiguresSection": "Figures en pause",
     "toLearnFiguresSection": "Figures à apprendre",
     "deactivateFigure": "Désactiver la figure",
-    "activateFigure": "Garder la figure active"
+    "activateFigure": "Garder la figure active",
+    "favoriteFigure": "Ajouter la figure aux favoris",
+    "unfavoriteFigure": "Retirer la figure des favoris"
 }

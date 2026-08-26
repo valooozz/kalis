@@ -819,6 +819,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Garder la figure active'**
   String get activateFigure;
+
+  /// No description provided for @favoriteFigure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter la figure aux favoris'**
+  String get favoriteFigure;
+
+  /// No description provided for @unfavoriteFigure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer la figure des favoris'**
+  String get unfavoriteFigure;
 }
 
 class _AppLocalizationsDelegate
