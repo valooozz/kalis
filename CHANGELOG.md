@@ -1,5 +1,10 @@
 # Version 1
 
+### v1.18.0
+
+- Possibilité de placer un figure en favori pour la faire remonter dans la planification
+- Système de scoring général pour l'ordre d'apparition des figures dans la planification
+
 ### v1.17.2
 
 - Tri alphabétique des lieux

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/core/utils/date_utils.dart';
 import 'package:kalis/models/training_done_model.dart';
@@ -180,7 +182,7 @@ final availableFiguresForDayProvider =
           }
         }
 
-        // Récupération des dates pour le tri
+        // Récupération des dates pour le calcul du score
         final effectiveLastDates = <String, DateTime?>{};
         final nextTrainingDates = <String, DateTime?>{};
 
@@ -203,44 +205,40 @@ final availableFiguresForDayProvider =
               .valueOrNull;
         }
 
-        // Tri selon les règles métier
+        // Calcul du score de chaque figure
+        int computeScore(FigureModel figure) {
+          var score = 0;
+
+          if (figure.state == FigureState.learning) score += 5;
+          if (figure.favorite) score += 20;
+
+          final lastDate = effectiveLastDates[figure.id];
+          if (lastDate == null) {
+            score += 20;
+          } else {
+            var difference = date.difference(lastDate).inDays;
+            if (difference > 1) {
+              score += min(difference * 2, 19);
+            }
+          }
+
+          final nextDate = nextTrainingDates[figure.id];
+          if (nextDate != null && !figure.favorite) {
+            var difference = nextDate.difference(date).inDays;
+            score -= (20 / (difference * difference)).floor();
+          }
+
+          return score;
+        }
+
+        final scores = <String, int>{
+          for (final figure in available) figure.id: computeScore(figure),
+        };
+
+        // Tri par score décroissant, ordre alphabétique en cas d'égalité
         available.sort((a, b) {
-          final aNext = nextTrainingDates[a.id];
-          final bNext = nextTrainingDates[b.id];
-          final aLast = effectiveLastDates[a.id];
-          final bLast = effectiveLastDates[b.id];
-
-          // Règle 1 : sans date de prochain entraînement en premier
-          if (aNext == null && bNext != null) return -1;
-          if (aNext != null && bNext == null) return 1;
-
-          // Règle 2 : dernier entraînement effectif le plus éloigné
-          // du jour sélectionné en premier
-          if (aLast == null && bLast != null) return -1;
-          if (aLast != null && bLast == null) return 1;
-          if (aLast != null && bLast != null) {
-            final aDiff = date.difference(aLast).inDays;
-            final bDiff = date.difference(bLast).inDays;
-            final lastComparison = bDiff.compareTo(aDiff);
-            if (lastComparison != 0) return lastComparison;
-          }
-
-          // Règle 3 : date de prochain entraînement la plus éloignée
-          // du jour sélectionné en premier
-          if (aNext != null && bNext != null) {
-            final aDiff = aNext.difference(date).inDays.abs();
-            final bDiff = bNext.difference(date).inDays.abs();
-            final nextComparison = bDiff.compareTo(aDiff);
-            if (nextComparison != 0) return nextComparison;
-          }
-
-          // Règle 4 : en apprentissage avant apprise
-          if (a.state != b.state) {
-            if (a.state == FigureState.learning) return -1;
-            if (b.state == FigureState.learning) return 1;
-          }
-
-          // Règle 5 : ordre alphabétique
+          final scoreComparison = scores[b.id]!.compareTo(scores[a.id]!);
+          if (scoreComparison != 0) return scoreComparison;
           return a.name.compareTo(b.name);
         });
 
