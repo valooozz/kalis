@@ -1,5 +1,11 @@
 # Version 1
 
+### v1.19.0
+
+- Possibilité d'échanger les figures de deux jours
+- Système de note générale
+- Fix : Sélection du texte du journal quand on le modifie
+
 ### v1.18.0
 
 - Possibilité de placer un figure en favori pour la faire remonter dans la planification
