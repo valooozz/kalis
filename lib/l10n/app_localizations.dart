@@ -658,6 +658,24 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{Aucun entraînement ce mois-ci} =1{1 entraînement ce mois-ci} other{{count} entraînements ce mois-ci}}'**
   String calendarMonthCount(int count);
 
+  /// No description provided for @generalNoteTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note générale'**
+  String get generalNoteTooltip;
+
+  /// No description provided for @generalNoteDialogTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note générale'**
+  String get generalNoteDialogTitle;
+
+  /// No description provided for @generalNoteHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écris ta note ici...'**
+  String get generalNoteHint;
+
   /// No description provided for @globalCalendarTitle.
   ///
   /// In fr, this message translates to:
@@ -859,7 +877,7 @@ abstract class AppLocalizations {
   /// No description provided for @cannotSwapDoneFigure.
   ///
   /// In fr, this message translates to:
-  /// **'Impossible d\'échanger : une figure déjà réalisée aujourd\'hui serait déplacée'**
+  /// **'Une figure déjà réalisée aujourd\'hui serait déplacée.'**
   String get cannotSwapDoneFigure;
 
   /// No description provided for @noFigurePlannedThisDay.

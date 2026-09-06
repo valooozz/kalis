@@ -7,6 +7,7 @@ import '../repositories/training_done_repository.dart';
 import '../repositories/training_planned_repository.dart';
 import '../repositories/journal_entry_repository.dart';
 import '../repositories/place_repository.dart';
+import '../repositories/general_note_repository.dart';
 
 // Provider de l'instance Firestore
 final firestoreProvider = Provider<FirebaseFirestore>((ref) {
@@ -72,6 +73,15 @@ final journalEntryRepositoryProvider = Provider<JournalEntryRepository?>((ref) {
   final userId = ref.watch(userIdProvider);
   if (userId == null) return null;
   return JournalEntryRepository(
+    firestore: ref.watch(firestoreProvider),
+    userId: userId,
+  );
+});
+
+final generalNoteRepositoryProvider = Provider<GeneralNoteRepository?>((ref) {
+  final userId = ref.watch(userIdProvider);
+  if (userId == null) return null;
+  return GeneralNoteRepository(
     firestore: ref.watch(firestoreProvider),
     userId: userId,
   );

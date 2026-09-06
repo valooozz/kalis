@@ -8,6 +8,7 @@ import 'package:kalis/widgets/color_filter_dialog.dart';
 import 'package:kalis/widgets/figure_card.dart';
 import 'figure_detail_dialog.dart';
 import 'figure_form_dialog.dart';
+import 'general_note_dialog.dart';
 import 'package:go_router/go_router.dart';
 
 class FiguresScreen extends ConsumerWidget {
@@ -44,6 +45,14 @@ class FiguresScreen extends ConsumerWidget {
                 pinned: true,
                 expandedHeight: 120,
                 actions: [
+                  IconButton(
+                    icon: const Icon(Icons.sticky_note_2),
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (_) => const GeneralNoteDialog(),
+                    ),
+                    tooltip: lbl.generalNoteTooltip,
+                  ),
                   IconButton(
                     icon: const Icon(Icons.palette),
                     onPressed: () => showDialog(

@@ -150,6 +150,9 @@
             }
         }
     },
+    "generalNoteTooltip": "Note générale",
+    "generalNoteDialogTitle": "Note générale",
+    "generalNoteHint": "Écris ta note ici...",
     "globalCalendarTitle": "Calendrier global",
     "filterByColor": "Filtrer par couleur",
     "pausedFigure": "Figure en pause",

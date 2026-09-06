@@ -317,6 +317,15 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get generalNoteTooltip => 'Note générale';
+
+  @override
+  String get generalNoteDialogTitle => 'Note générale';
+
+  @override
+  String get generalNoteHint => 'Écris ta note ici...';
+
+  @override
   String get globalCalendarTitle => 'Calendrier global';
 
   @override
@@ -431,7 +440,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get cannotSwapDoneFigure =>
-      'Impossible d\'échanger : une figure déjà réalisée aujourd\'hui serait déplacée';
+      'Une figure déjà réalisée aujourd\'hui serait déplacée.';
 
   @override
   String get noFigurePlannedThisDay => 'Aucune figure prévue';
