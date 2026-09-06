@@ -88,4 +88,46 @@ class TrainingPlannedRepository {
     final doc = await _collection.doc(docId).get();
     return doc.exists;
   }
+
+  String _dateKey(DateTime date) => date.toIso8601String().substring(0, 10);
+
+  /// Échange les figures planifiées entre deux jours.
+  /// Les figures présentes sur les deux jours ne sont pas affectées.
+  Future<void> swapDays({
+    required DateTime dayA,
+    required DateTime dayB,
+    required List<String> figureIdsA,
+    required List<String> figureIdsB,
+  }) async {
+    final setA = figureIdsA.toSet();
+    final setB = figureIdsB.toSet();
+    final common = setA.intersection(setB);
+
+    final onlyA = setA.difference(common); // à déplacer de A vers B
+    final onlyB = setB.difference(common); // à déplacer de B vers A
+
+    if (onlyA.isEmpty && onlyB.isEmpty) return;
+
+    final dayAKey = _dateKey(dayA);
+    final dayBKey = _dateKey(dayB);
+    final batch = _firestore.batch();
+
+    for (final figureId in onlyA) {
+      batch.delete(_collection.doc('${figureId}_$dayAKey'));
+      batch.set(
+        _collection.doc('${figureId}_$dayBKey'),
+        TrainingPlannedModel(figureId: figureId, date: dayB).toFirestore(),
+      );
+    }
+
+    for (final figureId in onlyB) {
+      batch.delete(_collection.doc('${figureId}_$dayBKey'));
+      batch.set(
+        _collection.doc('${figureId}_$dayAKey'),
+        TrainingPlannedModel(figureId: figureId, date: dayA).toFirestore(),
+      );
+    }
+
+    await batch.commit();
+  }
 }

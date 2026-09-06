@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/screens/planning/begin_learning_dialog.dart';
 import 'package:kalis/screens/planning/past_planning_dialog.dart';
+import 'package:kalis/screens/planning/swap_days_dialog.dart';
 import 'package:kalis/screens/planning/training_dates_dialog.dart';
 import '../../models/figure_model.dart';
 import '../../providers/planning_providers.dart';
@@ -28,6 +29,14 @@ class PlanningScreen extends ConsumerWidget {
             pinned: true,
             expandedHeight: 120,
             actions: [
+              IconButton(
+                icon: const Icon(Icons.swap_horiz),
+                onPressed: () => showDialog(
+                  context: context,
+                  builder: (_) => const SwapDaysDialog(),
+                ),
+                tooltip: lbl.swapDaysTooltip,
+              ),
               IconButton(
                 icon: const Icon(Icons.history),
                 onPressed: () => showDialog(

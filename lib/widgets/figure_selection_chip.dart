@@ -4,13 +4,13 @@ import 'package:kalis/models/figure_model.dart';
 class FigureSelectionChip extends StatelessWidget {
   final FigureModel figure;
   final bool selected;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const FigureSelectionChip({
     super.key,
     required this.figure,
     required this.selected,
-    required this.onTap,
+    this.onTap,
   });
 
   @override

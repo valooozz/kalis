@@ -831,6 +831,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Retirer la figure des favoris'**
   String get unfavoriteFigure;
+
+  /// No description provided for @swapDaysTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échanger deux jours'**
+  String get swapDaysTooltip;
+
+  /// No description provided for @swapDaysDialogTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échanger deux jours'**
+  String get swapDaysDialogTitle;
+
+  /// No description provided for @swapDaysConfirmButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échanger'**
+  String get swapDaysConfirmButton;
+
+  /// No description provided for @cannotSwapDoneFigureTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échange impossible'**
+  String get cannotSwapDoneFigureTitle;
+
+  /// No description provided for @cannotSwapDoneFigure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d\'échanger : une figure déjà réalisée aujourd\'hui serait déplacée'**
+  String get cannotSwapDoneFigure;
+
+  /// No description provided for @noFigurePlannedThisDay.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune figure prévue'**
+  String get noFigurePlannedThisDay;
+
+  /// No description provided for @swapDaysSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les jours ont été échangés'**
+  String get swapDaysSuccess;
 }
 
 class _AppLocalizationsDelegate

@@ -416,4 +416,26 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get unfavoriteFigure => 'Retirer la figure des favoris';
+
+  @override
+  String get swapDaysTooltip => 'Échanger deux jours';
+
+  @override
+  String get swapDaysDialogTitle => 'Échanger deux jours';
+
+  @override
+  String get swapDaysConfirmButton => 'Échanger';
+
+  @override
+  String get cannotSwapDoneFigureTitle => 'Échange impossible';
+
+  @override
+  String get cannotSwapDoneFigure =>
+      'Impossible d\'échanger : une figure déjà réalisée aujourd\'hui serait déplacée';
+
+  @override
+  String get noFigurePlannedThisDay => 'Aucune figure prévue';
+
+  @override
+  String get swapDaysSuccess => 'Les jours ont été échangés';
 }

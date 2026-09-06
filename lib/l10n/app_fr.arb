@@ -220,5 +220,12 @@
     "deactivateFigure": "Désactiver la figure",
     "activateFigure": "Garder la figure active",
     "favoriteFigure": "Ajouter la figure aux favoris",
-    "unfavoriteFigure": "Retirer la figure des favoris"
+    "unfavoriteFigure": "Retirer la figure des favoris",
+    "swapDaysTooltip": "Échanger deux jours",
+    "swapDaysDialogTitle": "Échanger deux jours",
+    "swapDaysConfirmButton": "Échanger",
+    "cannotSwapDoneFigureTitle": "Échange impossible",
+    "cannotSwapDoneFigure": "Une figure déjà réalisée aujourd'hui serait déplacée.",
+    "noFigurePlannedThisDay": "Aucune figure prévue",
+    "swapDaysSuccess": "Les jours ont été échangés"
 }
