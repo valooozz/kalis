@@ -1,5 +1,10 @@
 # Version 1
 
+### v1.19.1
+
+- Figures dont la date de début est dans le futur n'apparaissent pas dans le Dialog de planification
+- Amélioration style Dialog de swap
+
 ### v1.19.0
 
 - Possibilité d'échanger les figures de deux jours

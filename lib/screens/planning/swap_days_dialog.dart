@@ -85,7 +85,7 @@ class _SwapDaysDialogState extends ConsumerState<SwapDaysDialog> {
         ),
         if (isSelected)
           Padding(
-            padding: const EdgeInsets.only(left: 32, right: 8, bottom: 8),
+            padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
             child: _DayFiguresPreview(date: day),
           ),
       ],
@@ -203,6 +203,7 @@ class _DayFiguresPreview extends ConsumerWidget {
         }
         return Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: figures
               .map(
                 (figure) => FigureSelectionChip(figure: figure, selected: true),

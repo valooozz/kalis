@@ -29,6 +29,7 @@ class FigureSelectionChip extends StatelessWidget {
           onTap: onTap,
           borderRadius: BorderRadius.circular(10),
           child: Container(
+            width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
