@@ -165,6 +165,9 @@ final availableFiguresForDayProvider =
           if (figure.state == FigureState.learned && !figure.active) {
             if (!showLearned) return false;
           }
+          if (figure.startDate != null && figure.startDate!.isAfter(date)) {
+            return false;
+          }
           return true;
         }).toList();
 
