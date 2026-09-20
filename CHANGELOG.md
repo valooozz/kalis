@@ -1,5 +1,9 @@
 # Version 1
 
+### v1.19.2
+
+- Étoile sur les FigureCard des figures favorites
+
 ### v1.19.1
 
 - Figures dont la date de début est dans le futur n'apparaissent pas dans le Dialog de planification
