@@ -80,7 +80,7 @@ class FigureCard extends ConsumerWidget {
     final cardColor = figure.paused
         ? figureColor.withValues(alpha: alphaValue)
         : figureColor;
-    final bool _showTrainingDates =
+    final bool showTrainingDates =
         figure.state == FigureState.learning ||
         (figure.state == FigureState.learned && figure.active);
 
@@ -89,53 +89,57 @@ class FigureCard extends ConsumerWidget {
       child: InkWell(
         onTap: onTap,
         splashColor: inkEffect ? null : Colors.transparent,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(left: BorderSide(color: cardColor, width: 10)),
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(12),
-              bottomLeft: Radius.circular(12),
-            ),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      figure.name,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: theme.colorScheme.onPrimaryContainer.withValues(
-                          alpha: alphaValue,
-                        ),
-                      ),
-                    ),
-                    if (_showTrainingDates && !figure.paused) ...[
-                      const SizedBox(height: 4),
-                      DateRow(
-                        icon: Icons.history,
-                        date: lastDate,
-                        label: lbl.lastTraining,
-                        referenceDate: referenceDate,
-                        isAlert: lastDateAlert,
-                      ),
-                      const SizedBox(height: 2),
-                      DateRow(
-                        icon: Icons.event,
-                        date: displayedNextDate,
-                        label: lbl.nextTraining,
-                        referenceDate: referenceDate,
-                      ),
-                    ],
-                  ],
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                border: Border(left: BorderSide(color: cardColor, width: 10)),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
                 ),
               ),
-              _StateIcon(state: figure.state, color: cardColor),
-            ],
-          ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        figure.name,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.onPrimaryContainer
+                              .withValues(alpha: alphaValue),
+                        ),
+                      ),
+                      if (showTrainingDates && !figure.paused) ...[
+                        const SizedBox(height: 4),
+                        DateRow(
+                          icon: Icons.history,
+                          date: lastDate,
+                          label: lbl.lastTraining,
+                          referenceDate: referenceDate,
+                          isAlert: lastDateAlert,
+                        ),
+                        const SizedBox(height: 2),
+                        DateRow(
+                          icon: Icons.event,
+                          date: displayedNextDate,
+                          label: lbl.nextTraining,
+                          referenceDate: referenceDate,
+                        ),
+                      ],
+                    ],
+                  ),
+                  if (figure.favorite)
+                    Icon(Icons.star, size: 20, color: figure.color.color),
+                  _StateIcon(state: figure.state, color: cardColor),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
