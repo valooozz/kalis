@@ -1,5 +1,11 @@
 # Version 1
 
+### v1.20.0
+
+- Ajout du système de renfos personnalisés : création de routines d'entraînement associées à plusieurs figures, suivi de leur exécution et signalement si elles ne sont pas pratiquées pendant plusieurs jours
+- Ajout d'un bouton dédié dans l'onglet Today pour valider rapidement les renfos du jour et une route dédiée dans les écrans annexes pour gérer les renfos
+- Déplacement de la note générale vers l'écran de séance du jour
+
 ### v1.19.2
 
 - Étoile sur les FigureCard des figures favorites

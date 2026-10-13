@@ -1,7 +1,7 @@
 ---
 agent: agent
 description: Met à jour la documentation du projet Flutter en fonction des différences entre l'état actuel du repo et la branche main
-tools: ['codebase', 'runCommands', 'editFiles', 'search', 'changes']
+tools: [execute, read, edit, search, todo]
 ---
 
 # Mise à jour de la documentation

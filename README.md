@@ -8,6 +8,7 @@ Kalis est une application mobile de suivi et d'organisation de séances de calli
 - **Lieux** — Gérez des lieux d'entraînement (salle, parc, tapis, etc.) et associez-les à des figures pour garder un contexte de pratique.
 - **Séance du jour** — Visualisez les figures prévues pour aujourd'hui, validez-les et ajoutez des notes de séance.
 - **Planification** — Planifiez vos entraînements sur les 14 prochains jours en ajoutant les figures à travailler jour par jour.
+- **Renfos** — Créez des blocs d'entraînement personnalisés composés de plusieurs figures et suivez leur exécution quotidienne.
 - **Journal** — Gardez une trace de vos progrès grâce à des entrées de journal associées à chaque figure.
 - **Note générale** — Rédigez une note libre pour votre progression globale, objectifs et remarques générales.
 - **Synchronisation cloud** — Vos données sont synchronisées en temps réel via Firebase Firestore et accessibles sur tous vos appareils, avec possibilité de lier un compte Google.
@@ -72,9 +73,9 @@ lib/
 ├── core/          # Thème, router, utilitaires globaux
 ├── l10n/          # Fichiers de traduction (.arb)
 ├── models/        # Entités métier (figures, journal, entraînements, lieux)
-├── providers/     # Providers Riverpod (figures, planning, lieux, note générale)
+├── providers/     # Providers Riverpod (figures, planning, lieux, renfos, note générale)
 ├── repositories/  # Accès aux données Firestore et collections utilisateur
-├── screens/       # Écrans, dialogs et écrans plein écran (settings, records, places)
+├── screens/       # Écrans, dialogs et écrans plein écran (settings, records, places, renfos)
 ├── widgets/       # Widgets réutilisables, cartes, sélecteurs, composants UI
 ├── main.dart      # Initialisation Firebase, auth anonyme et démarrage de l'application
 ├── firebase_options.dart  # Configuration Firebase générée

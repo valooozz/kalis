@@ -101,6 +101,7 @@ lib/
 │   ├── journal_providers.dart        # Journal d'une figure
 │   ├── place_providers.dart          # Lieux utilisateur
 │   ├── planning_providers.dart       # Planification + logique métier
+│   ├── renfo_providers.dart          # Renfos personnalisés + état du jour
 │   └── today_providers.dart          # Vue du jour
 │
 ├── screens/                           # Écrans et dialogues
@@ -110,6 +111,7 @@ lib/
 │   ├── places/                       # Gestion des lieux
 │   ├── planning/                     # Planification 14 jours
 │   ├── records/                      # Historique / records
+│   ├── renfos/                       # Gestion des renfos personnalisés
 │   ├── settings/                     # Auth Google + paramètres compte
 │   └── today/                        # Séance du jour
 │
@@ -201,6 +203,31 @@ class PlaceModel {
   final String id;
   final String name;
   final List<String> figureIds;
+}
+```
+
+### RenfoModel
+
+Represente un renfo, c'est-à-dire un bloc d'entraînement personnalisé composé d'un nom et d'une sélection de figures.
+
+```dart
+class RenfoModel {
+  final String id;
+  final String name;
+  final List<String> figureIds;
+}
+```
+
+Le `figureIds` permet de relier un renfo à plusieurs figures, tandis que `name` sert à identifier la routine ou le thème de séance à travailler.
+
+### RenfoDoneModel
+
+Enregistre qu'un renfo a été validé pour une date donnée.
+
+```dart
+class RenfoDoneModel {
+  final String renfoId;
+  final DateTime date;
 }
 ```
 
@@ -368,9 +395,10 @@ MainScreen (Navigation principale avec BottomNavigationBar)
 
 Routes plein écran (hors onglets)
 ├── /places             → PlacesScreen (gestion des lieux)
+├── /renfos            → RenfosScreen (gestion des routines d'entraînement)
 ├── /records            → RecordsScreen (historique + records)
 ├── /settings           → SettingsScreen (compte Google / paramètres)
-└── Dialogues modaux   → FigureFormDialog, FigureDetailDialog, PlaceFormDialog, etc.
+└── Dialogues modaux   → FigureFormDialog, FigureDetailDialog, PlaceFormDialog, RenfoFormDialog, etc.
 ```
 
 ### Écrans principaux
