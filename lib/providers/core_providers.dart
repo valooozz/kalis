@@ -8,6 +8,8 @@ import '../repositories/training_planned_repository.dart';
 import '../repositories/journal_entry_repository.dart';
 import '../repositories/place_repository.dart';
 import '../repositories/general_note_repository.dart';
+import '../repositories/renfo_repository.dart';
+import '../repositories/renfo_done_repository.dart';
 
 // Provider de l'instance Firestore
 final firestoreProvider = Provider<FirebaseFirestore>((ref) {
@@ -97,4 +99,22 @@ final isLinkedToGoogleProvider = Provider<bool>((ref) {
   final user = FirebaseAuth.instance.currentUser;
   if (user == null) return false;
   return user.providerData.any((p) => p.providerId == 'google.com');
+});
+
+final renfoRepositoryProvider = Provider<RenfoRepository?>((ref) {
+  final userId = ref.watch(userIdProvider);
+  if (userId == null) return null;
+  return RenfoRepository(
+    firestore: ref.watch(firestoreProvider),
+    userId: userId,
+  );
+});
+
+final renfoDoneRepositoryProvider = Provider<RenfoDoneRepository?>((ref) {
+  final userId = ref.watch(userIdProvider);
+  if (userId == null) return null;
+  return RenfoDoneRepository(
+    firestore: ref.watch(firestoreProvider),
+    userId: userId,
+  );
 });

@@ -447,4 +447,39 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get swapDaysSuccess => 'Les jours ont été échangés';
+
+  @override
+  String get renfosTitle => 'Renfos';
+
+  @override
+  String get addRenfo => 'Ajouter un renfo';
+
+  @override
+  String get newRenfo => 'Nouveau renfo';
+
+  @override
+  String get editRenfo => 'Modifier le renfo';
+
+  @override
+  String get deleteRenfo => 'Supprimer le renfo';
+
+  @override
+  String deleteRenfoConfirm(String name) {
+    return 'Supprimer \"$name\" ? Cette action est irréversible.';
+  }
+
+  @override
+  String get renfoAlreadyExistError => 'Ce renfo existe déjà.';
+
+  @override
+  String get fieldRenfoName => 'Nom';
+
+  @override
+  String get noRenfos => 'Aucun renfo pour le moment';
+
+  @override
+  String get renfoSessionTitle => 'Renfo du jour';
+
+  @override
+  String get noRenfoToday => 'Aucun renfo disponible aujourd\'hui';
 }

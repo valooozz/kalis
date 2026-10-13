@@ -891,6 +891,72 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Les jours ont été échangés'**
   String get swapDaysSuccess;
+
+  /// No description provided for @renfosTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Renfos'**
+  String get renfosTitle;
+
+  /// No description provided for @addRenfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un renfo'**
+  String get addRenfo;
+
+  /// No description provided for @newRenfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau renfo'**
+  String get newRenfo;
+
+  /// No description provided for @editRenfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le renfo'**
+  String get editRenfo;
+
+  /// No description provided for @deleteRenfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le renfo'**
+  String get deleteRenfo;
+
+  /// No description provided for @deleteRenfoConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer \"{name}\" ? Cette action est irréversible.'**
+  String deleteRenfoConfirm(String name);
+
+  /// No description provided for @renfoAlreadyExistError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce renfo existe déjà.'**
+  String get renfoAlreadyExistError;
+
+  /// No description provided for @fieldRenfoName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom'**
+  String get fieldRenfoName;
+
+  /// No description provided for @noRenfos.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun renfo pour le moment'**
+  String get noRenfos;
+
+  /// No description provided for @renfoSessionTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Renfo du jour'**
+  String get renfoSessionTitle;
+
+  /// No description provided for @noRenfoToday.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun renfo disponible aujourd\'hui'**
+  String get noRenfoToday;
 }
 
 class _AppLocalizationsDelegate

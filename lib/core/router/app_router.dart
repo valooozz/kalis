@@ -8,6 +8,7 @@ import '../../screens/figures/figures_screen.dart';
 import '../../screens/places/places_screen.dart';
 import '../../screens/planning/planning_screen.dart';
 import '../../screens/main/main_screen.dart';
+import '../../screens/renfos/renfos_screen.dart';
 
 // Provider du router
 final routerProvider = Provider<GoRouter>((ref) {
@@ -37,6 +38,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: '/places',
             pageBuilder: (context, state) =>
                 const NoTransitionPage(child: PlacesScreen()),
+          ),
+          GoRoute(
+            path: '/renfos',
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: RenfosScreen()),
           ),
           GoRoute(
             path: '/today',

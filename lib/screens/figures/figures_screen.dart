@@ -80,6 +80,11 @@ class FiguresScreen extends ConsumerWidget {
                     tooltip: lbl.placesTitle,
                   ),
                   IconButton(
+                    icon: const Icon(Icons.fitness_center),
+                    onPressed: () => context.push('/renfos'),
+                    tooltip: lbl.renfosTitle,
+                  ),
+                  IconButton(
                     icon: const Icon(Icons.settings),
                     onPressed: () => context.push('/settings'),
                     tooltip: lbl.settingsTitle,

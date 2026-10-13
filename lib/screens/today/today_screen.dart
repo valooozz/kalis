@@ -7,6 +7,8 @@ import '../../providers/today_providers.dart';
 import '../../providers/core_providers.dart';
 import '../../widgets/figure_square_card.dart';
 import 'today_training_dialog.dart';
+import '../../providers/renfo_providers.dart';
+import 'today_renfo_dialog.dart';
 
 class TodayScreen extends ConsumerWidget {
   const TodayScreen({super.key});
@@ -17,6 +19,8 @@ class TodayScreen extends ConsumerWidget {
     final lbl = AppLocalizations.of(context)!;
     final figuresAsync = ref.watch(todayFiguresProvider);
     final doneIdsAsync = ref.watch(todayDoneIdsProvider);
+    final renfoState = ref.watch(renfoButtonStateProvider);
+    final renfoColor = renfoState.colorFor(theme);
 
     return Scaffold(
       body: figuresAsync.when(
@@ -39,6 +43,17 @@ class TodayScreen extends ConsumerWidget {
                       title: Text(lbl.todayScreenTitle),
                       titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
                     ),
+                    actions: [
+                      if (renfoState != RenfoButtonState.hidden)
+                        IconButton(
+                          icon: Icon(Icons.fitness_center, color: renfoColor),
+                          tooltip: lbl.renfoSessionTitle,
+                          onPressed: () => showDialog(
+                            context: context,
+                            builder: (_) => const TodayRenfoDialog(),
+                          ),
+                        ),
+                    ],
                   ),
                   if (figures.isEmpty)
                     SliverFillRemaining(

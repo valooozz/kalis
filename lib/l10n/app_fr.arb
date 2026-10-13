@@ -230,5 +230,23 @@
     "cannotSwapDoneFigureTitle": "Échange impossible",
     "cannotSwapDoneFigure": "Une figure déjà réalisée aujourd'hui serait déplacée.",
     "noFigurePlannedThisDay": "Aucune figure prévue",
-    "swapDaysSuccess": "Les jours ont été échangés"
+    "swapDaysSuccess": "Les jours ont été échangés",
+    "renfosTitle": "Renfos",
+    "addRenfo": "Ajouter un renfo",
+    "newRenfo": "Nouveau renfo",
+    "editRenfo": "Modifier le renfo",
+    "deleteRenfo": "Supprimer le renfo",
+    "deleteRenfoConfirm": "Supprimer \"{name}\" ? Cette action est irréversible.",
+    "@deleteRenfoConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "renfoAlreadyExistError": "Ce renfo existe déjà.",
+    "fieldRenfoName": "Nom",
+    "noRenfos": "Aucun renfo pour le moment",
+    "renfoSessionTitle": "Renfo du jour",
+    "noRenfoToday": "Aucun renfo disponible aujourd'hui"
 }
