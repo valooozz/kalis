@@ -9,6 +9,7 @@ import '../../widgets/figure_square_card.dart';
 import 'today_training_dialog.dart';
 import '../../providers/renfo_providers.dart';
 import 'today_renfo_dialog.dart';
+import 'general_note_dialog.dart';
 
 class TodayScreen extends ConsumerWidget {
   const TodayScreen({super.key});
@@ -44,6 +45,14 @@ class TodayScreen extends ConsumerWidget {
                       titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
                     ),
                     actions: [
+                      IconButton(
+                        icon: const Icon(Icons.sticky_note_2),
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (_) => const GeneralNoteDialog(),
+                        ),
+                        tooltip: lbl.generalNoteTooltip,
+                      ),
                       if (renfoState != RenfoButtonState.hidden)
                         IconButton(
                           icon: Icon(Icons.fitness_center, color: renfoColor),
