@@ -2,7 +2,7 @@
 
 ## Overview
 
-All state management uses `flutter_riverpod`. Providers live in `lib/providers/` split across six files. `core_providers.dart` is the root of the dependency graph — all other providers ultimately depend on it.
+All state management uses `flutter_riverpod`. Providers live in `lib/providers/` and are split across several feature files. `core_providers.dart` is the root of the dependency graph — all other providers ultimately depend on it.
 
 Repositories are **nullable** (`FigureRepository?`, etc.) because `userIdProvider` returns `null` when unauthenticated. Feature providers must guard against null repos.
 
@@ -21,6 +21,10 @@ core_providers          firestore, auth, userId, all repositories
     ├── figure_providers  ◄─────┤ (consumes filter + today + core)
     │       │               figures list, byState, byId, order, training dates
     │       │
+    ├── place_providers   ◄─────┤ (consumes core; exposes places)
+    │
+    ├── general_note_providers  │ (consumes core; exposes user general note)
+    │
     ├── planning_providers ◄────┤ (consumes figure + today + core)
     │       │               14-day window, availableFiguresForDay, showLearned pref
     │       │
@@ -39,9 +43,11 @@ core_providers          firestore, auth, userId, all repositories
 | `authStateProvider` | StreamProvider\<User?\> | Auth state stream |
 | `userIdProvider` | Provider\<String?\> | Current UID or null |
 | `figureRepositoryProvider` | Provider\<FigureRepository?\> | Null if not authenticated |
+| `placeRepositoryProvider` | Provider\<PlaceRepository?\> | Null if not authenticated |
 | `trainingDoneRepositoryProvider` | Provider\<TrainingDoneRepository?\> | Null if not authenticated |
 | `trainingPlannedRepositoryProvider` | Provider\<TrainingPlannedRepository?\> | Null if not authenticated |
 | `journalEntryRepositoryProvider` | Provider\<JournalEntryRepository?\> | Null if not authenticated |
+| `generalNoteRepositoryProvider` | Provider\<GeneralNoteRepository?\> | Null if not authenticated |
 | `googleSignInProvider` | Provider | GoogleSignIn instance |
 | `isLinkedToGoogleProvider` | Provider\<bool\> | Watches authStateProvider |
 
@@ -118,6 +124,19 @@ Key logic in `availableFiguresForDayProvider`: excludes figures already planned 
 |---|---|---|
 | `journalEntriesForFigureProvider` | StreamProvider.family\<List\<JournalEntryModel\>, String\> | All entries for a figure, ordered by date desc |
 | `todayJournalEntryForFigureProvider` | FutureProvider.family | Entry for a figure on today's date (may be null) |
+
+## place_providers.dart
+
+| Provider | Type | Description |
+|---|---|---|
+| `placesProvider` | StreamProvider\<List\<PlaceModel\>\> | All places for the current user, sorted by name |
+| `placeByIdProvider` | Provider.family\<AsyncValue\<PlaceModel\?>, String\> | Resolve a place by id |
+
+## general_note_providers.dart
+
+| Provider | Type | Description |
+|---|---|---|
+| `generalNoteProvider` | StreamProvider\<String\> | Reads the current user's general note text |
 
 ---
 

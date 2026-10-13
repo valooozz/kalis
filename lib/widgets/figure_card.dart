@@ -134,7 +134,11 @@ class FigureCard extends ConsumerWidget {
                     ],
                   ),
                   if (figure.favorite)
-                    Icon(Icons.star, size: 20, color: figure.color.color),
+                    Icon(
+                      Icons.star,
+                      size: 20,
+                      color: figure.color.color.withValues(alpha: alphaValue),
+                    ),
                   _StateIcon(state: figure.state, color: cardColor),
                 ],
               ),
