@@ -5,7 +5,7 @@ import 'package:kalis/models/renfo_done_model.dart';
 import 'package:kalis/providers/core_providers.dart';
 import 'package:kalis/providers/renfo_providers.dart';
 import 'package:kalis/providers/today_providers.dart';
-import 'package:kalis/widgets/date_row.dart';
+import 'package:kalis/widgets/renfo_today_card.dart';
 
 class TodayRenfoDialog extends ConsumerWidget {
   const TodayRenfoDialog({super.key});
@@ -28,7 +28,20 @@ class TodayRenfoDialog extends ConsumerWidget {
     final items = ref.watch(todayRenfoItemsProvider);
 
     return AlertDialog(
-      title: Text(lbl.renfoSessionTitle),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+      title: Row(
+        children: [
+          CircleAvatar(
+            backgroundColor: theme.colorScheme.primaryContainer,
+            child: Icon(
+              Icons.fitness_center,
+              color: theme.colorScheme.onPrimaryContainer,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(child: Text(lbl.renfoSessionTitle)),
+        ],
+      ),
       content: SizedBox(
         width: double.maxFinite,
         child: items.isEmpty
@@ -38,40 +51,14 @@ class TodayRenfoDialog extends ConsumerWidget {
                   color: theme.colorScheme.outline,
                 ),
               )
-            : ListView.builder(
+            : ListView.separated(
                 shrinkWrap: true,
                 itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  final color = item.isAlert
-                      ? theme.colorScheme.error
-                      : theme.colorScheme.onSurface;
-                  return ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    onTap: () => _toggle(ref, item),
-                    leading: Icon(
-                      item.doneToday
-                          ? Icons.check_circle
-                          : Icons.radio_button_unchecked,
-                      color: item.doneToday
-                          ? Colors.green.shade700
-                          : theme.colorScheme.outline,
-                    ),
-                    title: Text(
-                      item.renfo.name,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: color,
-                      ),
-                    ),
-                    subtitle: DateRow(
-                      icon: Icons.history,
-                      date: item.lastDone,
-                      label: lbl.lastTraining,
-                      isAlert: item.isAlert,
-                    ),
-                  );
-                },
+                separatorBuilder: (_, _) => const SizedBox(height: 4),
+                itemBuilder: (context, index) => RenfoTodayCard(
+                  item: items[index],
+                  onTap: () => _toggle(ref, items[index]),
+                ),
               ),
       ),
       actions: [
