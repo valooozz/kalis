@@ -67,58 +67,65 @@ Kalis suit une architecture **MVVM (Model-View-ViewModel)** avec une séparation
 
 ```
 lib/
-├── main.dart                          # Point d'entrée, configuration de l'app
-├── firebase_options.dart              # Configuration Firebase (généré)
+├── main.dart                          # Point d'entrée, init Firebase + auth anonyme
+├── firebase_options.dart              # Configuration Firebase générée
 │
-├── core/                              # Infrastructure et configuration globale
+├── core/                              # Infrastructure globale
 │   ├── router/
-│   │   └── app_router.dart           # Routes et navigation Go Router
+│   │   └── app_router.dart           # Routes Go Router + redirection d'auth
 │   ├── theme/
-│   │   └── app_theme.dart            # Thème global (couleurs, typographie)
+│   │   └── app_theme.dart            # Thème global (light/dark)
 │   └── utils/
-│       └── date_utils.dart           # Utilitaires pour dates
+│       └── date_utils.dart           # Utilitaires de date
 │
-├── models/                            # Modèles de données (entités métier)
-│   ├── figure_model.dart             # Figure d'entraînement (principale)
-│   ├── journal_entry_model.dart      # Note journal pour une figure
+├── models/                            # Entités métier
+│   ├── figure_model.dart             # Figure d'entraînement
+│   ├── journal_entry_model.dart      # Note de journal liée à une figure
+│   ├── place_model.dart              # Lieu d'entraînement
 │   ├── training_done_model.dart      # Entraînement effectué
 │   └── training_planned_model.dart   # Entraînement planifié
 │
-├── repositories/                      # Accès aux données (Firestore)
-│   ├── figure_repository.dart        # CRUD des figures
-│   ├── training_done_repository.dart # Gestion des entraînements effectués
-│   ├── training_planned_repository.dart # Gestion des planifications
-│   └── journal_entry_repository.dart # Gestion des notes journal
+├── repositories/                      # Accès aux collections Firestore
+│   ├── figure_repository.dart        # CRUD sur les figures
+│   ├── general_note_repository.dart  # Note générale utilisateur
+│   ├── journal_entry_repository.dart # Notes de journal
+│   ├── place_repository.dart         # Gestion des lieux
+│   ├── training_done_repository.dart # Entraînements validés
+│   └── training_planned_repository.dart # Planification 14 jours
 │
-├── providers/                         # Gestion d'état (Riverpod)
-│   ├── core_providers.dart           # Providers fondamentaux (Firebase, repos)
-│   ├── figure_providers.dart         # Providers des figures
-│   ├── journal_providers.dart        # Providers du journal
-│   ├── today_providers.dart          # Providers pour le jour courant
-│   ├── planning_providers.dart       # Providers pour la planification
-│   └── filter_providers.dart         # Provider de filtrage
+├── providers/                         # Gestion d'état Riverpod
+│   ├── core_providers.dart           # Firebase/Auth + repos partagés
+│   ├── figure_providers.dart         # Figures, dates, records, filtres
+│   ├── filter_providers.dart         # Filtre couleur actif
+│   ├── general_note_providers.dart   # Note générale utilisateur
+│   ├── journal_providers.dart        # Journal d'une figure
+│   ├── place_providers.dart          # Lieux utilisateur
+│   ├── planning_providers.dart       # Planification + logique métier
+│   └── today_providers.dart          # Vue du jour
 │
-├── screens/                           # Écrans et dialogues de l'application
+├── screens/                           # Écrans et dialogues
+│   ├── figures/                      # Gestion des figures + note générale
 │   ├── main/
-│   │   └── main_screen.dart          # Navigation principale
-│   ├── today/                        # Vue du jour
+│   │   └── main_screen.dart          # Shell avec 3 onglets
+│   ├── places/                       # Gestion des lieux
 │   ├── planning/                     # Planification 14 jours
-│   ├── figures/                      # Gestion des figures
-│   ├── records/                      # Historique des entraînements
-│   └── settings/                     # Paramètres
+│   ├── records/                      # Historique / records
+│   ├── settings/                     # Auth Google + paramètres compte
+│   └── today/                        # Séance du jour
 │
-├── widgets/                           # Composants réutilisables
-│   ├── figure_card.dart              # Carte figure (format large)
-│   ├── figure_square_card.dart       # Carte figure (format carré)
-│   ├── journal_entry_tile.dart       # Ligne de note journal
+├── widgets/                           # Composants UI réutilisables
+│   ├── color_filter_dialog.dart      # Filtre couleur
 │   ├── color_picker_row.dart         # Sélecteur de couleur
-│   ├── color_filter_dialog.dart      # Dialogue de filtrage couleur
-│   ├── date_row.dart                 # Composant de date
-│   └── record_display.dart           # Affichage d'un record
+│   ├── figure_card.dart              # Carte figure
+│   ├── figure_square_card.dart       # Variante carte carrée
+│   ├── journal_entry_tile.dart       # Entrée de journal
+│   ├── place_card.dart               # Carte lieu
+│   ├── record_display.dart           # Affichage d'un record
+│   └── ...
 │
-└── l10n/                              # Localisation (français)
-    ├── app_localizations.dart        # Classe i18n
-    ├── app_localizations_fr.dart     # Traductions
+└── l10n/                              # Localisation et fichiers arb
+    ├── app_localizations.dart        # Classe générée
+    ├── app_localizations_fr.dart     # Implémentation FR
     └── app_fr.arb                    # Ressources de traduction
 ```
 
@@ -182,6 +189,29 @@ Entraînement planifié pour une date donnée.
 class TrainingPlannedModel {
   final String figureId;              // Référence à la figure
   final DateTime date;                // Date planifiée (jour uniquement)
+}
+```
+
+### PlaceModel
+
+Represente un lieu d'entraînement (salle, parc, tapis, etc.) et les figures associées à ce lieu.
+
+```dart
+class PlaceModel {
+  final String id;
+  final String name;
+  final List<String> figureIds;
+}
+```
+
+### GeneralNoteModel / note générale utilisateur
+
+La note générale n'est pas un modèle de figure mais un document unique par utilisateur, utilisé pour stocker un texte libre de contexte, objectifs ou remarques globales.
+
+```dart
+// collection: users/{uid}/generalNote/main
+{
+  "text": "Objectif de la semaine: améliorer l'alignement..."
 }
 ```
 
@@ -258,7 +288,7 @@ class TrainingPlannedModel {
 | Service | Usage |
 |---------|-------|
 | **Firebase Firestore** | Base de données NoSQL temps réel cloud |
-| **Firebase Auth** | Authentification (anonyme) |
+| **Firebase Auth** | Authentification anonyme + liaison à un compte Google |
 | **Firebase Core** | Configuration et initialisation |
 
 ### Outils & Librairies
@@ -292,6 +322,9 @@ class TrainingPlannedModel {
 | `todayDoneProvider` | Global | Entraînements complétés aujourd'hui |
 | `planningProvider` | Global | Entraînements planifiés sur 14 jours |
 | `journalEntriesForFigureProvider` | Family | Notes journal pour une figure |
+| `placesProvider` | Global | Lieux utilisateur triés par nom |
+| `generalNoteProvider` | Global | Texte libre de note générale utilisateur |
+| `isLinkedToGoogleProvider` | Global | Indique si le compte Firebase est lié à Google |
 | `colorFilterProvider` | Global | Filtre couleur actif |
 
 ### Repositories (CRUD)
@@ -325,31 +358,31 @@ class TrainingPlannedModel {
 
 L'application utilise **Go Router** pour une navigation déclarative et structurée.
 
+Le shell principal est construit dans `MainScreen`, qui expose seulement 3 onglets dans la barre de navigation :
+
 ```
 MainScreen (Navigation principale avec BottomNavigationBar)
-├── /today              → TodayScreen (Séance du jour)
-├── /planning           → PlanningScreen (Planification 14j)
-├── /figures            → FiguresScreen (Gestion figures)
-├── /records            → RecordsScreen (Historique)
-└── /settings           → SettingsScreen (Paramètres)
+├── /figures            → FiguresScreen (gestion des figures)
+├── /today              → TodayScreen (séance du jour)
+└── /planning           → PlanningScreen (planification sur 14 jours)
 
-Dialogues (modaux)
-├── /figures/form       → FigureFormDialog (Créer/éditer)
-├── /figures/detail/:id → FigureDetailDialog (Détails)
-├── /figures/calendar/:id → FigureCalendarDialog (Calendrier figure)
-├── /planning/add       → AddFigureToDayDialog (Ajouter à jour)
-└── ...
+Routes plein écran (hors onglets)
+├── /places             → PlacesScreen (gestion des lieux)
+├── /records            → RecordsScreen (historique + records)
+├── /settings           → SettingsScreen (compte Google / paramètres)
+└── Dialogues modaux   → FigureFormDialog, FigureDetailDialog, PlaceFormDialog, etc.
 ```
 
 ### Écrans principaux
 
 | Écran | Chemin | Usage |
 |-------|--------|-------|
+| **Figures** | `/figures` | Gérer le portefeuille de figures |
 | **Today** | `/today` | Afficher les figures à entraîner aujourd'hui |
 | **Planning** | `/planning` | Planifier les entraînements sur 14 jours |
-| **Figures** | `/figures` | Gérer le portefeuille de figures |
+| **Places** | `/places` | Gérer les lieux d'entraînement et leurs figures associées |
 | **Records** | `/records` | Consulter l'historique des entraînements |
-| **Settings** | `/settings` | Configurer l'authentification et les préférences |
+| **Settings** | `/settings` | Configurer l'authentification et lier son compte Google |
 
 ---
 
@@ -359,30 +392,32 @@ Dialogues (modaux)
 ┌─────────────────────────────────┐
 │  main() - Point d'entrée        │
 │  - Configuration Firebase       │
+│  - SignInAnonymously() si besoin│
 │  - ProviderScope (Riverpod)     │
 │  - MaterialApp + GoRouter       │
 └──────────────┬──────────────────┘
                │
 ┌──────────────▼──────────────────┐
 │  KalisApp (MaterialApp)         │
-│  - Go Router configuration      │
-│  - Thème global                 │
+│  - Router configuration         │
+│  - Theme global                 │
 │  - Localization (français)      │
 └──────────────┬──────────────────┘
                │
 ┌──────────────▼──────────────────┐
 │  MainScreen                     │
-│  (NavigationBar - 5 sections)   │
-│  - Gère la navigation centrale  │
+│  (BottomNavigationBar - 3 tabs) │
+│  - /figures /today /planning     │
 └──────────────┬──────────────────┘
                │
-        ┌──────┴──────┬──────────┬────────┐
-        │             │          │        │
-   TodayScreen  PlanningScreen Figures   Records
-        │       Screen      Screen     Screen
-        │             │          │        │
-        └─────────────┴──────────┴────────┘
-        Dialogues modaux au besoin
+      ┌────────┴────────┬──────────┬──────────┐
+      │                 │          │          │
+  FiguresScreen     TodayScreen  PlanningScreen   
+      │                 │          │          │
+      └─────┬───────────┴──────────┴──────────┘
+            │
+      Routes plein écran : /places, /records, /settings
+      Dialogues modulaires : figures, lieux, journal, records, notes générales
 ```
 
 ---

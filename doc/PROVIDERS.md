@@ -15,9 +15,11 @@ Ce document décrit les providers présents dans `lib/providers` : leur utilité
 - authStateProvider : `StreamProvider<User?>` exposant l'état d'authentification.
 - userIdProvider : `Provider<String?>` retournant l'UID courant ou `null`.
 - figureRepositoryProvider : `Provider<FigureRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
+- placeRepositoryProvider : `Provider<PlaceRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
 - trainingDoneRepositoryProvider : `Provider<TrainingDoneRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
 - trainingPlannedRepositoryProvider : `Provider<TrainingPlannedRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
 - journalEntryRepositoryProvider : `Provider<JournalEntryRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
+- generalNoteRepositoryProvider : `Provider<GeneralNoteRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
 - googleSignInProvider : `Provider<GoogleSignIn>`.
 - isLinkedToGoogleProvider : `Provider<bool>` qui observe `authStateProvider`.
 
@@ -78,11 +80,18 @@ Usage : centraliser la logique liée à « aujourd'hui » et fournir des informa
 - `journalEntriesForFigureProvider` : `StreamProvider.family<List<JournalEntryModel>, String>` — dépend de `journalEntryRepositoryProvider`.
 - `todayJournalEntryForFigureProvider` : récupère l'entrée de journal pour une figure et la date `todayProvider`.
 
+## place_providers.dart
+- `placesProvider` : `StreamProvider<List<PlaceModel>>` — lit `placeRepositoryProvider` et renvoie les lieux triés par nom.
+- `placeByIdProvider` : `Provider.family<AsyncValue<PlaceModel?>, String>` — retourne le lieu correspondant à un identifiant.
+
+## general_note_providers.dart
+- `generalNoteProvider` : `StreamProvider<String>` — lit `generalNoteRepositoryProvider` et expose le texte de la note générale utilisateur.
+
 ---
 
 ## Graphe de dépendances (résumé)
 - `core_providers.dart` (racine)
-  - fournit : firestore, auth, repositories (figure, training done/planned, journal)
+  - fournit : firestore, auth, repositories (figure, place, training done/planned, journal, general note)
 - `filter_providers.dart`
   - utilisé par : `figure_providers.dart`
 - `today_providers.dart`
@@ -90,6 +99,12 @@ Usage : centraliser la logique liée à « aujourd'hui » et fournir des informa
 - `figure_providers.dart`
   - consomme : `core_providers`, `filter_providers`, `today_providers`
   - fourni à : `planning_providers.dart`, `today_providers.dart`, composants UI
+- `place_providers.dart`
+  - consomme : `core_providers`
+  - fourni à : écrans de gestion des lieux
+- `general_note_providers.dart`
+  - consomme : `core_providers`
+  - fourni à : dialogue de note générale dans `figures`
 - `planning_providers.dart`
   - consomme : `core_providers`, `figure_providers`, `today_providers`, `filter_providers` (indirectement)
 - `journal_providers.dart`

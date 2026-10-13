@@ -1,0 +1,68 @@
+---
+agent: agent
+description: Met à jour la documentation du projet Flutter en fonction des différences entre l'état actuel du repo et la branche main
+tools: ['codebase', 'runCommands', 'editFiles', 'search', 'changes']
+---
+
+# Mise à jour de la documentation
+
+Tu es chargé de mettre à jour la documentation de ce projet Flutter pour qu'elle reflète fidèlement les modifications apportées depuis la branche `main`.
+
+## Étape 1 : Identifier les changements
+
+Exécute les commandes suivantes dans le terminal :
+
+1. `git fetch origin main` (ignore l'erreur si aucun remote n'est configuré, et utilise alors la branche locale `main`).
+2. `git diff --stat main` pour obtenir la liste des fichiers modifiés entre `main` et l'état actuel du repo (commits de la branche + modifications non commitées).
+3. `git status --short` pour repérer les fichiers non suivis (nouveaux fichiers non encore ajoutés à git).
+4. `git diff main -- . ':(exclude)pubspec.lock' ':(exclude)*.g.dart' ':(exclude)*.freezed.dart'` pour lire le détail des changements (ignore les fichiers générés).
+5. Lis également le contenu des fichiers non suivis qui sont pertinents.
+
+Si `main` n'existe pas localement, utilise `origin/main`.
+
+## Étape 2 : Analyser l'impact
+
+À partir des changements, identifie ce qui a un impact sur la documentation :
+
+- Nouvelles fonctionnalités, écrans, routes ou flux de navigation
+- Modifications ou suppressions de fonctionnalités existantes
+- Changements d'architecture (structure des dossiers, couches, gestion d'état, injection de dépendances)
+- Nouveaux modèles, services, repositories, providers/blocs/cubits ou widgets réutilisables
+- Ajout, mise à jour ou suppression de dépendances (`pubspec.yaml`)
+- Changements de configuration : variables d'environnement, flavors, permissions Android/iOS, Firebase, signatures, CI/CD
+- Changements d'API (endpoints, formats de données, authentification)
+- Modification des commandes de build, de test, de lancement ou de génération de code
+- Changement de version de Flutter/Dart ou du SDK minimum
+
+Ignore les changements purement cosmétiques ou internes sans effet sur ce qu'un développeur ou un utilisateur doit savoir (refactoring mineur, renommage de variables locales, formatage).
+
+## Étape 3 : Repérer la documentation existante
+
+Voici tous les fichiers de documentation du repo :
+- `README.md`
+- dossier `doc/`
+- dossier `doc/context-packs`
+- `CHANGELOG.md`
+
+Lis-les en entier avant de modifier quoi que ce soit afin de respecter leur structure, leur ton et leur langue.
+
+## Étape 4 : Mettre à jour
+
+- Modifie uniquement les passages concernés par les changements : ne réécris pas ce qui est encore exact.
+- Ajoute les sections manquantes pour les nouveautés.
+- Supprime ou corrige ce qui est devenu obsolète ou faux.
+- Conserve le format, le style, la langue et la hiérarchie des titres existants.
+- Vérifie que les chemins de fichiers, noms de classes, commandes et extraits de code cités existent réellement dans le repo.
+- Si un `CHANGELOG.md` existe, ajoute une entrée dans la section « Unreleased » (ou crée-la) en suivant le format déjà utilisé.
+- N'invente rien : si une information n'est pas déductible du code ou du diff, signale-la plutôt que de la deviner.
+- Ne modifie aucun code source, uniquement la documentation.
+
+## Étape 5 : Résumé
+
+Termine par un court récapitulatif :
+
+- Les fichiers de documentation modifiés ou créés, avec une phrase par fichier
+- Les changements du code qui ont motivé chaque mise à jour
+- Les points incertains ou les informations manquantes que je dois valider ou compléter
+
+Précision éventuelle de ma part : ${input:focus:Zone ou fonctionnalité à privilégier (optionnel)}
