@@ -27,12 +27,16 @@ final renfoDoneAllProvider = StreamProvider<List<RenfoDoneModel>>((ref) {
 
 /// Dernière date de travail (manuel) pour chaque renfo.
 final renfoLastDoneDatesProvider = Provider<Map<String, DateTime>>((ref) {
-  final done = ref.watch(renfoDoneAllProvider).valueOrNull ?? [];
+  final allRenfoDone = ref.watch(renfoDoneAllProvider).valueOrNull ?? [];
+  final today = ref.watch(todayProvider);
   final result = <String, DateTime>{};
-  for (final d in done) {
-    final date = d.date.dateOnly;
-    final current = result[d.renfoId];
-    if (current == null || date.isAfter(current)) result[d.renfoId] = date;
+  for (final renfoDone in allRenfoDone) {
+    final date = renfoDone.date.dateOnly;
+    if (date == today) continue;
+    final currentForRenfo = result[renfoDone.renfoId];
+    if (currentForRenfo == null || date.isAfter(currentForRenfo)) {
+      result[renfoDone.renfoId] = date;
+    }
   }
   return result;
 });
@@ -61,9 +65,14 @@ final todayRenfoItemsProvider = Provider<List<RenfoTodayItem>>((ref) {
   final renfos = ref.watch(renfosProvider).valueOrNull ?? [];
   final planned = ref.watch(todayPlannedProvider).valueOrNull ?? [];
   final lastDates = ref.watch(renfoLastDoneDatesProvider);
+  final allRenfoDone = ref.watch(renfoDoneAllProvider).valueOrNull ?? [];
   final today = ref.watch(todayProvider);
 
   final plannedIds = planned.map((t) => t.figureId).toSet();
+  final doneTodayIds = allRenfoDone
+      .where((entry) => entry.date.dateOnly == today)
+      .map((entry) => entry.renfoId)
+      .toSet();
 
   final items = <RenfoTodayItem>[];
   for (final renfo in renfos) {
@@ -75,7 +84,7 @@ final todayRenfoItemsProvider = Provider<List<RenfoTodayItem>>((ref) {
         renfo: renfo,
         lastDone: lastDone,
         daysSince: days,
-        doneToday: days == 0,
+        doneToday: doneTodayIds.contains(renfo.id),
       ),
     );
   }
