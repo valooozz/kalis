@@ -484,11 +484,11 @@ abstract class AppLocalizations {
   /// **'Aucun lieu pour le moment'**
   String get noPlaces;
 
-  /// No description provided for @placesFigures.
+  /// No description provided for @linkedFigures.
   ///
   /// In fr, this message translates to:
-  /// **'figures'**
-  String get placesFigures;
+  /// **'{count, plural, =1{{count} figure} other{{count} figures}}'**
+  String linkedFigures(int count);
 
   /// No description provided for @beginLearning.
   ///

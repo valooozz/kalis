@@ -107,7 +107,14 @@
     "placeAlreadyExistError": "Ce lieu existe déjà.",
     "fieldPlaceName": "Nom",
     "noPlaces": "Aucun lieu pour le moment",
-    "placesFigures": "figures",
+    "linkedFigures": "{count, plural, =1{{count} figure} other{{count} figures}}",
+    "@linkedFigures": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
     "beginLearning": "Je vais apprendre cette figure",
     "settingsTitle": "Paramètres",
     "settingsAccountSection": "Compte",

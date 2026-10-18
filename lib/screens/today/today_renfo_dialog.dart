@@ -54,7 +54,7 @@ class TodayRenfoDialog extends ConsumerWidget {
             : ListView.separated(
                 shrinkWrap: true,
                 itemCount: items.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 4),
+                separatorBuilder: (_, _) => const SizedBox(height: 8),
                 itemBuilder: (context, index) => RenfoTodayCard(
                   item: items[index],
                   onTap: () => _toggle(ref, items[index]),

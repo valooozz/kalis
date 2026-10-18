@@ -216,7 +216,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noPlaces => 'Aucun lieu pour le moment';
 
   @override
-  String get placesFigures => 'figures';
+  String linkedFigures(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count figures',
+      one: '$count figure',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get beginLearning => 'Je vais apprendre cette figure';

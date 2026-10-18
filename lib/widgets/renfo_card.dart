@@ -41,7 +41,7 @@ class RenfoCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '${renfo.figureIds.length} ${lbl.placesFigures}',
+                      lbl.linkedFigures(renfo.figureIds.length),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.outline,
                       ),

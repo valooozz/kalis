@@ -41,7 +41,7 @@ class PlaceCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '${place.figureIds.length} ${lbl.placesFigures}',
+                      lbl.linkedFigures(place.figureIds.length),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.outline,
                       ),
