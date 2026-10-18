@@ -1,5 +1,10 @@
 # Version 1
 
+## v1.20.1
+
+- Correction du libellé d’affichage du nombre de figures associées à un lieu ou à un renfo pour gérer correctement le singulier et le pluriel.
+- Correction de la logique de suivi des renfos : une validation effectuée aujourd’hui n’est plus traitée comme une date de dernière exécution pour le calcul d’alerte, et le statut “fait aujourd’hui” est calculé depuis les validations réelles de la journée.
+
 ### v1.20.0
 
 - Ajout du système de renfos personnalisés : création de routines d'entraînement associées à plusieurs figures, suivi de leur exécution et signalement si elles ne sont pas pratiquées pendant plusieurs jours

@@ -56,7 +56,8 @@ class RenfoTodayItem {
   });
 
   /// Jamais travaillé = considéré comme infini, donc en alerte.
-  bool get isAlert => daysSince == null || daysSince! >= renfoAlertDays;
+  bool get isAlert =>
+      !doneToday && (daysSince == null || daysSince! >= renfoAlertDays);
 }
 
 /// Renfos pouvant être effectués aujourd'hui (aucune figure liée planifiée

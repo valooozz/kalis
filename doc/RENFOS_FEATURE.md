@@ -169,8 +169,8 @@ class RenfoDoneModel {
 Dans `todayRenfoItemsProvider`, les renfos sont filtrés selon les règles suivantes :
 
 - on exclut les renfos dont au moins une figure associée est déjà planifiée aujourd'hui
-- on calcule la date du dernier enregistrement validé (`renfoLastDoneDatesProvider`)
-- on considère qu'un renfo est "fait aujourd'hui" si sa dernière date de validation est aujourd'hui
+- on calcule la date du dernier enregistrement validé (`renfoLastDoneDatesProvider`) en ignorant explicitement la date du jour pour éviter qu'une validation récente masque un retard réel
+- on considère qu'un renfo est "fait aujourd'hui" à partir des validations réelles de la journée (`doneTodayIds`), sans utiliser cette date comme référence de dernier succès pour l'alerte
 - un renfo est considéré en alerte quand il n'a pas été validé depuis au moins `renfoAlertDays` jours (seuil fixé à 4 jours)
 
 ### Couleur de l'icône Today
