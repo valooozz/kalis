@@ -25,6 +25,19 @@ final renfoDoneAllProvider = StreamProvider<List<RenfoDoneModel>>((ref) {
   return repository.watchAll();
 });
 
+/// Toutes les dates de travail pour un renfo donné.
+final renfoDoneDatesProvider =
+    Provider.family<AsyncValue<Set<DateTime>>, String>((ref, renfoId) {
+      return ref
+          .watch(renfoDoneAllProvider)
+          .whenData(
+            (entries) => entries
+                .where((entry) => entry.renfoId == renfoId)
+                .map((entry) => entry.date.dateOnly)
+                .toSet(),
+          );
+    });
+
 /// Dernière date de travail (manuel) pour chaque renfo.
 final renfoLastDoneDatesProvider = Provider<Map<String, DateTime>>((ref) {
   final allRenfoDone = ref.watch(renfoDoneAllProvider).valueOrNull ?? [];

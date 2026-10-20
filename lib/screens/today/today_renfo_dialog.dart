@@ -6,6 +6,7 @@ import 'package:kalis/providers/core_providers.dart';
 import 'package:kalis/providers/renfo_providers.dart';
 import 'package:kalis/providers/today_providers.dart';
 import 'package:kalis/widgets/renfo_today_card.dart';
+import '../renfos/renfo_calendar_dialog.dart';
 
 class TodayRenfoDialog extends ConsumerWidget {
   const TodayRenfoDialog({super.key});
@@ -58,6 +59,11 @@ class TodayRenfoDialog extends ConsumerWidget {
                 itemBuilder: (context, index) => RenfoTodayCard(
                   item: items[index],
                   onTap: () => _toggle(ref, items[index]),
+                  onLongPress: () => showDialog(
+                    context: context,
+                    builder: (_) =>
+                        RenfoCalendarDialog(renfo: items[index].renfo),
+                  ),
                 ),
               ),
       ),

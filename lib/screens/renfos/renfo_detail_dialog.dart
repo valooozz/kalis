@@ -5,6 +5,7 @@ import 'package:kalis/models/renfo_model.dart';
 import 'package:kalis/providers/core_providers.dart';
 import 'package:kalis/providers/figure_providers.dart';
 import 'package:kalis/widgets/figure_selection_chip.dart';
+import 'renfo_calendar_dialog.dart';
 import 'renfo_form_dialog.dart';
 
 class RenfoDetailDialog extends ConsumerStatefulWidget {
@@ -160,9 +161,24 @@ class _RenfoDetailDialogState extends ConsumerState<RenfoDetailDialog> {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(lbl.buttonClose),
+        Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                showDialog(
+                  context: context,
+                  builder: (_) => RenfoCalendarDialog(renfo: _renfo),
+                );
+              },
+              icon: const Icon(Icons.calendar_month),
+            ),
+            const Spacer(),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(lbl.buttonClose),
+            ),
+          ],
         ),
       ],
     );

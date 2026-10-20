@@ -6,8 +6,14 @@ import 'package:kalis/widgets/date_row.dart';
 class RenfoTodayCard extends StatelessWidget {
   final RenfoTodayItem item;
   final VoidCallback onTap;
+  final VoidCallback onLongPress;
 
-  const RenfoTodayCard({super.key, required this.item, required this.onTap});
+  const RenfoTodayCard({
+    super.key,
+    required this.item,
+    required this.onTap,
+    required this.onLongPress,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +32,9 @@ class RenfoTodayCard extends StatelessWidget {
     return Card(
       margin: EdgeInsets.zero,
       clipBehavior: Clip.antiAlias,
-      // color: done ? doneColor.withValues(alpha: 0.12) : null,
       child: InkWell(
         onTap: onTap,
+        onLongPress: onLongPress,
         child: Container(
           decoration: BoxDecoration(
             border: Border(left: BorderSide(color: accentColor, width: 10)),
