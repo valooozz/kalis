@@ -1,5 +1,10 @@
 # Version 1
 
+## v1.21.0
+
+- Ajout d'un calendrier pour voir les sessions de renfo effectuées
+- Double tap sur l'écran du jour ouvre le Dialog des renfos
+
 ## v1.20.1
 
 - Correction du libellé d’affichage du nombre de figures associées à un lieu ou à un renfo pour gérer correctement le singulier et le pluriel.

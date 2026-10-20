@@ -160,6 +160,19 @@ class RenfoDoneModel {
 - Marquer un renfo comme validé pour aujourd'hui
 - Retirer la validation si besoin
 
+### 5. RenfoCalendarDialog
+
+**Fichier** : `lib/screens/renfos/renfo_calendar_dialog.dart`
+
+**Contexte** : le calendrier d'un renfo peut être ouvert depuis le dialogue de validation du jour ou depuis le détail du renfo.
+
+**Rôle** :
+- Afficher les dates exactes de validation d'un renfo sur un calendrier mensuel
+- Rendre visible l'historique de travail du renfo sans quitter le flux actuel
+- Reprendre le composant générique `TrainingCalendarDialog` pour garder un rendu cohérent avec les autres calendriers de Kalis
+
+**Données affichées** : le composant réutilise `renfoDoneDatesProvider` pour afficher uniquement les validations passées du renfo, sans ajouter les dates planifiées. Cette vue met donc l'accent sur l'historique réel d'exécution de la routine.
+
 ---
 
 ## Règles métier
