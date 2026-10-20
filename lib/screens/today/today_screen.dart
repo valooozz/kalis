@@ -23,131 +23,145 @@ class TodayScreen extends ConsumerWidget {
     final renfoState = ref.watch(renfoButtonStateProvider);
     final renfoColor = renfoState.colorFor(theme);
 
+    void openRenfoDialog() {
+      if (renfoState == RenfoButtonState.hidden) return;
+      showDialog(context: context, builder: (_) => const TodayRenfoDialog());
+    }
+
     return Scaffold(
-      body: figuresAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Erreur : $e')),
-        data: (figures) {
-          return doneIdsAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (e, _) => Center(child: Text('Erreur : $e')),
-            data: (doneIds) {
-              final allDone =
-                  figures.isNotEmpty &&
-                  figures.every((f) => doneIds.contains(f.id));
-              return CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    pinned: true,
-                    expandedHeight: 120,
-                    flexibleSpace: FlexibleSpaceBar(
-                      title: Text(lbl.todayScreenTitle),
-                      titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
-                    ),
-                    actions: [
-                      IconButton(
-                        icon: const Icon(Icons.sticky_note_2),
-                        onPressed: () => showDialog(
-                          context: context,
-                          builder: (_) => const GeneralNoteDialog(),
+      body: GestureDetector(
+        onDoubleTap: renfoState == RenfoButtonState.hidden
+            ? null
+            : openRenfoDialog,
+        child: figuresAsync.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (e, _) => Center(child: Text('Erreur : $e')),
+          data: (figures) {
+            return doneIdsAsync.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, _) => Center(child: Text('Erreur : $e')),
+              data: (doneIds) {
+                final allDone =
+                    figures.isNotEmpty &&
+                    figures.every((f) => doneIds.contains(f.id));
+                return CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      pinned: true,
+                      expandedHeight: 120,
+                      flexibleSpace: FlexibleSpaceBar(
+                        title: Text(lbl.todayScreenTitle),
+                        titlePadding: const EdgeInsets.only(
+                          left: 16,
+                          bottom: 16,
                         ),
-                        tooltip: lbl.generalNoteTooltip,
                       ),
-                      if (renfoState != RenfoButtonState.hidden)
+                      actions: [
                         IconButton(
-                          icon: Icon(Icons.fitness_center, color: renfoColor),
-                          tooltip: lbl.renfoSessionTitle,
+                          icon: const Icon(Icons.sticky_note_2),
                           onPressed: () => showDialog(
                             context: context,
-                            builder: (_) => const TodayRenfoDialog(),
+                            builder: (_) => const GeneralNoteDialog(),
+                          ),
+                          tooltip: lbl.generalNoteTooltip,
+                        ),
+                        if (renfoState != RenfoButtonState.hidden)
+                          IconButton(
+                            icon: Icon(Icons.fitness_center, color: renfoColor),
+                            tooltip: lbl.renfoSessionTitle,
+                            onPressed: openRenfoDialog,
+                          ),
+                      ],
+                    ),
+                    if (figures.isEmpty)
+                      SliverFillRemaining(
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.battery_3_bar,
+                                size: 88,
+                                color: theme.colorScheme.outline,
+                              ),
+                              const SizedBox(height: 24),
+                              Text(
+                                lbl.noFiguresToday,
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  color: theme.colorScheme.outline,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                lbl.noFiguresTodaySubtitle,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: theme.colorScheme.outline,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                    ],
-                  ),
-                  if (figures.isEmpty)
-                    SliverFillRemaining(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.battery_3_bar,
-                              size: 88,
-                              color: theme.colorScheme.outline,
-                            ),
-                            const SizedBox(height: 24),
-                            Text(
-                              lbl.noFiguresToday,
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                color: theme.colorScheme.outline,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              lbl.noFiguresTodaySubtitle,
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: theme.colorScheme.outline,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  else if (allDone)
-                    SliverToBoxAdapter(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.done_outline,
-                              color: Colors.green.shade700,
-                              size: 20,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              lbl.allFiguresDone,
-                              style: TextStyle(
+                      )
+                    else if (allDone)
+                      SliverToBoxAdapter(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.done_outline,
                                 color: Colors.green.shade700,
-                                fontWeight: FontWeight.bold,
+                                size: 20,
                               ),
-                            ),
-                          ],
+                              const SizedBox(width: 8),
+                              Text(
+                                lbl.allFiguresDone,
+                                style: TextStyle(
+                                  color: Colors.green.shade700,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                    SliverPadding(
+                      padding: const EdgeInsets.all(16),
+                      sliver: SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 8,
+                            ),
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          final figure = figures[index];
+                          final isDone = doneIds.contains(figure.id);
+                          return FigureSquareCard(
+                            figure: figure,
+                            isDone: isDone,
+                            onTap: () => _openTrainingDialog(
+                              context,
+                              ref,
+                              figure,
+                              isDone,
+                            ),
+                            onLongPress: () =>
+                                _handleLongPress(context, ref, figure, isDone),
+                          );
+                        }, childCount: figures.length),
+                      ),
                     ),
-                  SliverPadding(
-                    padding: const EdgeInsets.all(16),
-                    sliver: SliverGrid(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                          ),
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        final figure = figures[index];
-                        final isDone = doneIds.contains(figure.id);
-                        return FigureSquareCard(
-                          figure: figure,
-                          isDone: isDone,
-                          onTap: () =>
-                              _openTrainingDialog(context, ref, figure, isDone),
-                          onLongPress: () =>
-                              _handleLongPress(context, ref, figure, isDone),
-                        );
-                      }, childCount: figures.length),
-                    ),
-                  ),
-                ],
-              );
-            },
-          );
-        },
+                  ],
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
