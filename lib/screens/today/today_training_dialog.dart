@@ -8,6 +8,7 @@ import '../../models/journal_entry_model.dart';
 import '../../providers/today_providers.dart';
 import '../../providers/journal_providers.dart';
 import '../../providers/core_providers.dart';
+import '../../core/utils/date_utils.dart';
 
 class TodayTrainingDialog extends ConsumerStatefulWidget {
   final FigureModel figure;
@@ -41,6 +42,9 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
     final lbl = AppLocalizations.of(context)!;
     final entryAsync = ref.watch(
       todayJournalEntryForFigureProvider(widget.figure.id),
+    );
+    final journalEntriesAsync = ref.watch(
+      journalEntriesForFigureProvider(widget.figure.id),
     );
 
     entryAsync.whenData((entry) {
@@ -84,6 +88,17 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (journalEntriesAsync.valueOrNull case [final lastEntry, ...]) ...[
+            Text(
+              lastEntry.date.toShortDate(),
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: theme.colorScheme.outline,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(lastEntry.text, style: theme.textTheme.bodyMedium),
+            const Divider(height: 24),
+          ],
           Text(lbl.trainingNote, style: theme.textTheme.labelLarge),
           const SizedBox(height: 8),
           TextField(
