@@ -24,7 +24,7 @@ class _SwapDaysDialogState extends ConsumerState<SwapDaysDialog> {
     final lbl = AppLocalizations.of(context)!;
     final materialLbl = MaterialLocalizations.of(context);
     final today = ref.watch(todayProvider);
-    final days = List.generate(14, (i) => today.add(Duration(days: i)));
+    final days = List.generate(14, today.addCalendarDays);
 
     return AlertDialog(
       title: Text(lbl.swapDaysDialogTitle),

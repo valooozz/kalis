@@ -122,7 +122,7 @@ final nextTrainingDateAfterTodayProvider =
       if (repository == null) return const Stream.empty();
 
       final today = ref.watch(todayProvider);
-      final tomorrow = today.add(const Duration(days: 1));
+      final tomorrow = today.addCalendarDays(1);
 
       return repository.watchByFigure(figureId).map((trainings) {
         final upcoming = trainings

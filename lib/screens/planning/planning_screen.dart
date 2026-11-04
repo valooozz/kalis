@@ -20,7 +20,7 @@ class PlanningScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final lbl = AppLocalizations.of(context)!;
     final today = ref.watch(todayProvider);
-    final days = List.generate(14, (i) => today.add(Duration(days: i)));
+    final days = List.generate(14, today.addCalendarDays);
 
     return Scaffold(
       body: CustomScrollView(

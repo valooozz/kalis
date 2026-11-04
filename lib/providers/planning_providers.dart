@@ -46,7 +46,7 @@ final planningProvider = StreamProvider<List<TrainingPlannedModel>>((ref) {
   if (repository == null) return const Stream.empty();
 
   final today = ref.watch(todayProvider);
-  final endDate = today.add(const Duration(days: 13));
+  final endDate = today.addCalendarDays(13);
   return repository.watchByDateRange(today, endDate);
 });
 
@@ -219,7 +219,7 @@ final availableFiguresForDayProvider =
           if (lastDate == null) {
             score += 20;
           } else {
-            var difference = date.difference(lastDate).inDays;
+            var difference = date.daysFrom(lastDate);
             if (difference > 1) {
               score += min(difference * 2, 19);
             }
@@ -227,7 +227,7 @@ final availableFiguresForDayProvider =
 
           final nextDate = nextTrainingDates[figure.id];
           if (nextDate != null && !figure.favorite) {
-            var difference = nextDate.difference(date).inDays;
+            var difference = nextDate.daysFrom(date);
             score -= (20 / (difference * difference)).floor();
           }
 

@@ -68,9 +68,9 @@ class FigureCard extends ConsumerWidget {
     } else {
       final today = ref.read(todayProvider);
       final referenceDateForDateAlert = referenceDate ?? today;
-      final daysSinceLast = referenceDateForDateAlert
-          .difference(lastDate.dateOnly)
-          .inDays;
+      final daysSinceLast = referenceDateForDateAlert.daysFrom(
+        lastDate.dateOnly,
+      );
       lastDateAlert = figure.state == FigureState.learning
           ? daysSinceLast >= 4
           : daysSinceLast >= 15;

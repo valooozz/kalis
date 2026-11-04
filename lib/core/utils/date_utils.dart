@@ -8,6 +8,12 @@ extension AppDateUtils on DateTime {
 
   DateTime get dateOnly => DateTime(year, month, day);
 
+  DateTime addCalendarDays(int days) {
+    return isUtc
+        ? DateTime.utc(year, month, day + days)
+        : DateTime(year, month, day + days);
+  }
+
   bool get isToday {
     final now = DateTime.now();
     return isSameDay(now);
@@ -54,8 +60,13 @@ extension AppDateUtils on DateTime {
   }
 
   int daysFrom(DateTime reference) {
-    final ref = reference.dateOnly;
-    return dateOnly.difference(ref).inDays;
+    final calendarDay = DateTime.utc(year, month, day);
+    final referenceDay = DateTime.utc(
+      reference.year,
+      reference.month,
+      reference.day,
+    );
+    return calendarDay.difference(referenceDay).inDays;
   }
 
   String toRelativeLabel(AppLocalizations lbl, {DateTime? reference}) {

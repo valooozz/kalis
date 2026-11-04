@@ -74,11 +74,12 @@ class TodayScreen extends ConsumerWidget {
                       ],
                     ),
                     if (figures.isEmpty)
-                      SliverFillRemaining(
+                      SliverToBoxAdapter(
                         child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              const SizedBox(height: 192),
                               Icon(
                                 Icons.battery_3_bar,
                                 size: 88,

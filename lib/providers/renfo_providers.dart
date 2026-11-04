@@ -92,7 +92,7 @@ final todayRenfoItemsProvider = Provider<List<RenfoTodayItem>>((ref) {
   for (final renfo in renfos) {
     if (renfo.figureIds.any(plannedIds.contains)) continue;
     final lastDone = lastDates[renfo.id];
-    final days = lastDone == null ? null : today.difference(lastDone).inDays;
+    final days = lastDone == null ? null : today.daysFrom(lastDone);
     items.add(
       RenfoTodayItem(
         renfo: renfo,
