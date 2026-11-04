@@ -30,7 +30,7 @@ class TodayScreen extends ConsumerWidget {
 
     return Scaffold(
       body: GestureDetector(
-        onDoubleTap: renfoState == RenfoButtonState.hidden
+        onLongPress: renfoState == RenfoButtonState.hidden
             ? null
             : openRenfoDialog,
         child: figuresAsync.when(
