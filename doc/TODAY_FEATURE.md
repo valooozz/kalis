@@ -35,6 +35,8 @@ L'onglet **Today** est l'interface d'exécution quotidienne des entraînements. 
 
 ```
 TodayScreen (écran principal)
+├── GestureDetector (onLongPress)
+│   └── Ouvre TodayRenfoDialog si un renfo est disponible
 ├── SliverAppBar (titre)
 │
 ├── États:
@@ -46,11 +48,13 @@ TodayScreen (écran principal)
 └── SliverGrid (grille 3 colonnes)
     └── FigureSquareCard × N
         ├── Clic: TodayTrainingDialog
-        └── Long-press: Annuler si déjà effectué
+        ├── Long-press si figure déjà faite: annulation
+        └── Long-press si figure non faite: dernière note de journal
 
 TodayTrainingDialog (validation + notes)
 ├── TextEditingController (notes)
 ├── Lecture todayJournalEntryForFigureProvider (notes existantes)
+├── Lecture journalEntriesForFigureProvider (dernière note visible)
 ├── Actions:
 │   ├── ⭐ Marquer comme maîtrisée (si learning)
 │   ├── 🏆 Enregistrer record (si learned)
@@ -163,7 +167,8 @@ Voir [documentation Figures](FIGURES_FEATURE.md#figuremodel)
 - Afficher les figures planifiées aujourd'hui
 - Afficher le statut "effectué" visuellement
 - Naviguer vers TodayTrainingDialog au clic
-- Permettre l'annulation (long-press)
+- Ouvrir le dialogue des renfos via un appui long sur l'écran quand le bouton renfo est actif
+- Permettre l'annulation ou la consultation rapide du dernier journal via long-press sur une carte
 - Afficher états (vide, chargement, tout effectué)
 
 **Structure visuelle**
@@ -198,10 +203,14 @@ Voir [documentation Figures](FIGURES_FEATURE.md#figuremodel)
 │ │ [Overlay ✅]   [Pas overlay]  [...]   │
 │ │ (si effectué)  (si non)               │
 │ │                                       │
-│ │ Long-press:    Clic:                  │
-│ │ └─ Annuler     └─ Validation dialog   │
-│ │                                       │
+│ │ Long-press:      Clic:                │
+│ │ ├─ Annuler / voir dernière note       │
+│ │ └─ Validation dialog                 │
+│ │                                     │
 │ └───────────────────────────────────────┘
+│
+│ Appui long sur l'écran (hors carte) → TodayRenfoDialog
+└──────────────────────────────────────────┘
 └──────────────────────────────────────────┘
 ```
 
@@ -225,7 +234,15 @@ Voir [documentation Figures](FIGURES_FEATURE.md#figuremodel)
    - Appel trainingDoneRepository.delete()
    - Marquer comme non effectué
 
-3. **Visuellement** : ✅ Overlay sur carte si effectuée
+3. **Long-press sur figure non effectuée** : Ouvre la dernière note de journal pour cette figure
+   - Utilise `LastJournalEntryDialog`
+   - Permet de consulter rapidement le dernier état narratif du travail
+
+4. **Long-press sur l'écran (hors carte)** : Ouvre le dialogue des renfos si le bouton est actif
+   - `GestureDetector(onLongPress)` dans `TodayScreen`
+   - `TodayRenfoDialog` pour valider les routines du jour
+
+5. **Visuellement** : ✅ Overlay sur carte si effectuée
 
 ---
 
@@ -271,6 +288,7 @@ Voir [documentation Figures](FIGURES_FEATURE.md#figuremodel)
 | Champ | Type | Obligatoire | Comportement |
 |-------|------|------------|--------------|
 | **Notes** | TextField | ❌ Non | Pré-rempli si entrée exist. aujourd'hui |
+| **Dernière note** | Text + date | ❌ Optionnel | Affichée au-dessus du champ si une ancienne entrée existe |
 | **Bouton ⭐** | IconButton | ❌ Optionnel | Visible si state = learning |
 | **Bouton 🏆** | IconButton | ❌ Optionnel | Visible si state = learned |
 
@@ -282,6 +300,11 @@ todayJournalEntryForFigureProvider(figureId):
 ├─ Si trouvée: pré-remplit TextField
 └─ Sauvegarde référence (_existingEntry)
    → Pour savoir si créer ou modifier
+
+journalEntriesForFigureProvider(figureId):
+├─ Récupère l'historique complet de la figure
+├─ Si des entrées existent: affiche la plus récente au-dessus du champ
+└─ Permet de contextualiser la séance avec le dernier texte enregistré
 ```
 
 **Workflow de validation**
@@ -485,25 +508,25 @@ TodayScreen grille:
    └─ Overlay ✅ semi-transparent
 ```
 
-### Annulation (Long-press)
+### Annulation et consultation rapide (Long-press)
 
 ```
-User long-press sur figure effectuée
+User long-press sur figure
         ↓
 _handleLongPress() appelée
         ↓
-trainingDoneRepository.delete(figureId, date)
-        ↓
-Firestore supprime document TrainingDone
-        ↓
-todayDoneProvider détecte suppression
-        ↓
-todayDoneIdsProvider se réexécute
-        ↓
-Figure perd overlay ✅
-        ↓
-État revient à "non effectué"
+Si figure déjà faite:
+├─ trainingDoneRepository.delete(figureId, date)
+├─ Firestore supprime document TrainingDone
+├─ todayDoneProvider détecte suppression
+└─ Figure perd overlay ✅
+
+Si figure non faite:
+├─ showDialog(LastJournalEntryDialog)
+└─ Dernière entrée de journal affichée
 ```
+
+> Sur l'écran Today, un long-press hors cartes ouvre aussi le dialogue Renfo si le bouton est actif; cette interaction est gérée par `GestureDetector.onLongPress` au niveau du `TodayScreen`.
 
 ---
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Today tab is the daily execution interface. It shows figures planned for today (from the Planning tab) and lets the user mark them as done, add session notes, promote a figure to `learned`, and log records.
+The Today tab is the daily execution interface. It shows figures planned for today (from the Planning tab) and lets the user mark them as done, add session notes, inspect recent journal entries, open the Renfo dialog with a long press, and log records.
 
 ---
 
@@ -10,6 +10,8 @@ The Today tab is the daily execution interface. It shows figures planned for tod
 
 ```
 TodayScreen
+├── GestureDetector (onLongPress)
+│   └── opens TodayRenfoDialog when Renfo button is active
 ├── SliverAppBar
 └── Body (one of four states):
     ├── loading  → CircularProgressIndicator
@@ -18,7 +20,8 @@ TodayScreen
     └── normal   → SliverGrid (3 columns)
                    └── FigureSquareCard × N
                        ├── tap          → TodayTrainingDialog
-                       └── long-press   → cancel done (if isDone)
+                       ├── long-press   → cancel done if marked, or show last journal note
+                       └── screen long-press → TodayRenfoDialog
 ```
 
 **Dialogs:**
@@ -35,9 +38,13 @@ TodayScreen
 
 **Marking done**: tapping a figure opens `TodayTrainingDialog`; clicking "Validate" creates a `TrainingDoneModel`. The note field is optional — if empty, no `JournalEntryModel` is created.
 
+**Background long-press**: `TodayScreen` wraps the body in a `GestureDetector` and opens `TodayRenfoDialog` on `onLongPress` when renfo sessions are available. This is separate from the card-level interactions.
+
 **Cancelling done**: long-press on a done figure calls `trainingDoneRepository.delete(figureId, today)`. Does **not** delete the journal entry.
 
-**One journal entry per figure per day**: `TodayTrainingDialog` reads `todayJournalEntryForFigureProvider(figureId)` on open. If an entry exists it pre-fills the text field and stores `_existingEntry`. On validate: calls `update()` if `_existingEntry != null`, `create()` otherwise.
+**Reading the last journal entry**: long-press on a not-done figure opens `LastJournalEntryDialog` so the user can review the latest note without leaving the Today tab.
+
+**One journal entry per figure per day**: `TodayTrainingDialog` reads `todayJournalEntryForFigureProvider(figureId)` on open. If an entry exists it pre-fills the text field and stores `_existingEntry`. It also reads `journalEntriesForFigureProvider(figureId)` to show the latest entry above the field. On validate: calls `update()` if `_existingEntry != null`, `create()` otherwise.
 
 **Promotion to `learned`** (⭐ button, visible only when `figure.state == learning`):
 - Shows a confirmation dialog.

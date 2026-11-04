@@ -1,5 +1,11 @@
 # Version 1
 
+## v1.21.1
+
+- Correction du calcul des jours calendaires autour des changements d'heure pour éviter les écarts de planification et de détection de dates.
+- Un appui long sur l'écran Today ouvre désormais le dialogue des renfos quand la routine est disponible.
+- Le dialogue de validation affiche la dernière entrée de journal pour contextualiser la séance en cours.
+
 ## v1.21.0
 
 - Ajout d'un calendrier pour voir les sessions de renfo effectuées
