@@ -155,9 +155,15 @@ class _TrainingCalendarDialogState extends State<TrainingCalendarDialog> {
             const SizedBox(width: 4),
             Text(lbl.calendarLegendDone, style: theme.textTheme.bodySmall),
             const SizedBox(width: 12),
-            _LegendDot(color: calendarColor.withValues(alpha: 0.35)),
-            const SizedBox(width: 4),
-            Text(lbl.calendarLegendPlanned, style: theme.textTheme.bodySmall),
+            if (plannedDates.isNotEmpty)
+              ...[
+                _LegendDot(color: calendarColor.withValues(alpha: 0.35)),
+                const SizedBox(width: 4),
+                Text(
+                  lbl.calendarLegendPlanned,
+                  style: theme.textTheme.bodySmall,
+                ),
+              ],
             const Spacer(),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
