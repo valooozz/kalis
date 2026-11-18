@@ -10,8 +10,10 @@ import '../../providers/planning_providers.dart';
 import '../../providers/today_providers.dart';
 import '../../widgets/figure_square_card.dart';
 import '../../providers/core_providers.dart';
+import '../../providers/weekly_activities_providers.dart';
 import '../../core/utils/date_utils.dart';
 import 'add_figure_to_day_dialog.dart';
+import 'weekly_activities_dialog.dart';
 
 class PlanningScreen extends ConsumerWidget {
   const PlanningScreen({super.key});
@@ -29,6 +31,14 @@ class PlanningScreen extends ConsumerWidget {
             pinned: true,
             expandedHeight: 120,
             actions: [
+              IconButton(
+                icon: const Icon(Icons.event_note),
+                onPressed: () => showDialog(
+                  context: context,
+                  builder: (_) => const WeeklyActivitiesDialog(),
+                ),
+                tooltip: lbl.weeklyActivitiesTooltip,
+              ),
               IconButton(
                 icon: const Icon(Icons.swap_horiz),
                 onPressed: () => showDialog(
@@ -63,16 +73,21 @@ class PlanningScreen extends ConsumerWidget {
 }
 
 // Header persistant pour chaque jour
-class _DayHeader extends StatelessWidget {
+class _DayHeader extends ConsumerWidget {
   final DateTime date;
 
   const _DayHeader({required this.date});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final lbl = AppLocalizations.of(context)!;
     final isToday = date.isToday;
+    final activity = ref
+        .watch(weeklyActivitiesProvider)
+        .valueOrNull
+        ?.activityFor(date)
+        .trim();
 
     return SliverPersistentHeader(
       delegate: _DayHeaderDelegate(
@@ -92,21 +107,25 @@ class _DayHeader extends StatelessWidget {
                       : theme.colorScheme.onSurface,
                 ),
               ),
-              if (isToday) ...[
+              if (activity != null && activity.isNotEmpty) ...[
                 const SizedBox(width: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    date.toShortDate(),
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: theme.colorScheme.primary,
+                Flexible(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.errorContainer,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      activity,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: theme.colorScheme.error,
+                      ),
                     ),
                   ),
                 ),

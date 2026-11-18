@@ -718,6 +718,24 @@ abstract class AppLocalizations {
   /// **'Écris ta note ici...'**
   String get generalNoteHint;
 
+  /// No description provided for @weeklyActivitiesTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Activités hebdomadaires'**
+  String get weeklyActivitiesTooltip;
+
+  /// No description provided for @weeklyActivitiesDialogTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Activités hebdomadaires'**
+  String get weeklyActivitiesDialogTitle;
+
+  /// No description provided for @weeklyActivityHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : cours de danse'**
+  String get weeklyActivityHint;
+
   /// No description provided for @globalCalendarTitle.
   ///
   /// In fr, this message translates to:

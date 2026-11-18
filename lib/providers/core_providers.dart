@@ -8,6 +8,7 @@ import '../repositories/training_planned_repository.dart';
 import '../repositories/journal_entry_repository.dart';
 import '../repositories/place_repository.dart';
 import '../repositories/general_note_repository.dart';
+import '../repositories/weekly_activities_repository.dart';
 import '../repositories/renfo_repository.dart';
 import '../repositories/renfo_done_repository.dart';
 
@@ -88,6 +89,16 @@ final generalNoteRepositoryProvider = Provider<GeneralNoteRepository?>((ref) {
     userId: userId,
   );
 });
+
+final weeklyActivitiesRepositoryProvider =
+    Provider<WeeklyActivitiesRepository?>((ref) {
+      final userId = ref.watch(userIdProvider);
+      if (userId == null) return null;
+      return WeeklyActivitiesRepository(
+        firestore: ref.watch(firestoreProvider),
+        userId: userId,
+      );
+    });
 
 final googleSignInProvider = Provider<GoogleSignIn>((ref) {
   return GoogleSignIn();

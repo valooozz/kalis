@@ -358,6 +358,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get generalNoteHint => 'Écris ta note ici...';
 
   @override
+  String get weeklyActivitiesTooltip => 'Activités hebdomadaires';
+
+  @override
+  String get weeklyActivitiesDialogTitle => 'Activités hebdomadaires';
+
+  @override
+  String get weeklyActivityHint => 'Ex. : cours de danse';
+
+  @override
   String get globalCalendarTitle => 'Calendrier global';
 
   @override
