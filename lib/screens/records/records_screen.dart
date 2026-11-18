@@ -79,7 +79,7 @@ class _RecordCard extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border(
                 left: BorderSide(color: figureColor, width: 10),
-                right: BorderSide(color: figureColor, width: 10),
+                // right: BorderSide(color: figureColor, width: 10),
               ),
               borderRadius: BorderRadius.circular(12),
             ),
@@ -101,6 +101,7 @@ class _RecordCard extends StatelessWidget {
                         '$figureRecordValue $figureRecordUnit',
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.bold,
+                          color: figure.color.color,
                         ),
                       ),
                     ],
