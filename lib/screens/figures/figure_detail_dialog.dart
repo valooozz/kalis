@@ -196,6 +196,7 @@ class FigureDetailDialog extends ConsumerWidget {
                   IconButton(
                     onPressed: () => _togglePaused(context, ref, lbl, figure),
                     icon: Icon(figure.paused ? Icons.play_arrow : Icons.pause),
+                    tooltip: figure.paused ? lbl.resumeFigure : lbl.buttonPause,
                   ),
                 ],
               ],

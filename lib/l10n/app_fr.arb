@@ -117,6 +117,20 @@
     },
     "beginLearning": "Je vais apprendre cette figure",
     "settingsTitle": "Paramètres",
+    "archivedFiguresTitle": "Figures archivées",
+    "archivedFiguresSubtitle": "Consulter et restaurer les figures archivées",
+    "noArchivedFigures": "Aucune figure archivée",
+    "archiveFigure": "Archiver",
+    "restoreFigure": "Restaurer",
+    "archiveFigureConfirm": "Archiver la figure \"{name}\" ?",
+    "@archiveFigureConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "resumeFigure": "Reprendre",
     "settingsAccountSection": "Compte",
     "settingsLinkGoogle": "Lier à un compte Google",
     "settingsLinkGoogleSubtitle": "Synchronisez vos données sur tous vos appareils",

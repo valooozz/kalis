@@ -17,13 +17,25 @@ final figuresProvider = StreamProvider<List<FigureModel>>((ref) {
   final selectedColor = ref.watch(colorFilterProvider);
 
   return repository.watchAll().map((figures) {
+    final visibleFigures = figures.where((figure) => !figure.archived);
     final filtered = selectedColor == null
-        ? figures
-        : figures.where((f) => f.color == selectedColor).toList();
+        ? visibleFigures.toList()
+        : visibleFigures.where((f) => f.color == selectedColor).toList();
 
     filtered.sort((a, b) => a.order.compareTo(b.order));
     return filtered;
   });
+});
+
+/// Figures archivées, tous statuts et couleurs confondus.
+final archivedFiguresProvider = StreamProvider<List<FigureModel>>((ref) {
+  final repository = ref.watch(figureRepositoryProvider);
+  if (repository == null) return const Stream.empty();
+  return repository.watchAll().map(
+    (figures) =>
+        figures.where((figure) => figure.archived).toList()
+          ..sort((a, b) => a.order.compareTo(b.order)),
+  );
 });
 
 // Figures filtrées par statut
@@ -58,7 +70,7 @@ final pausedFiguresProvider = StreamProvider<List<FigureModel>>((ref) {
   final repository = ref.watch(figureRepositoryProvider);
   if (repository == null) return const Stream.empty();
   return repository.watchAll().map(
-    (figures) => figures.where((f) => f.paused).toList(),
+    (figures) => figures.where((f) => f.paused && !f.archived).toList(),
   );
 });
 

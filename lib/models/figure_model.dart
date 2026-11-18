@@ -80,6 +80,7 @@ class FigureModel {
   final bool paused;
   final bool active;
   final bool favorite;
+  final bool archived;
 
   const FigureModel({
     required this.id,
@@ -94,6 +95,7 @@ class FigureModel {
     this.paused = false,
     this.active = false,
     this.favorite = false,
+    this.archived = false,
   });
 
   factory FigureModel.fromFirestore(Map<String, dynamic> data, String id) {
@@ -125,6 +127,7 @@ class FigureModel {
       paused: data['paused'] ?? false,
       active: data['active'] ?? false,
       favorite: data['favorite'] ?? false,
+      archived: data['archived'] ?? false,
     );
   }
 
@@ -141,6 +144,7 @@ class FigureModel {
       'paused': paused,
       'active': active,
       'favorite': favorite,
+      'archived': archived,
     };
   }
 
@@ -157,6 +161,7 @@ class FigureModel {
     bool? paused,
     bool? active,
     bool? favorite,
+    bool? archived,
     bool clearStartDate = false,
     bool clearEndDate = false,
     bool clearRecord = false,
@@ -174,6 +179,7 @@ class FigureModel {
       paused: paused ?? this.paused,
       active: active ?? this.active,
       favorite: favorite ?? this.favorite,
+      archived: archived ?? this.archived,
     );
   }
 

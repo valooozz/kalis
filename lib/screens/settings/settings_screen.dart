@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import '../../providers/core_providers.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -27,6 +28,12 @@ class SettingsScreen extends ConsumerWidget {
             delegate: SliverChildListDelegate([
               // Section compte
               _SectionHeader(label: lbl.settingsAccountSection),
+              _SettingsTile(
+                icon: Icons.archive_outlined,
+                title: lbl.archivedFiguresTitle,
+                subtitle: lbl.archivedFiguresSubtitle,
+                onTap: () => context.push('/archived-figures'),
+              ),
               if (!isLinkedToGoogle)
                 _SettingsTile(
                   icon: Icons.account_circle,

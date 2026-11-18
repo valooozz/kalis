@@ -119,6 +119,18 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
             ),
             child: Text(lbl.deleteFigure),
           ),
+        if (_isEditing)
+          TextButton.icon(
+            onPressed: () => _toggleArchived(lbl),
+            icon: Icon(
+              widget.figure!.archived
+                  ? Icons.unarchive_outlined
+                  : Icons.archive_outlined,
+            ),
+            label: Text(
+              widget.figure!.archived ? lbl.restoreFigure : lbl.archiveFigure,
+            ),
+          ),
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(lbl.buttonCancel),
@@ -192,6 +204,36 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
 
     await repository.delete(widget.figure!.id);
 
+    if (mounted) Navigator.of(context).pop();
+  }
+
+  Future<void> _toggleArchived(AppLocalizations lbl) async {
+    final figure = widget.figure!;
+    if (!figure.archived) {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(lbl.archiveFigure),
+          content: Text(lbl.archiveFigureConfirm(figure.name)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(lbl.buttonCancel),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(lbl.archiveFigure),
+            ),
+          ],
+        ),
+      );
+      if (confirmed != true || !mounted) return;
+    }
+
+    final repository = ref.read(figureRepositoryProvider);
+    if (repository == null) return;
+
+    await repository.update(figure.copyWith(archived: !figure.archived));
     if (mounted) Navigator.of(context).pop();
   }
 }

@@ -233,6 +233,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsTitle => 'Paramètres';
 
   @override
+  String get archivedFiguresTitle => 'Figures archivées';
+
+  @override
+  String get archivedFiguresSubtitle =>
+      'Consulter et restaurer les figures archivées';
+
+  @override
+  String get noArchivedFigures => 'Aucune figure archivée';
+
+  @override
+  String get archiveFigure => 'Archiver';
+
+  @override
+  String get restoreFigure => 'Restaurer';
+
+  @override
+  String archiveFigureConfirm(String name) {
+    return 'Archiver la figure \"$name\" ?';
+  }
+
+  @override
+  String get resumeFigure => 'Reprendre';
+
+  @override
   String get settingsAccountSection => 'Compte';
 
   @override

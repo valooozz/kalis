@@ -502,6 +502,48 @@ abstract class AppLocalizations {
   /// **'Paramètres'**
   String get settingsTitle;
 
+  /// No description provided for @archivedFiguresTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Figures archivées'**
+  String get archivedFiguresTitle;
+
+  /// No description provided for @archivedFiguresSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Consulter et restaurer les figures archivées'**
+  String get archivedFiguresSubtitle;
+
+  /// No description provided for @noArchivedFigures.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune figure archivée'**
+  String get noArchivedFigures;
+
+  /// No description provided for @archiveFigure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Archiver'**
+  String get archiveFigure;
+
+  /// No description provided for @restoreFigure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Restaurer'**
+  String get restoreFigure;
+
+  /// No description provided for @archiveFigureConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Archiver la figure \"{name}\" ?'**
+  String archiveFigureConfirm(String name);
+
+  /// No description provided for @resumeFigure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reprendre'**
+  String get resumeFigure;
+
   /// No description provided for @settingsAccountSection.
   ///
   /// In fr, this message translates to:
