@@ -37,7 +37,7 @@ FiguresScreen
 ## FigureModel — Fields & Enums
 
 ```dart
-FigureModel { id, name, color, state, startDate, endDate, recordValue, recordUnit, order, paused }
+FigureModel { id, name, color, state, startDate, endDate, recordValue, recordUnit, order, paused, archived }
 
 FigureState  { toLearn, learning, learned }
 FigureColor  { red, orange, yellow, green, blue, purple }
@@ -82,6 +82,12 @@ Transitions are triggered from `FigureStatusPickerDialog`, which calls `figureRe
 - `ReorderableListView` in `_FigureSliver` allows drag-and-drop reorder within a section.
 - Drop triggers `figureOrderProvider` (a `FigureOrderNotifier`) which batch-updates the `order` field via `figureRepository.updateOrder()`.
 
+**Archive / restore**
+- `archived` defaults to `false` for existing documents.
+- In edit mode, `FigureFormDialog` offers `Archive` or `Restore`.
+- Archiving requires confirmation. Archived figures are excluded from `figuresProvider`, active planning views, paused-figure lists and normal tab lists.
+- `ArchivedFiguresScreen` is available at `/archived-figures` through Settings. It lists archived figures by `order` and opens `FigureDetailDialog` on tap.
+
 **Color filter**
 - `colorFilterProvider` (StateProvider\<FigureColor?\>) — null means no filter.
 - Filter is applied in `figuresProvider` before the stream reaches the UI.
@@ -96,7 +102,8 @@ Transitions are triggered from `FigureStatusPickerDialog`, which calls `figureRe
 
 | Provider | Source file | Role |
 |---|---|---|
-| `figuresProvider` | figure_providers | All figures, filtered + sorted |
+| `figuresProvider` | figure_providers | Active (non-archived) figures, filtered + sorted |
+| `archivedFiguresProvider` | figure_providers | Archived figures, sorted by order |
 | `figuresByStateProvider` | figure_providers | Figures per FigureState section |
 | `figureByIdProvider` | figure_providers | Single figure lookup |
 | `figureOrderProvider` | figure_providers | Reorder notifier |

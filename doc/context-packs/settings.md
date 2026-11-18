@@ -17,11 +17,18 @@ SettingsScreen
         └── linked      → "Connecté avec Google" + email  (non-tappable)
 ```
 
+The screen also includes a `Figures archived` tile that pushes `/archived-figures`.
+
 No sub-dialogs except the inline confirmation dialog for the `credential-already-in-use` case.
 
 ---
 
 ## Authentication Flows
+
+**Archived figures**:
+- `ArchivedFiguresScreen` reads `archivedFiguresProvider` and shows only `FigureModel.archived == true`.
+- Tapping a card opens `FigureDetailDialog`.
+- `FigureFormDialog` in edit mode can restore the figure without an archive confirmation.
 
 **Normal link** (`linkWithCredential`):
 1. `googleSignIn.signIn()` → get `accessToken` + `idToken`.

@@ -37,6 +37,7 @@ L'onglet **Planning** est l'interface de planification et de programmation des e
 ```
 PlanningScreen (écran principal)
 ├── SliverAppBar (titre + actions)
+│   ├── IconButton: Activités hebdomadaires (WeeklyActivitiesDialog)
 │   └── IconButton: Historique (PastPlanningDialog)
 │
 ├── CustomScrollView (14 jours scrollable)
@@ -180,16 +181,26 @@ Les champs pertinents pour le planning :
 
 **Fonctionnalités clés**
 
-1. **Headers Sticky** : Le jour reste visible au scroll
-2. **14 jours** : Fenêtre glissante du jour courant + 13 jours
-3. **Grille de cartes** : 3 cartes par ligne (responsive)
-4. **Ajouter figure** : Bouton [+] en bas à droite
-5. **Long-press** : Supprimer une figure de la planification
-6. **Clic figure** : Voir dates d'entraînement précédente/suivante
+1. **Activités hebdomadaires** : une icône ouvre `WeeklyActivitiesDialog`, avec sept champs correspondant du lundi au dimanche.
+
+2. **Headers Sticky** : Le jour reste visible au scroll
+3. **14 jours** : Fenêtre glissante du jour courant + 13 jours
+4. **Grille de cartes** : 3 cartes par ligne (responsive)
+5. **Ajouter figure** : Bouton [+] en bas à droite
+6. **Long-press** : Supprimer une figure de la planification
+7. **Clic figure** : Voir dates d'entraînement précédente/suivante
 
 ---
 
-### 2. AddFigureToDayDialog
+### 2. WeeklyActivitiesDialog
+
+**Fichier** : `lib/screens/planning/weekly_activities_dialog.dart`
+
+Ce dialogue permet de saisir une courte activité pour chacun des sept jours de semaine. Les valeurs sont enregistrées dans le document unique `users/{uid}/weeklyActivities/main` via `WeeklyActivitiesRepository.save()`.
+
+Une activité est réutilisée pour toutes les dates correspondant à son jour de semaine. Dans `PlanningScreen`, `_DayHeader` affiche l’activité sur un bandeau rouge compact lorsque la journée en possède une.
+
+### 3. AddFigureToDayDialog
 
 **Fichier** : `lib/screens/planning/add_figure_to_day_dialog.dart`
 
@@ -259,7 +270,7 @@ Figure 🔵 apparaît dans grille du jour
 
 ---
 
-### 3. BeginLearningDialog
+### 4. BeginLearningDialog
 
 **Fichier** : `lib/screens/planning/begin_learning_dialog.dart`
 **Contexte** : Commencer l'apprentissage d'une figure, ou reprendre une figure en pause, directement depuis la planification
@@ -369,7 +380,7 @@ trainingPlannedRepository.add(
 
 ---
 
-### 4. TrainingDatesDialog
+### 5. TrainingDatesDialog
 
 **Fichier** : `lib/screens/planning/training_dates_dialog.dart`
 
@@ -420,7 +431,7 @@ nextTrainingDateAfterDayProvider:
 
 ---
 
-### 5. PastPlanningDialog
+### 6. PastPlanningDialog
 
 **Fichier** : `lib/screens/planning/past_planning_dialog.dart`
 
@@ -712,6 +723,7 @@ FigureSquareCard(
 | `trainingPlannedForFigureProvider` | StreamProvider.family | Tous TrainingPlanned d'une figure |
 | `figuresForPastDateProvider` | Provider.family | Figures planifiées un jour passé |
 | `trainingDoneForDateProvider` | StreamProvider.family | Figures effectuées un jour |
+| `weeklyActivitiesProvider` | StreamProvider | Activités récurrentes configurées par jour de semaine |
 
 ### Repositories
 
@@ -720,6 +732,7 @@ FigureSquareCard(
 | `TrainingPlannedRepository` | `watchByDateRange()`, `add()`, `delete()`, `watchByFigure()` |
 | `FigureRepository` | `update()`, `getMaxOrder()` (pour ordre) |
 | `TrainingDoneRepository` | `watchByDate()`, `delete()` |
+| `WeeklyActivitiesRepository` | `watch()`, `save()` |
 
 ---
 

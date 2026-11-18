@@ -151,12 +151,23 @@ class FigureModel {
   final RecordUnit? recordUnit;       // Unité: reps ou seconds
   final int order;                    // Position dans la liste
   final bool paused;                  // Figure en pause?
+  final bool archived;                 // Figure retirée des vues actives
 }
 
 // Énumérés associés
 enum FigureState { toLearn, learning, learned }
 enum FigureColor { red, orange, yellow, green, blue, purple }
 enum RecordUnit { reps, seconds }
+```
+
+### WeeklyActivitiesModel
+
+Associé à un document unique par utilisateur (`users/{uid}/weeklyActivities/main`), ce modèle stocke une activité optionnelle pour chaque jour de semaine.
+
+```dart
+class WeeklyActivitiesModel {
+  final Map<int, String> activities; // 1 = lundi, 7 = dimanche
+}
 ```
 
 ### JournalEntryModel
@@ -353,6 +364,8 @@ La note générale n'est pas un modèle de figure mais un document unique par ut
 | `generalNoteProvider` | Global | Texte libre de note générale utilisateur |
 | `isLinkedToGoogleProvider` | Global | Indique si le compte Firebase est lié à Google |
 | `colorFilterProvider` | Global | Filtre couleur actif |
+| `archivedFiguresProvider` | Global | Figures dont `archived == true`, triées par ordre |
+| `weeklyActivitiesProvider` | Global | Activités hebdomadaires enregistrées pour l'utilisateur |
 
 ### Repositories (CRUD)
 
@@ -398,7 +411,8 @@ Routes plein écran (hors onglets)
 ├── /renfos            → RenfosScreen (gestion des routines d'entraînement)
 ├── /records            → RecordsScreen (historique + records)
 ├── /settings           → SettingsScreen (compte Google / paramètres)
-└── Dialogues modaux   → FigureFormDialog, FigureDetailDialog, PlaceFormDialog, RenfoFormDialog, etc.
+├── /archived-figures   → ArchivedFiguresScreen (liste des figures archivées)
+└── Dialogues modaux   → FigureFormDialog, FigureDetailDialog, PlaceFormDialog, WeeklyActivitiesDialog, RenfoFormDialog, etc.
 ```
 
 ### Écrans principaux

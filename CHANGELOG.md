@@ -1,5 +1,10 @@
 # Version 1
 
+## v1.22.0
+
+- Archivage des figures depuis leur formulaire d'édition, avec consultation et restauration depuis les paramètres.
+- Activités hebdomadaires configurables par jour dans le Planning, affichées dans les en-têtes des journées.
+
 ## v1.21.1
 
 - Correction du calcul des jours calendaires autour des changements d'heure pour éviter les écarts de planification et de détection de dates.

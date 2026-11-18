@@ -114,6 +114,7 @@ class FigureModel {
   final RecordUnit? recordUnit;       // Unité du record (reps ou secondes)
   final int order;                    // Position dans la liste (pour tri custom)
   final bool paused;                  // Figure actuellement en pause?
+  final bool archived;                // Figure retirée des vues actives
 }
 ```
 
@@ -627,6 +628,10 @@ trainingPlannedDatesProvider(figureId)   // Planifiés
    + Mise à jour automatique des dates
 ```
 
+**Archiver ou restaurer**
+
+Dans `FigureFormDialog`, le mode édition propose une action `Archiver` ou `Restaurer` selon l'état courant. L'archivage demande une confirmation. Une figure archivée reste en Firestore mais est exclue de `figuresProvider`, des vues actives, du planning et du filtre des figures en pause. Elle est accessible depuis `Paramètres > Figures archivées`, sur la route `/archived-figures`. Depuis cette liste, une figure peut être ouverte puis restaurée via son formulaire d'édition.
+
 **Marquer en pause**
 ```
 1. Depuis FigureDetailDialog: clic ⏸️
@@ -848,7 +853,8 @@ _FigureSection (statut)
 
 | Provider | Type | Description |
 |----------|------|-------------|
-| `figuresProvider` | StreamProvider | Toutes les figures + filtrage couleur + tri |
+| `figuresProvider` | StreamProvider | Toutes les figures actives + filtrage couleur + tri |
+| `archivedFiguresProvider` | StreamProvider | Toutes les figures archivées, triées par ordre |
 | `figuresByStateProvider` | Provider.family | Figures d'un statut donné |
 | `figureByIdProvider` | Provider.family | Accès une figure par ID |
 | `figureOrderProvider` | Provider | Notifier pour réordonnancement |

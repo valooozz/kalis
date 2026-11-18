@@ -48,6 +48,7 @@ core_providers          firestore, auth, userId, all repositories
 | `trainingPlannedRepositoryProvider` | Provider\<TrainingPlannedRepository?\> | Null if not authenticated |
 | `journalEntryRepositoryProvider` | Provider\<JournalEntryRepository?\> | Null if not authenticated |
 | `generalNoteRepositoryProvider` | Provider\<GeneralNoteRepository?\> | Null if not authenticated |
+| `weeklyActivitiesRepositoryProvider` | Provider\<WeeklyActivitiesRepository?\> | Weekly activities document, null if not authenticated |
 | `googleSignInProvider` | Provider | GoogleSignIn instance |
 | `isLinkedToGoogleProvider` | Provider\<bool\> | Watches authStateProvider |
 
@@ -82,7 +83,8 @@ Consumed only by `figuresProvider` to filter the figure list.
 
 | Provider | Type | Description |
 |---|---|---|
-| `figuresProvider` | StreamProvider\<List\<FigureModel\>\> | All figures, filtered by `colorFilterProvider`, sorted by `order` |
+| `figuresProvider` | StreamProvider\<List\<FigureModel\>\> | Active (non-archived) figures, filtered by `colorFilterProvider`, sorted by `order` |
+| `archivedFiguresProvider` | StreamProvider\<List\<FigureModel\>\> | Archived figures, sorted by `order` |
 | `figuresByStateProvider` | StreamProvider.family\<…, FigureState\> | Subset of `figuresProvider` by state |
 | `figureByIdProvider` | Provider.family\<FigureModel?, String\> | Derived from `figuresProvider` |
 | `lastTrainingDateProvider` | FutureProvider.family | Last done date for a figure (via trainingDoneRepo) |
@@ -124,6 +126,12 @@ Key logic in `availableFiguresForDayProvider`: excludes figures already planned 
 |---|---|---|
 | `journalEntriesForFigureProvider` | StreamProvider.family\<List\<JournalEntryModel\>, String\> | All entries for a figure, ordered by date desc |
 | `todayJournalEntryForFigureProvider` | FutureProvider.family | Entry for a figure on today's date (may be null) |
+
+## weekly_activities_providers.dart
+
+| Provider | Type | Description |
+|---|---|---|
+| `weeklyActivitiesProvider` | StreamProvider\<WeeklyActivitiesModel\> | Watches `users/{uid}/weeklyActivities/main`; returns an empty model when no repository is available |
 
 ## place_providers.dart
 

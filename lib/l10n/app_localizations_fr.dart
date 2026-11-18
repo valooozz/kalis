@@ -236,8 +236,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get archivedFiguresTitle => 'Figures archivées';
 
   @override
-  String get archivedFiguresSubtitle =>
-      'Consulter et restaurer les figures archivées';
+  String get archivedFiguresSubtitle => 'Consulter et restaurer les figures archivées';
 
   @override
   String get noArchivedFigures => 'Aucune figure archivée';
@@ -263,8 +262,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsLinkGoogle => 'Lier à un compte Google';
 
   @override
-  String get settingsLinkGoogleSubtitle =>
-      'Synchronisez vos données sur tous vos appareils';
+  String get settingsLinkGoogleSubtitle => 'Synchronisez vos données sur tous vos appareils';
 
   @override
   String get settingsLinkedGoogle => 'Connecté avec Google';
@@ -273,15 +271,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsLinkGoogleSuccess => 'Compte Google lié avec succès';
 
   @override
-  String get settingsLinkGoogleError =>
-      'Erreur lors de la liaison au compte Google';
+  String get settingsLinkGoogleError => 'Erreur lors de la liaison au compte Google';
 
   @override
   String get settingsAlreadyLinkedTitle => 'Compte déjà utilisé';
 
   @override
-  String get settingsAlreadyLinkedContent =>
-      'Ce compte Google est déjà lié à un autre compte Kalis. Veux-tu te connecter à ce compte ? Tes données actuelles ne seront pas migrées.';
+  String get settingsAlreadyLinkedContent => 'Ce compte Google est déjà lié à un autre compte Kalis. Veux-tu te connecter à ce compte ? Tes données actuelles ne seront pas migrées.';
 
   @override
   String get buttonConfirm => 'Confirmer';
@@ -387,8 +383,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get buttonPause => 'Mettre en pause';
 
   @override
-  String get cannotRemoveDoneFigure =>
-      'Cette figure a déjà été travaillée aujourd\'hui et ne peut pas être retirée';
+  String get cannotRemoveDoneFigure => 'Cette figure a déjà été travaillée aujourd\'hui et ne peut pas être retirée';
 
   @override
   String get pastPlanningTitle => 'Séances passées';
@@ -424,8 +419,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get errorRemovalTitle => 'Retrait impossible';
 
   @override
-  String get errorRemoval =>
-      'Cette figure a été travaillée et ne peut donc pas être retirée.';
+  String get errorRemoval => 'Cette figure a été travaillée et ne peut donc pas être retirée.';
 
   @override
   String get beginLearningDialogTitle => 'Commencer une figure';
@@ -480,8 +474,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get cannotSwapDoneFigureTitle => 'Échange impossible';
 
   @override
-  String get cannotSwapDoneFigure =>
-      'Une figure déjà réalisée aujourd\'hui serait déplacée.';
+  String get cannotSwapDoneFigure => 'Une figure déjà réalisée aujourd\'hui serait déplacée.';
 
   @override
   String get noFigurePlannedThisDay => 'Aucune figure prévue';

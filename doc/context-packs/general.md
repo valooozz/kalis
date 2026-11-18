@@ -25,7 +25,9 @@ Data flows bottom-up reactively: Firestore → Repository (Stream) → Riverpod 
 
 ```
 FigureModel          id, name, color (FigureColor), state (FigureState),
-                     startDate, endDate, recordValue, recordUnit, order, paused
+                     startDate, endDate, recordValue, recordUnit, order, paused, archived
+
+WeeklyActivitiesModel activities: Map<int, String> (weekday 1–7 → activity)
 
 JournalEntryModel    id, figureId, date, text
 
@@ -52,6 +54,7 @@ Each repository wraps one Firestore collection and exposes Streams + Futures.
 - **TrainingPlannedRepository** — planTraining, watchTrainingsPlanedForDateRange
 - **JournalEntryRepository** — addJournalEntry, watchJournalEntriesForFigure, getLatestJournalEntryForFigure
 - **GeneralNoteRepository** — watch, save for the single user-level note
+- **WeeklyActivitiesRepository** — watch/save the single `weeklyActivities/main` document
 
 Repositories are provided via Riverpod and injected into feature providers.
 
@@ -73,6 +76,8 @@ Providers are defined in `lib/providers/`. Key providers:
 | `generalNoteProvider` | StreamProvider | User-level general note text |
 | `colorFilterProvider` | StateProvider | Active color filter (nullable FigureColor) |
 | `isLinkedToGoogleProvider` | Provider | Whether the anonymous Firebase user is linked to Google |
+| `archivedFiguresProvider` | StreamProvider | Figures with `archived == true` |
+| `weeklyActivitiesProvider` | StreamProvider | Repeating weekday activities for the current user |
 
 ---
 
@@ -92,9 +97,10 @@ Additional app screens are full-page routes outside the tab shell:
 /places      PlacesScreen      — training locations
 /records     RecordsScreen     — training history
 /settings    SettingsScreen    — auth & preferences
+`/archived-figures` ArchivedFiguresScreen — archived figure list
 ```
 
-Modal dialogs are still used for figure, place, journal, record and note forms.
+Modal dialogs are still used for figure, place, journal, record, weekly-activity and note forms.
 
 ---
 

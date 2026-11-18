@@ -39,6 +39,8 @@ SettingsScreen (écran principal)
     ├── _SectionHeader
     │   └── Titre section: "Compte"
     │
+    ├── Tuiles Paramètres
+    │   └── "Figures archivées" → route /archived-figures
     └── _SettingsTile (conditionnel)
         ├── Version 1: Pas lié à Google
         │   ├── Icon: account_circle
@@ -63,6 +65,7 @@ SettingsScreen (écran principal)
 
 **Responsabilités** :
 - Afficher l'interface des paramètres
+- Proposer l'accès à la liste des figures archivées
 - Surveiller le statut de liaison avec Google via `isLinkedToGoogleProvider`
 - Afficher le compte Google lié via `authStateProvider`
 - Gérer les actions de liaison et les dialogues
@@ -120,6 +123,12 @@ Scaffold(
 ---
 
 ## Écrans et dialogues
+
+### Figures archivées
+
+La section Compte contient une tuile ouvrant `/archived-figures`. L'écran associé affiche toutes les figures dont le champ `archived` vaut `true`, quel que soit leur statut ou leur couleur. Chaque carte ouvre `FigureDetailDialog`; son formulaire d'édition permet de restaurer la figure.
+
+Une liste vide affiche le message dédié lorsqu'aucune figure n'est archivée.
 
 ### État : Non lié à Google
 

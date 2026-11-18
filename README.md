@@ -4,10 +4,10 @@ Kalis est une application mobile de suivi et d'organisation de séances de calli
 
 ## ✨ Fonctionnalités
 
-- **Figures** — Organisez vos figures en trois catégories : à apprendre, en apprentissage, et maîtrisées. Assignez une couleur à chaque figure et suivez les dates de début et de maîtrise.
+- **Figures** — Organisez vos figures en trois catégories : à apprendre, en apprentissage, et maîtrisées. Assignez une couleur à chaque figure, suivez les dates de début et de maîtrise, et archivez les figures que vous souhaitez conserver hors des vues actives.
 - **Lieux** — Gérez des lieux d'entraînement (salle, parc, tapis, etc.) et associez-les à des figures pour garder un contexte de pratique.
 - **Séance du jour** — Visualisez les figures prévues pour aujourd'hui, validez-les et ajoutez des notes de séance.
-- **Planification** — Planifiez vos entraînements sur les 14 prochains jours en ajoutant les figures à travailler jour par jour.
+- **Planification** — Planifiez vos entraînements sur les 14 prochains jours en ajoutant les figures à travailler jour par jour. Configurez aussi une activité récurrente à afficher dans l’en-tête de chaque jour de la semaine.
 - **Renfos** — Créez des blocs d'entraînement personnalisés composés de plusieurs figures, suivez leur exécution quotidienne, ouvrez leur historique de validation dans un calendrier et recevez une alerte si une routine n'a pas été pratiquée depuis plusieurs jours.
 - **Journal** — Gardez une trace de vos progrès grâce à des entrées de journal associées à chaque figure.
 - **Note générale** — Rédigez une note libre pour votre progression globale, objectifs et remarques générales.
@@ -72,10 +72,10 @@ Le projet suit un **Repository pattern** avec une séparation claire des respons
 lib/
 ├── core/          # Thème, router, utilitaires globaux
 ├── l10n/          # Fichiers de traduction (.arb)
-├── models/        # Entités métier (figures, journal, entraînements, lieux)
-├── providers/     # Providers Riverpod (figures, planning, lieux, renfos, note générale)
+├── models/        # Entités métier (figures, activités hebdomadaires, journal, entraînements, lieux)
+├── providers/     # Providers Riverpod (figures, planning, activités, lieux, renfos, note générale)
 ├── repositories/  # Accès aux données Firestore et collections utilisateur
-├── screens/       # Écrans, dialogs et écrans plein écran (settings, records, places, renfos)
+├── screens/       # Écrans, dialogs et écrans plein écran (settings, archived figures, records, places, renfos)
 ├── widgets/       # Widgets réutilisables, cartes, sélecteurs, composants UI
 ├── main.dart      # Initialisation Firebase, auth anonyme et démarrage de l'application
 ├── firebase_options.dart  # Configuration Firebase générée

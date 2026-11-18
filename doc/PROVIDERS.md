@@ -20,6 +20,7 @@ Ce document décrit les providers présents dans `lib/providers` : leur utilité
 - trainingPlannedRepositoryProvider : `Provider<TrainingPlannedRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
 - journalEntryRepositoryProvider : `Provider<JournalEntryRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
 - generalNoteRepositoryProvider : `Provider<GeneralNoteRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
+- weeklyActivitiesRepositoryProvider : `Provider<WeeklyActivitiesRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
 - googleSignInProvider : `Provider<GoogleSignIn>`.
 - isLinkedToGoogleProvider : `Provider<bool>` qui observe `authStateProvider`.
 
@@ -36,7 +37,8 @@ Utilisé par `figure_providers.dart` pour filtrer la liste des figures selon une
 
 ## figure_providers.dart
 Providers exposés et dépendances principales :
-- `figuresProvider` (StreamProvider<List<FigureModel>>) : lit `figureRepositoryProvider` et `colorFilterProvider` pour renvoyer la liste des figures (filtrage & tri).
+- `figuresProvider` (StreamProvider<List<FigureModel>>) : lit `figureRepositoryProvider` et `colorFilterProvider` pour renvoyer uniquement les figures actives (filtrage & tri).
+- `archivedFiguresProvider` (StreamProvider<List<FigureModel>>) : lit toutes les figures et ne conserve que celles dont `archived == true`.
 - `figuresByStateProvider` : dérivé de `figuresProvider` (filtre par `FigureState`).
 - `figureByIdProvider` : dérivé de `figuresProvider` (recherche par id).
 - `lastTrainingDateProvider` : dépend de `trainingDoneRepositoryProvider` (renvoie la dernière date d'entraînement effectué pour une figure).
@@ -86,6 +88,13 @@ Usage : centraliser la logique liée à « aujourd'hui » et fournir des informa
 
 ## general_note_providers.dart
 - `generalNoteProvider` : `StreamProvider<String>` — lit `generalNoteRepositoryProvider` et expose le texte de la note générale utilisateur.
+
+---
+
+## weekly_activities_providers.dart
+- `weeklyActivitiesProvider` : `StreamProvider<WeeklyActivitiesModel>` lit `weeklyActivitiesRepositoryProvider` et retourne un modèle vide si l'utilisateur ou la ressource n'est pas disponible.
+
+Le document surveillé est `users/{uid}/weeklyActivities/main`.
 
 ---
 

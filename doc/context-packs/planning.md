@@ -27,6 +27,7 @@ PlanningScreen
 | `BeginLearningDialog` | Tap a `toLearn` figure in AddFigureToDayDialog | Transition a `toLearn` figure to `learning` + add to plan, or resume a `paused` figure + add to plan |
 | `TrainingDatesDialog` | Tap a `FigureSquareCard` | Show last/next training dates for that figure |
 | `PastPlanningDialog` | 📜 icon in AppBar | Browse the past 14 days |
+| `WeeklyActivitiesDialog` | 🗓️/event icon in AppBar | Configure an activity for each weekday |
 
 ---
 
@@ -34,6 +35,9 @@ PlanningScreen
 
 ```dart
 TrainingPlannedModel { figureId: String, date: DateTime }
+
+WeeklyActivitiesModel { activities: Map<int, String> }
+// Firestore: /users/{uid}/weeklyActivities/main
 // Firestore: /users/{uid}/training_planned/{id}
 ```
 
@@ -54,6 +58,8 @@ Relevant `FigureModel` fields: `state`, `startDate`, `paused`, `order`.
 - Sorted by `effectiveLastTrainingDate` ascending (least recently trained first).
 
 **`showLearnedProvider`**: bool persisted in SharedPreferences (`showLearnedFigures` key). Toggled via checkbox in `AddFigureToDayDialog`.
+
+**Weekly activities**: `WeeklyActivitiesDialog` edits the seven map entries (weekday `1` through `7`). `WeeklyActivitiesRepository.save()` writes `WeeklyActivitiesModel` to `users/{uid}/weeklyActivities/main`. `_DayHeader` uses `weeklyActivitiesProvider` and `activityFor(date)` to show the matching short activity in a compact header badge.
 
 **`BeginLearningDialog`** vs starting learning from the Figures tab:
 | Entry point | `startDate` | Auto-adds to plan |
@@ -110,6 +116,7 @@ Both display results as relative strings ("yesterday", "in 3 days").
 | `figuresForPastDateProvider(date)` | Planned figures for a past date |
 | `trainingDoneForDateProvider(date)` | Done figure IDs for a past date |
 | `todayProvider` | Single source of truth for today's date |
+| `weeklyActivitiesProvider` | Streams the repeating weekday activities |
 
 ---
 
