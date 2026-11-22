@@ -114,7 +114,9 @@ class FigureCard extends ConsumerWidget {
                               .withValues(alpha: alphaValue),
                         ),
                       ),
-                      if (showTrainingDates && !figure.paused) ...[
+                      if (showTrainingDates &&
+                          !figure.paused &&
+                          !figure.archived) ...[
                         const SizedBox(height: 4),
                         DateRow(
                           icon: Icons.history,

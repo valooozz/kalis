@@ -40,7 +40,8 @@ class FigureRepository {
     }
 
     final batch = _firestore.batch();
-    batch.update(_collection.doc(figure.id), figure.toFirestore());
+    final archivedFigure = figure.copyWith(paused: false);
+    batch.update(_collection.doc(figure.id), archivedFigure.toFirestore());
 
     final places = await _firestore
         .collection('users')
