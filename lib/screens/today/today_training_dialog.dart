@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/screens/figures/record_form_dialog.dart';
 import '../../models/figure_model.dart';
 import '../../models/training_done_model.dart';
 import '../../models/journal_entry_model.dart';
 import '../../providers/today_providers.dart';
+import '../../providers/figure_providers.dart';
 import '../../providers/journal_providers.dart';
 import '../../providers/core_providers.dart';
 import '../../core/utils/date_utils.dart';
@@ -122,10 +124,7 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
     );
   }
 
-  Future<void> _validate(
-    JournalEntryModel? existingEntry, {
-    bool pop = true,
-  }) async {
+  void _validate(JournalEntryModel? existingEntry, {bool pop = true}) {
     final repository = ref.read(trainingDoneRepositoryProvider);
     final journalRepository = ref.read(journalEntryRepositoryProvider);
     if (repository == null || journalRepository == null) return;
@@ -134,24 +133,33 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
     final text = _controller.text.trim();
 
     // Ajout dans TrainingDone
-    await repository.add(
-      TrainingDoneModel(figureId: widget.figure.id, date: today),
+    detachFirestoreWrite(
+      repository.add(
+        TrainingDoneModel(figureId: widget.figure.id, date: today),
+      ),
+      operation: 'validating a training',
     );
 
     // Gestion de l'entrée de journal
     if (text.isNotEmpty) {
       if (existingEntry != null) {
         // Modification de l'entrée existante
-        await journalRepository.update(existingEntry.copyWith(text: text));
+        detachFirestoreWrite(
+          journalRepository.update(existingEntry.copyWith(text: text)),
+          operation: 'updating a training note',
+        );
       } else {
         // Création d'une nouvelle entrée
-        await journalRepository.create(
-          JournalEntryModel(
-            id: '',
-            figureId: widget.figure.id,
-            date: today,
-            text: text,
+        detachFirestoreWrite(
+          journalRepository.create(
+            JournalEntryModel(
+              id: '',
+              figureId: widget.figure.id,
+              date: today,
+              text: text,
+            ),
           ),
+          operation: 'creating a training note',
         );
       }
     }
@@ -183,7 +191,7 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
     if (confirmed != true) return;
 
     // On valide d'abord l'entraînement et le journal
-    await _validate(_existingEntry, pop: false);
+    _validate(_existingEntry, pop: false);
 
     final figureRepository = ref.read(figureRepositoryProvider);
     if (figureRepository == null) return;
@@ -191,13 +199,17 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
     final today = ref.read(todayProvider);
 
     // Passage à l'état maîtrisée avec la date du jour, et en bas de la liste
-    final newOrder = await figureRepository.getMaxOrder(FigureState.learned);
+    final newOrder = ref.read(nextFigureOrderProvider(FigureState.learned));
+    if (newOrder == null) return;
     final updated = widget.figure.copyWith(
       state: FigureState.learned,
       endDate: today,
       order: newOrder,
     );
-    await figureRepository.update(updated);
+    detachFirestoreWrite(
+      figureRepository.update(updated),
+      operation: 'marking a figure as learned',
+    );
 
     if (!context.mounted) return;
 

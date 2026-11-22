@@ -39,77 +39,80 @@ class FigureRepository {
       return;
     }
 
-    final batch = _firestore.batch();
     final archivedFigure = figure.copyWith(paused: false);
-    batch.update(_collection.doc(figure.id), archivedFigure.toFirestore());
-
-    final places = await _firestore
+    final figureWrite = _collection
+        .doc(figure.id)
+        .update(archivedFigure.toFirestore());
+    final placesFuture = _firestore
         .collection('users')
         .doc(_userId)
         .collection('places')
         .where('figureIds', arrayContains: figure.id)
         .get();
-    for (final doc in places.docs) {
-      batch.update(doc.reference, {
-        'figureIds': FieldValue.arrayRemove([figure.id]),
-      });
-    }
-
-    final renfos = await _firestore
+    final renfosFuture = _firestore
         .collection('users')
         .doc(_userId)
         .collection('renfos')
         .where('figureIds', arrayContains: figure.id)
         .get();
-    for (final doc in renfos.docs) {
-      batch.update(doc.reference, {
-        'figureIds': FieldValue.arrayRemove([figure.id]),
-      });
-    }
 
-    await batch.commit();
+    final relationCleanup = Future.wait([placesFuture, renfosFuture]).then((
+      snapshots,
+    ) async {
+      final batch = _firestore.batch();
+      for (final doc in snapshots[0].docs) {
+        batch.update(doc.reference, {
+          'figureIds': FieldValue.arrayRemove([figure.id]),
+        });
+      }
+      for (final doc in snapshots[1].docs) {
+        batch.update(doc.reference, {
+          'figureIds': FieldValue.arrayRemove([figure.id]),
+        });
+      }
+      await batch.commit();
+    });
+
+    await Future.wait([figureWrite, relationCleanup]);
   }
 
   Future<void> delete(String figureId) async {
-    final batch = _firestore.batch();
-
-    // Suppression de la figure
-    batch.delete(_collection.doc(figureId));
-
-    // Suppression des trainingDone associés
-    final trainingDone = await _firestore
+    final figureDelete = _collection.doc(figureId).delete();
+    final trainingDoneFuture = _firestore
         .collection('users')
         .doc(_userId)
         .collection('trainingDone')
         .where('figureId', isEqualTo: figureId)
         .get();
-    for (final doc in trainingDone.docs) {
-      batch.delete(doc.reference);
-    }
-
-    // Suppression des trainingPlanned associés
-    final trainingPlanned = await _firestore
+    final trainingPlannedFuture = _firestore
         .collection('users')
         .doc(_userId)
         .collection('trainingPlanned')
         .where('figureId', isEqualTo: figureId)
         .get();
-    for (final doc in trainingPlanned.docs) {
-      batch.delete(doc.reference);
-    }
-
-    // Suppression des journalEntries associées
-    final journalEntries = await _firestore
+    final journalEntriesFuture = _firestore
         .collection('users')
         .doc(_userId)
         .collection('journalEntries')
         .where('figureId', isEqualTo: figureId)
         .get();
-    for (final doc in journalEntries.docs) {
-      batch.delete(doc.reference);
-    }
 
-    await batch.commit();
+    final cascadeDelete =
+        Future.wait([
+          trainingDoneFuture,
+          trainingPlannedFuture,
+          journalEntriesFuture,
+        ]).then((snapshots) async {
+          final batch = _firestore.batch();
+          for (final snapshot in snapshots) {
+            for (final doc in snapshot.docs) {
+              batch.delete(doc.reference);
+            }
+          }
+          await batch.commit();
+        });
+
+    await Future.wait([figureDelete, cascadeDelete]);
   }
 
   Future<void> updateOrder(List<FigureModel> figures) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import '../../providers/core_providers.dart';
 import '../../providers/general_note_providers.dart';
@@ -68,12 +69,14 @@ class _GeneralNoteDialogState extends ConsumerState<GeneralNoteDialog> {
     );
   }
 
-  Future<void> _save() async {
+  void _save() {
     final repository = ref.read(generalNoteRepositoryProvider);
     if (repository == null) return;
 
-    await repository.save(_controller.text.trim());
-
-    if (mounted) Navigator.of(context).pop();
+    detachFirestoreWrite(
+      repository.save(_controller.text.trim()),
+      operation: 'saving the general note',
+    );
+    Navigator.of(context).pop();
   }
 }

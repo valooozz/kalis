@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/providers/figure_providers.dart';
 import 'package:kalis/providers/today_providers.dart';
 import '../../models/figure_model.dart';
 import '../../providers/core_providers.dart';
@@ -97,11 +99,7 @@ class FigureStatusPickerDialog extends ConsumerWidget {
     }
   }
 
-  Future<void> _changeState(
-    BuildContext context,
-    WidgetRef ref,
-    FigureState newState,
-  ) async {
+  void _changeState(BuildContext context, WidgetRef ref, FigureState newState) {
     if (newState == figure.state) {
       Navigator.of(context).pop();
       return;
@@ -117,8 +115,9 @@ class FigureStatusPickerDialog extends ConsumerWidget {
 
     final isUpgrade = stateOrder[newState]! > stateOrder[figure.state]!;
     final newOrder = isUpgrade
-        ? await figureRepository.getMaxOrder(newState)
-        : await figureRepository.getMinOrder(newState);
+        ? ref.read(nextFigureOrderProvider(newState))
+        : ref.read(previousFigureOrderProvider(newState));
+    if (newOrder == null) return;
 
     // Mise à jour des dates selon le nouveau statut
     FigureModel updated = figure.copyWith(state: newState, order: newOrder);
@@ -130,7 +129,10 @@ class FigureStatusPickerDialog extends ConsumerWidget {
         clearEndDate: true,
         clearRecord: true,
       );
-      await trainingPlannedRepository.removeAllForFigure(figure.id);
+      detachFirestoreWrite(
+        trainingPlannedRepository.removeAllForFigure(figure.id),
+        operation: 'removing a figure from plans',
+      );
     } else if (newState == FigureState.learning) {
       updated = updated.copyWith(
         startDate: today,
@@ -142,7 +144,10 @@ class FigureStatusPickerDialog extends ConsumerWidget {
       updated = updated.copyWith(endDate: today);
     }
 
-    await figureRepository.update(updated);
-    if (context.mounted) Navigator.of(context).pop();
+    detachFirestoreWrite(
+      figureRepository.update(updated),
+      operation: 'changing figure state',
+    );
+    Navigator.of(context).pop();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/widgets/figure_selection_chip.dart';
 import '../../core/utils/date_utils.dart';
@@ -17,13 +18,13 @@ class SwapDaysDialog extends ConsumerStatefulWidget {
 class _SwapDaysDialogState extends ConsumerState<SwapDaysDialog> {
   DateTime? _dayA;
   DateTime? _dayB;
-  bool _isSwapping = false;
 
   @override
   Widget build(BuildContext context) {
     final lbl = AppLocalizations.of(context)!;
     final materialLbl = MaterialLocalizations.of(context);
     final today = ref.watch(todayProvider);
+    final todayDoneIds = ref.watch(todayDoneIdsProvider);
     final days = List.generate(14, today.addCalendarDays);
 
     return AlertDialog(
@@ -39,20 +40,14 @@ class _SwapDaysDialogState extends ConsumerState<SwapDaysDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: _isSwapping ? null : () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).pop(),
           child: Text(materialLbl.cancelButtonLabel),
         ),
         FilledButton(
-          onPressed: (_dayA != null && _dayB != null && !_isSwapping)
+          onPressed: (_dayA != null && _dayB != null && todayDoneIds.hasValue)
               ? () => _confirmSwap(context)
               : null,
-          child: _isSwapping
-              ? const SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
-              : Text(lbl.swapDaysConfirmButton),
+          child: Text(lbl.swapDaysConfirmButton),
         ),
       ],
     );
@@ -113,61 +108,54 @@ class _SwapDaysDialogState extends ConsumerState<SwapDaysDialog> {
     final dayB = _dayB!;
 
     final plannedRepository = ref.read(trainingPlannedRepositoryProvider);
-    final doneRepository = ref.read(trainingDoneRepositoryProvider);
-    if (plannedRepository == null || doneRepository == null) return;
+    if (plannedRepository == null) return;
 
     final today = ref.read(todayProvider);
 
-    setState(() => _isSwapping = true);
+    final doneIds = ref.read(todayDoneIdsProvider).valueOrNull;
+    if (doneIds == null) return;
 
-    try {
-      // Blocage si une figure déjà faite aujourd'hui serait déplacée
-      for (final day in [dayA, dayB]) {
-        if (!day.isSameDay(today)) continue;
-        final planned = ref.read(plannedForDayProvider(day)).valueOrNull ?? [];
-        for (final entry in planned) {
-          final isDone = await doneRepository.exists(entry.figureId, day);
-          if (isDone) {
-            if (context.mounted) {
-              await showDialog<void>(
-                context: context,
-                builder: (_) => AlertDialog(
-                  title: Text(lbl.cannotSwapDoneFigureTitle),
-                  content: Text(lbl.cannotSwapDoneFigure),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text(
-                        MaterialLocalizations.of(context).okButtonLabel,
-                      ),
-                    ),
-                  ],
+    for (final day in [dayA, dayB]) {
+      if (!day.isSameDay(today)) continue;
+      final planned = ref.read(plannedForDayProvider(day)).valueOrNull ?? [];
+      if (planned.any((entry) => doneIds.contains(entry.figureId))) {
+        if (context.mounted) {
+          await showDialog<void>(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: Text(lbl.cannotSwapDoneFigureTitle),
+              content: Text(lbl.cannotSwapDoneFigure),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(MaterialLocalizations.of(context).okButtonLabel),
                 ),
-              );
-            }
-            return;
-          }
+              ],
+            ),
+          );
         }
+        return;
       }
+    }
 
-      final plannedA = ref.read(plannedForDayProvider(dayA)).valueOrNull ?? [];
-      final plannedB = ref.read(plannedForDayProvider(dayB)).valueOrNull ?? [];
+    final plannedA = ref.read(plannedForDayProvider(dayA)).valueOrNull ?? [];
+    final plannedB = ref.read(plannedForDayProvider(dayB)).valueOrNull ?? [];
 
-      await plannedRepository.swapDays(
+    detachFirestoreWrite(
+      plannedRepository.swapDays(
         dayA: dayA,
         dayB: dayB,
         figureIdsA: plannedA.map((t) => t.figureId).toList(),
         figureIdsB: plannedB.map((t) => t.figureId).toList(),
-      );
+      ),
+      operation: 'swapping planned days',
+    );
 
-      if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(lbl.swapDaysSuccess)));
-        Navigator.of(context).pop();
-      }
-    } finally {
-      if (mounted) setState(() => _isSwapping = false);
+    if (context.mounted) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(lbl.swapDaysSuccess)));
+      Navigator.of(context).pop();
     }
   }
 }

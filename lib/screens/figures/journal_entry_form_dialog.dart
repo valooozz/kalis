@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/providers/today_providers.dart';
 import '../../models/journal_entry_model.dart';
@@ -73,23 +74,29 @@ class _JournalEntryFormDialogState
     );
   }
 
-  Future<void> _save(DateTime today) async {
+  void _save(DateTime today) {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
     final repository = ref.read(journalEntryRepositoryProvider);
     if (repository == null) return;
     if (_isEditing && widget.entry != null) {
-      await repository.update(widget.entry!.copyWith(text: text));
+      detachFirestoreWrite(
+        repository.update(widget.entry!.copyWith(text: text)),
+        operation: 'updating a journal entry',
+      );
     } else {
-      await repository.create(
-        JournalEntryModel(
-          id: '',
-          figureId: widget.figureId,
-          date: today,
-          text: text,
+      detachFirestoreWrite(
+        repository.create(
+          JournalEntryModel(
+            id: '',
+            figureId: widget.figureId,
+            date: today,
+            text: text,
+          ),
         ),
+        operation: 'creating a journal entry',
       );
     }
-    if (mounted) Navigator.of(context).pop();
+    Navigator.of(context).pop();
   }
 }

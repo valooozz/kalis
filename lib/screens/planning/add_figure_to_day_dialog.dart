@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import '../../models/figure_model.dart';
 import '../../models/training_planned_model.dart';
@@ -160,7 +161,7 @@ class _AddFigureToDayDialogState extends ConsumerState<AddFigureToDayDialog> {
     );
   }
 
-  Future<void> _addFigure(
+  void _addFigure(
     BuildContext context,
     WidgetRef ref,
     FigureModel figure,
@@ -168,8 +169,11 @@ class _AddFigureToDayDialogState extends ConsumerState<AddFigureToDayDialog> {
     final repository = ref.read(trainingPlannedRepositoryProvider);
     if (repository == null) return;
 
-    await repository.add(
-      TrainingPlannedModel(figureId: figure.id, date: widget.date),
+    detachFirestoreWrite(
+      repository.add(
+        TrainingPlannedModel(figureId: figure.id, date: widget.date),
+      ),
+      operation: 'adding a figure to the plan',
     );
   }
 }

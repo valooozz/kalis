@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/screens/today/last_journal_entry_dialog.dart';
 import '../../models/figure_model.dart';
@@ -179,19 +180,22 @@ class TodayScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _handleLongPress(
+  void _handleLongPress(
     BuildContext context,
     WidgetRef ref,
     FigureModel figure,
     bool isDone,
-  ) async {
+  ) {
     if (isDone) {
       final repository = ref.read(trainingDoneRepositoryProvider);
       if (repository == null) return;
 
       final today = ref.read(todayProvider);
 
-      await repository.remove(figure.id, today);
+      detachFirestoreWrite(
+        repository.remove(figure.id, today),
+        operation: 'unmarking a training',
+      );
     } else {
       showDialog(
         context: context,

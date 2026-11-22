@@ -87,6 +87,9 @@ Consumed only by `figuresProvider` to filter the figure list.
 | `archivedFiguresProvider` | StreamProvider\<List\<FigureModel\>\> | Archived figures, sorted by `order` |
 | `figuresByStateProvider` | StreamProvider.family\<…, FigureState\> | Subset of `figuresProvider` by state |
 | `figureByIdProvider` | Provider.family\<FigureModel?, String\> | Derived from `figuresProvider` |
+| `allFiguresProvider` | StreamProvider\<List\<FigureModel\>\> | Toutes les figures sans filtre, source des calculs d’ordre locaux |
+| `nextFigureOrderProvider` | Provider.family | Prochain ordre d’une catégorie calculé depuis le cache |
+| `previousFigureOrderProvider` | Provider.family | Ordre précédent d’une catégorie calculé depuis le cache |
 | `lastTrainingDateProvider` | FutureProvider.family | Last done date for a figure (via trainingDoneRepo) |
 | `nextTrainingDateProvider` | FutureProvider.family | Next planned date ≥ today |
 | `nextTrainingDateAfterTodayProvider` | FutureProvider.family | Next planned date strictly after today |

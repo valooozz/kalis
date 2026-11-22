@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/core/utils/date_utils.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import '../../models/figure_model.dart';
 import '../../models/training_planned_model.dart';
@@ -133,16 +134,22 @@ class BeginLearningDialog extends ConsumerWidget {
     final plannedRepository = ref.read(trainingPlannedRepositoryProvider);
     if (figureRepository == null || plannedRepository == null) return;
 
-    final newOrder = await figureRepository.getMaxOrder(FigureState.learning);
+    final newOrder = ref.read(nextFigureOrderProvider(FigureState.learning));
+    if (newOrder == null) return;
     final updated = figure.copyWith(
       state: FigureState.learning,
       startDate: date,
       order: newOrder,
     );
-    await figureRepository.update(updated);
-
-    await plannedRepository.add(
-      TrainingPlannedModel(figureId: figure.id, date: date),
+    detachFirestoreWrite(
+      figureRepository.update(updated),
+      operation: 'starting to learn a figure',
+    );
+    detachFirestoreWrite(
+      plannedRepository.add(
+        TrainingPlannedModel(figureId: figure.id, date: date),
+      ),
+      operation: 'planning a figure',
     );
   }
 
@@ -177,10 +184,15 @@ class BeginLearningDialog extends ConsumerWidget {
     if (figureRepository == null || plannedRepository == null) return;
 
     final updated = figure.copyWith(paused: false);
-    await figureRepository.update(updated);
-
-    await plannedRepository.add(
-      TrainingPlannedModel(figureId: figure.id, date: date),
+    detachFirestoreWrite(
+      figureRepository.update(updated),
+      operation: 'resuming a figure',
+    );
+    detachFirestoreWrite(
+      plannedRepository.add(
+        TrainingPlannedModel(figureId: figure.id, date: date),
+      ),
+      operation: 'planning a resumed figure',
     );
   }
 }

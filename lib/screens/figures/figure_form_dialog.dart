@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'package:kalis/repositories/figure_repository.dart';
 import 'package:kalis/screens/figures/record_form_dialog.dart';
 import 'package:kalis/widgets/record_display.dart';
 import '../../models/figure_model.dart';
 import '../../providers/core_providers.dart';
+import '../../providers/figure_providers.dart';
 import '../../widgets/color_picker_row.dart';
 import '../../core/utils/date_utils.dart';
 
@@ -100,9 +103,15 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
                   onDelete: () async {
                     Navigator.of(context).pop();
                     final repository = ref.read(figureRepositoryProvider);
-                    await repository?.update(
+                    final write = repository?.update(
                       widget.figure!.copyWith(clearRecord: true),
                     );
+                    if (write != null) {
+                      detachFirestoreWrite(
+                        write,
+                        operation: 'clearing a figure record',
+                      );
+                    }
                   },
                 ),
               ],
@@ -144,7 +153,7 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
     );
   }
 
-  Future<void> _save() async {
+  void _save() {
     final name = _nameController.text.trim();
     if (name.isEmpty) return;
 
@@ -160,20 +169,32 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
         clearStartDate: _startDate == null,
         clearEndDate: _endDate == null,
       );
-      await figureRepository.update(updated);
+      detachFirestoreWrite(
+        figureRepository.update(updated),
+        operation: 'updating a figure',
+      );
+      Navigator.of(context).pop();
     } else {
-      final newOrder = await figureRepository.getMaxOrder(FigureState.toLearn);
-      final figure = FigureModel(
+      detachFirestoreWrite(
+        _createFigure(figureRepository, name),
+        operation: 'creating a figure',
+      );
+      Navigator.of(context).pop();
+    }
+  }
+
+  Future<void> _createFigure(FigureRepository repository, String name) async {
+    final newOrder = ref.read(nextFigureOrderProvider(FigureState.toLearn));
+    if (newOrder == null) return;
+    await repository.create(
+      FigureModel(
         id: '',
         name: name,
         color: _selectedColor,
         state: FigureState.toLearn,
         order: newOrder,
-      );
-      await figureRepository.create(figure);
-    }
-
-    if (mounted) Navigator.of(context).pop();
+      ),
+    );
   }
 
   Future<void> _delete(AppLocalizations lbl) async {
@@ -198,14 +219,16 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
       ),
     );
 
-    if (confirmed != true) return;
+    if (confirmed != true || !mounted) return;
 
     final repository = ref.read(figureRepositoryProvider);
     if (repository == null) return;
 
-    await repository.delete(widget.figure!.id);
-
-    if (mounted) Navigator.of(context).pop();
+    detachFirestoreWrite(
+      repository.delete(widget.figure!.id),
+      operation: 'deleting a figure',
+    );
+    Navigator.of(context).pop();
   }
 
   Future<void> _toggleArchived(AppLocalizations lbl) async {
@@ -234,8 +257,11 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
     final repository = ref.read(figureRepositoryProvider);
     if (repository == null) return;
 
-    await repository.update(figure.copyWith(archived: !figure.archived));
-    if (mounted) Navigator.of(context).pop();
+    detachFirestoreWrite(
+      repository.update(figure.copyWith(archived: !figure.archived)),
+      operation: 'changing figure archive state',
+    );
+    Navigator.of(context).pop();
   }
 }
 

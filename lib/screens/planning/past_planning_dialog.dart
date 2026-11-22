@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import '../../models/figure_model.dart';
 import '../../models/training_done_model.dart';
@@ -176,9 +177,15 @@ class _PastDaySection extends ConsumerWidget {
     if (repository == null) return;
 
     if (isDone) {
-      await repository.remove(figure.id, date);
+      detachFirestoreWrite(
+        repository.remove(figure.id, date),
+        operation: 'removing a completed training',
+      );
     } else {
-      await repository.add(TrainingDoneModel(figureId: figure.id, date: date));
+      detachFirestoreWrite(
+        repository.add(TrainingDoneModel(figureId: figure.id, date: date)),
+        operation: 'marking a past training as complete',
+      );
     }
   }
 
@@ -239,6 +246,9 @@ class _PastDaySection extends ConsumerWidget {
     final repository = ref.read(trainingPlannedRepositoryProvider);
     if (repository == null) return;
 
-    await repository.remove(figure.id, date);
+    detachFirestoreWrite(
+      repository.remove(figure.id, date),
+      operation: 'removing a planned figure',
+    );
   }
 }

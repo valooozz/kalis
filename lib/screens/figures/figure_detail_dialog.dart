@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/models/journal_entry_model.dart';
 import 'package:kalis/models/training_planned_model.dart';
 import 'package:kalis/providers/today_providers.dart';
+import 'package:kalis/providers/figure_providers.dart';
 import 'package:kalis/screens/figures/figure_calendar_dialog.dart';
 import 'package:kalis/widgets/record_display.dart';
 import '../../models/figure_model.dart';
@@ -279,9 +281,12 @@ class FigureDetailDialog extends ConsumerWidget {
     );
   }
 
-  Future<void> _deleteEntry(WidgetRef ref, String entryId) async {
+  void _deleteEntry(WidgetRef ref, String entryId) {
     final repository = ref.read(journalEntryRepositoryProvider);
-    await repository?.delete(entryId);
+    final write = repository?.delete(entryId);
+    if (write != null) {
+      detachFirestoreWrite(write, operation: 'deleting a journal entry');
+    }
   }
 
   Future<void> _beginLearning(BuildContext context, WidgetRef ref) async {
@@ -294,25 +299,31 @@ class FigureDetailDialog extends ConsumerWidget {
       lastDate: DateTime(2100),
     );
 
-    if (picked == null) return;
+    if (picked == null || !context.mounted) return;
 
     final figureRepository = ref.read(figureRepositoryProvider);
     final plannedRepository = ref.read(trainingPlannedRepositoryProvider);
     if (figureRepository == null || plannedRepository == null) return;
 
-    final newOrder = await figureRepository.getMaxOrder(FigureState.learning);
+    final newOrder = ref.read(nextFigureOrderProvider(FigureState.learning));
+    if (newOrder == null) return;
     final updated = figure.copyWith(
       state: FigureState.learning,
       startDate: picked,
       order: newOrder,
     );
-    await figureRepository.update(updated);
-
-    await plannedRepository.add(
-      TrainingPlannedModel(figureId: figure.id, date: picked),
+    detachFirestoreWrite(
+      figureRepository.update(updated),
+      operation: 'starting to learn a figure',
+    );
+    detachFirestoreWrite(
+      plannedRepository.add(
+        TrainingPlannedModel(figureId: figure.id, date: picked),
+      ),
+      operation: 'planning a figure',
     );
 
-    if (context.mounted) Navigator.of(context).pop();
+    Navigator.of(context).pop();
   }
 
   Future<void> _togglePaused(
@@ -354,23 +365,42 @@ class FigureDetailDialog extends ConsumerWidget {
     final newPaused = !figure.paused;
     final newFigure = figure.copyWith(paused: newPaused);
 
-    await figureRepository?.update(newFigure);
-    await trainingPlannedRepository?.removeAllForFigure(figure.id);
+    final update = figureRepository?.update(newFigure);
+    if (update != null) {
+      detachFirestoreWrite(update, operation: 'changing figure pause state');
+    }
+    final removal = trainingPlannedRepository?.removeAllForFigure(figure.id);
+    if (removal != null) {
+      detachFirestoreWrite(removal, operation: 'removing a figure from plans');
+    }
   }
 
-  Future<void> _toggleActive(WidgetRef ref) async {
+  void _toggleActive(WidgetRef ref) {
     final figureRepository = ref.read(figureRepositoryProvider);
-    await figureRepository?.update(figure.copyWith(active: !figure.active));
+    final write = figureRepository?.update(
+      figure.copyWith(active: !figure.active),
+    );
+    if (write != null) {
+      detachFirestoreWrite(write, operation: 'toggling figure activity');
+    }
   }
 
-  Future<void> _restoreFigure(WidgetRef ref) async {
+  void _restoreFigure(WidgetRef ref) {
     final figureRepository = ref.read(figureRepositoryProvider);
-    await figureRepository?.update(figure.copyWith(archived: false));
+    final write = figureRepository?.update(figure.copyWith(archived: false));
+    if (write != null) {
+      detachFirestoreWrite(write, operation: 'restoring a figure');
+    }
   }
 
-  Future<void> _toggleFavorite(WidgetRef ref) async {
+  void _toggleFavorite(WidgetRef ref) {
     final figureRepository = ref.read(figureRepositoryProvider);
-    await figureRepository?.update(figure.copyWith(favorite: !figure.favorite));
+    final write = figureRepository?.update(
+      figure.copyWith(favorite: !figure.favorite),
+    );
+    if (write != null) {
+      detachFirestoreWrite(write, operation: 'toggling figure favorite');
+    }
   }
 }
 

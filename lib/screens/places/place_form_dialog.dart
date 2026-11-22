@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/models/place_model.dart';
 import 'package:kalis/providers/core_providers.dart';
@@ -15,7 +16,6 @@ class PlaceFormDialog extends ConsumerStatefulWidget {
 
 class _PlaceFormDialogState extends ConsumerState<PlaceFormDialog> {
   final _controller = TextEditingController();
-  bool _saving = false;
   String? _errorText;
 
   @override
@@ -45,44 +45,38 @@ class _PlaceFormDialogState extends ConsumerState<PlaceFormDialog> {
           child: Text(lbl.buttonCancel),
         ),
         FilledButton(
-          onPressed: _saving
-              ? null
-              : () async {
-                  final repo = ref.read(placeRepositoryProvider);
-                  if (repo == null) return;
-                  setState(() => _saving = true);
-                  final name = _controller.text.trim();
-                  if (name.isEmpty) {
-                    setState(() => _saving = false);
-                    return;
-                  }
+          onPressed: () {
+            final repo = ref.read(placeRepositoryProvider);
+            if (repo == null) return;
+            final name = _controller.text.trim();
+            if (name.isEmpty) return;
 
-                  // Check for duplicate name among existing places
-                  final places = ref.read(placesProvider).valueOrNull ?? [];
-                  final exists = places.any(
-                    (p) =>
-                        p.name.toLowerCase() == name.toLowerCase() &&
-                        (widget.initial == null || p.id != widget.initial!.id),
-                  );
-                  if (exists) {
-                    setState(() {
-                      _saving = false;
-                      _errorText = lbl.placeAlreadyExistError;
-                    });
-                    return;
-                  }
+            final places = ref.read(placesProvider).valueOrNull ?? [];
+            final exists = places.any(
+              (p) =>
+                  p.name.toLowerCase() == name.toLowerCase() &&
+                  (widget.initial == null || p.id != widget.initial!.id),
+            );
+            if (exists) {
+              setState(() => _errorText = lbl.placeAlreadyExistError);
+              return;
+            }
 
-                  if (widget.initial == null) {
-                    final created = await repo.create(
-                      PlaceModel(id: '', name: name),
-                    );
-                    Navigator.of(context).pop(created);
-                  } else {
-                    final updated = widget.initial!.copyWith(name: name);
-                    await repo.update(updated);
-                    Navigator.of(context).pop(updated);
-                  }
-                },
+            if (widget.initial == null) {
+              detachFirestoreWrite(
+                repo.create(PlaceModel(id: '', name: name)),
+                operation: 'creating a place',
+              );
+              Navigator.of(context).pop();
+            } else {
+              final updated = widget.initial!.copyWith(name: name);
+              detachFirestoreWrite(
+                repo.update(updated),
+                operation: 'updating a place',
+              );
+              Navigator.of(context).pop(updated);
+            }
+          },
           child: Text(lbl.buttonSave),
         ),
       ],

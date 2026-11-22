@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import '../../models/figure_model.dart';
 import '../../providers/core_providers.dart';
@@ -85,17 +86,20 @@ class _RecordFormDialogState extends ConsumerState<RecordFormDialog> {
     );
   }
 
-  Future<void> _save() async {
+  void _save() {
     final value = int.tryParse(_valueController.text.trim());
     if (value == null) return;
 
     final repository = ref.read(figureRepositoryProvider);
     if (repository == null) return;
 
-    await repository.update(
-      widget.figure.copyWith(recordValue: value, recordUnit: _selectedUnit),
+    detachFirestoreWrite(
+      repository.update(
+        widget.figure.copyWith(recordValue: value, recordUnit: _selectedUnit),
+      ),
+      operation: 'updating a figure record',
     );
 
-    if (mounted) Navigator.of(context).pop();
+    Navigator.of(context).pop();
   }
 }

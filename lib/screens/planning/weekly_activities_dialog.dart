@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import '../../models/weekly_activities_model.dart';
 import '../../providers/core_providers.dart';
@@ -99,7 +100,7 @@ class _WeeklyActivitiesDialogState
     );
   }
 
-  Future<void> _save() async {
+  void _save() {
     final repository = ref.read(weeklyActivitiesRepositoryProvider);
     if (repository == null) return;
 
@@ -109,7 +110,10 @@ class _WeeklyActivitiesDialogState
       if (text.isNotEmpty) activities[weekday] = text;
     }
 
-    await repository.save(WeeklyActivitiesModel(activities: activities));
-    if (mounted) Navigator.of(context).pop();
+    detachFirestoreWrite(
+      repository.save(WeeklyActivitiesModel(activities: activities)),
+      operation: 'saving weekly activities',
+    );
+    Navigator.of(context).pop();
   }
 }

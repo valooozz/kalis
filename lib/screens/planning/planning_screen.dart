@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/screens/planning/begin_learning_dialog.dart';
 import 'package:kalis/screens/planning/past_planning_dialog.dart';
@@ -216,7 +217,19 @@ class _DayContent extends ConsumerWidget {
     return (screenWidth - 32 - 16) / 3;
   }
 
-  Future<void> _removeFigure(
+  void _removeFigure(
+    BuildContext context,
+    WidgetRef ref,
+    FigureModel figure,
+    DateTime date,
+  ) {
+    detachFirestoreWrite(
+      _removeFigureAfterCheck(context, ref, figure, date),
+      operation: 'removing a figure from the plan',
+    );
+  }
+
+  Future<void> _removeFigureAfterCheck(
     BuildContext context,
     WidgetRef ref,
     FigureModel figure,

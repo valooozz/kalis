@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/core/utils/date_utils.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/providers/filter_providers.dart';
 import 'package:kalis/providers/today_providers.dart';
 import 'package:kalis/repositories/figure_repository.dart';
@@ -9,11 +10,17 @@ import '../models/figure_model.dart';
 import 'core_providers.dart';
 import 'package:collection/collection.dart';
 
-// Stream de toutes les figures, triées par statut puis alphabétiquement, en tenant compte du filtre de couleur
-final figuresProvider = StreamProvider<List<FigureModel>>((ref) {
+final allFiguresProvider = StreamProvider<List<FigureModel>>((ref) {
   final repository = ref.watch(figureRepositoryProvider);
   if (repository == null) return const Stream.empty();
+  return repository.watchAll();
+});
 
+// Stream de toutes les figures, triées par statut puis alphabétiquement, en tenant compte du filtre de couleur
+final figuresProvider = StreamProvider<List<FigureModel>>((ref) {
+  ref.watch(allFiguresProvider);
+  final repository = ref.watch(figureRepositoryProvider);
+  if (repository == null) return const Stream.empty();
   final selectedColor = ref.watch(colorFilterProvider);
 
   return repository.watchAll().map((figures) {
@@ -29,6 +36,7 @@ final figuresProvider = StreamProvider<List<FigureModel>>((ref) {
 
 /// Figures archivées, tous statuts et couleurs confondus.
 final archivedFiguresProvider = StreamProvider<List<FigureModel>>((ref) {
+  ref.watch(allFiguresProvider);
   final repository = ref.watch(figureRepositoryProvider);
   if (repository == null) return const Stream.empty();
   return repository.watchAll().map(
@@ -72,6 +80,34 @@ final pausedFiguresProvider = StreamProvider<List<FigureModel>>((ref) {
   return repository.watchAll().map(
     (figures) => figures.where((f) => f.paused && !f.archived).toList(),
   );
+});
+
+final nextFigureOrderProvider = Provider.family<int?, FigureState>((
+  ref,
+  state,
+) {
+  final figures = ref.watch(allFiguresProvider).valueOrNull;
+  if (figures == null) return null;
+
+  final orders = figures
+      .where((figure) => figure.state == state)
+      .map((figure) => figure.order);
+  if (orders.isEmpty) return 0;
+  return orders.reduce((a, b) => a > b ? a : b) + 1;
+});
+
+final previousFigureOrderProvider = Provider.family<int?, FigureState>((
+  ref,
+  state,
+) {
+  final figures = ref.watch(allFiguresProvider).valueOrNull;
+  if (figures == null) return null;
+
+  final orders = figures
+      .where((figure) => figure.state == state)
+      .map((figure) => figure.order);
+  if (orders.isEmpty) return 0;
+  return orders.reduce((a, b) => a < b ? a : b) - 1;
 });
 
 // Une figure par son id
@@ -178,8 +214,13 @@ class FigureOrderNotifier {
 
   FigureOrderNotifier(this._repository);
 
-  Future<void> reorder(List<FigureModel> figures) async {
-    await _repository?.updateOrder(figures);
+  void reorder(List<FigureModel> figures) {
+    final repository = _repository;
+    if (repository == null) return;
+    detachFirestoreWrite(
+      repository.updateOrder(figures),
+      operation: 'reordering figures',
+    );
   }
 }
 

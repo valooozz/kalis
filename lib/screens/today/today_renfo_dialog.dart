@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/models/renfo_done_model.dart';
 import 'package:kalis/providers/core_providers.dart';
@@ -11,14 +12,20 @@ import '../renfos/renfo_calendar_dialog.dart';
 class TodayRenfoDialog extends ConsumerWidget {
   const TodayRenfoDialog({super.key});
 
-  Future<void> _toggle(WidgetRef ref, RenfoTodayItem item) async {
+  void _toggle(WidgetRef ref, RenfoTodayItem item) {
     final repo = ref.read(renfoDoneRepositoryProvider);
     if (repo == null) return;
     final today = ref.read(todayProvider);
     if (item.doneToday) {
-      await repo.remove(item.renfo.id, today);
+      detachFirestoreWrite(
+        repo.remove(item.renfo.id, today),
+        operation: 'unmarking a renfo session',
+      );
     } else {
-      await repo.add(RenfoDoneModel(renfoId: item.renfo.id, date: today));
+      detachFirestoreWrite(
+        repo.add(RenfoDoneModel(renfoId: item.renfo.id, date: today)),
+        operation: 'marking a renfo session as complete',
+      );
     }
   }
 

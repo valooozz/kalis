@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/models/renfo_model.dart';
@@ -15,7 +16,6 @@ class RenfoFormDialog extends ConsumerStatefulWidget {
 
 class _RenfoFormDialogState extends ConsumerState<RenfoFormDialog> {
   final _controller = TextEditingController();
-  bool _saving = false;
   String? _errorText;
 
   @override
@@ -45,43 +45,38 @@ class _RenfoFormDialogState extends ConsumerState<RenfoFormDialog> {
           child: Text(lbl.buttonCancel),
         ),
         FilledButton(
-          onPressed: _saving
-              ? null
-              : () async {
-                  final repo = ref.read(renfoRepositoryProvider);
-                  if (repo == null) return;
-                  setState(() => _saving = true);
-                  final name = _controller.text.trim();
-                  if (name.isEmpty) {
-                    setState(() => _saving = false);
-                    return;
-                  }
+          onPressed: () {
+            final repo = ref.read(renfoRepositoryProvider);
+            if (repo == null) return;
+            final name = _controller.text.trim();
+            if (name.isEmpty) return;
 
-                  final renfos = ref.read(renfosProvider).valueOrNull ?? [];
-                  final exists = renfos.any(
-                    (r) =>
-                        r.name.toLowerCase() == name.toLowerCase() &&
-                        (widget.initial == null || r.id != widget.initial!.id),
-                  );
-                  if (exists) {
-                    setState(() {
-                      _saving = false;
-                      _errorText = lbl.renfoAlreadyExistError;
-                    });
-                    return;
-                  }
+            final renfos = ref.read(renfosProvider).valueOrNull ?? [];
+            final exists = renfos.any(
+              (r) =>
+                  r.name.toLowerCase() == name.toLowerCase() &&
+                  (widget.initial == null || r.id != widget.initial!.id),
+            );
+            if (exists) {
+              setState(() => _errorText = lbl.renfoAlreadyExistError);
+              return;
+            }
 
-                  if (widget.initial == null) {
-                    final created = await repo.create(
-                      RenfoModel(id: '', name: name),
-                    );
-                    if (context.mounted) Navigator.of(context).pop(created);
-                  } else {
-                    final updated = widget.initial!.copyWith(name: name);
-                    await repo.update(updated);
-                    if (context.mounted) Navigator.of(context).pop(updated);
-                  }
-                },
+            if (widget.initial == null) {
+              detachFirestoreWrite(
+                repo.create(RenfoModel(id: '', name: name)),
+                operation: 'creating a renfo',
+              );
+              Navigator.of(context).pop();
+            } else {
+              final updated = widget.initial!.copyWith(name: name);
+              detachFirestoreWrite(
+                repo.update(updated),
+                operation: 'updating a renfo',
+              );
+              Navigator.of(context).pop(updated);
+            }
+          },
           child: Text(lbl.buttonSave),
         ),
       ],

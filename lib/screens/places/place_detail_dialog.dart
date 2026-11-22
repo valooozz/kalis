@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/models/place_model.dart';
 import 'package:kalis/providers/core_providers.dart';
@@ -24,21 +25,21 @@ class _PlaceDetailDialogState extends ConsumerState<PlaceDetailDialog> {
     _place = widget.place;
   }
 
-  Future<void> _updatePlace(PlaceModel p) async {
+  void _updatePlace(PlaceModel p) {
     final repo = ref.read(placeRepositoryProvider);
     if (repo == null) return;
-    await repo.update(p);
     setState(() => _place = p);
+    detachFirestoreWrite(repo.update(p), operation: 'updating a place');
   }
 
-  Future<void> _toggleFigure(String figureId) async {
+  void _toggleFigure(String figureId) {
     final updatedIds = List<String>.from(_place.figureIds);
     if (updatedIds.contains(figureId)) {
       updatedIds.remove(figureId);
     } else {
       updatedIds.add(figureId);
     }
-    await _updatePlace(_place.copyWith(figureIds: updatedIds));
+    _updatePlace(_place.copyWith(figureIds: updatedIds));
   }
 
   Future<void> _deletePlace() async {
@@ -70,8 +71,8 @@ class _PlaceDetailDialogState extends ConsumerState<PlaceDetailDialog> {
     if (confirmed != true) return;
     if (!mounted) return;
 
-    await repo.delete(_place.id);
-    if (mounted) Navigator.of(context).pop();
+    detachFirestoreWrite(repo.delete(_place.id), operation: 'deleting a place');
+    Navigator.of(context).pop();
   }
 
   @override

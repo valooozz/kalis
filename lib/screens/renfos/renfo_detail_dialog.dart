@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/core/utils/firestore_write_utils.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/models/renfo_model.dart';
 import 'package:kalis/providers/core_providers.dart';
@@ -25,23 +26,23 @@ class _RenfoDetailDialogState extends ConsumerState<RenfoDetailDialog> {
     _renfo = widget.renfo;
   }
 
-  Future<void> _updateRenfo(RenfoModel r) async {
+  void _updateRenfo(RenfoModel r) {
     final repo = ref.read(renfoRepositoryProvider);
     if (repo == null) return;
     // Mise à jour locale immédiate (l'écriture Firestore peut être lente
     // et le dialog peut être fermé entre-temps)
     setState(() => _renfo = r);
-    await repo.update(r);
+    detachFirestoreWrite(repo.update(r), operation: 'updating a renfo');
   }
 
-  Future<void> _toggleFigure(String figureId) async {
+  void _toggleFigure(String figureId) {
     final updatedIds = List<String>.from(_renfo.figureIds);
     if (updatedIds.contains(figureId)) {
       updatedIds.remove(figureId);
     } else {
       updatedIds.add(figureId);
     }
-    await _updateRenfo(_renfo.copyWith(figureIds: updatedIds));
+    _updateRenfo(_renfo.copyWith(figureIds: updatedIds));
   }
 
   Future<void> _deleteRenfo() async {
@@ -74,9 +75,12 @@ class _RenfoDetailDialogState extends ConsumerState<RenfoDetailDialog> {
     if (confirmed != true) return;
     if (!mounted) return;
 
-    await doneRepo.removeAllForRenfo(_renfo.id);
-    await repo.delete(_renfo.id);
-    if (mounted) Navigator.of(context).pop();
+    detachFirestoreWrite(
+      doneRepo.removeAllForRenfo(_renfo.id),
+      operation: 'removing renfo history',
+    );
+    detachFirestoreWrite(repo.delete(_renfo.id), operation: 'deleting a renfo');
+    Navigator.of(context).pop();
   }
 
   @override
