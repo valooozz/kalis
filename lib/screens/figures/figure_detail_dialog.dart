@@ -208,17 +208,27 @@ class FigureDetailDialog extends ConsumerWidget {
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(lbl.buttonClose),
                 ),
-                FilledButton.icon(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    showDialog(
-                      context: context,
-                      builder: (_) => FigureFormDialog(figure: figure),
-                    );
-                  },
-                  icon: const Icon(Icons.edit),
-                  label: Text(lbl.buttonEdit),
-                ),
+                if (figure.archived)
+                  FilledButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      _restoreFigure(ref);
+                    },
+                    icon: const Icon(Icons.unarchive_outlined),
+                    label: Text(lbl.restoreFigure),
+                  )
+                else
+                  FilledButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      showDialog(
+                        context: context,
+                        builder: (_) => FigureFormDialog(figure: figure),
+                      );
+                    },
+                    icon: const Icon(Icons.edit),
+                    label: Text(lbl.buttonEdit),
+                  ),
               ],
             ),
           ],
@@ -351,6 +361,11 @@ class FigureDetailDialog extends ConsumerWidget {
   Future<void> _toggleActive(WidgetRef ref) async {
     final figureRepository = ref.read(figureRepositoryProvider);
     await figureRepository?.update(figure.copyWith(active: !figure.active));
+  }
+
+  Future<void> _restoreFigure(WidgetRef ref) async {
+    final figureRepository = ref.read(figureRepositoryProvider);
+    await figureRepository?.update(figure.copyWith(archived: false));
   }
 
   Future<void> _toggleFavorite(WidgetRef ref) async {
