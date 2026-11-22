@@ -211,7 +211,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteFigure.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer la figure'**
+  /// **'Supprimer'**
   String get deleteFigure;
 
   /// No description provided for @deleteFigureConfirm.

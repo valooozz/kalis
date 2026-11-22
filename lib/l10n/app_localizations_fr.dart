@@ -66,7 +66,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get newFigure => 'Nouvelle figure';
 
   @override
-  String get deleteFigure => 'Supprimer la figure';
+  String get deleteFigure => 'Supprimer';
 
   @override
   String deleteFigureConfirm(String name) {

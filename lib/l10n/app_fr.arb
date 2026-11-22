@@ -19,7 +19,7 @@
     "addFigure": "Ajouter une figure",
     "editFigure": "Modifier la figure",
     "newFigure": "Nouvelle figure",
-    "deleteFigure": "Supprimer la figure",
+    "deleteFigure": "Supprimer",
     "deleteFigureConfirm": "Supprimer \"{name}\" ? Cette action est irréversible.",
     "@deleteFigureConfirm": {
         "placeholders": {

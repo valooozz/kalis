@@ -112,12 +112,13 @@ class _FigureFormDialogState extends ConsumerState<FigureFormDialog> {
       ),
       actions: [
         if (_isEditing)
-          TextButton(
+          TextButton.icon(
             onPressed: () => _delete(lbl),
             style: TextButton.styleFrom(
               foregroundColor: Theme.of(context).colorScheme.error,
             ),
-            child: Text(lbl.deleteFigure),
+            icon: Icon(Icons.delete_outlined),
+            label: Text(lbl.deleteFigure),
           ),
         if (_isEditing)
           TextButton.icon(
