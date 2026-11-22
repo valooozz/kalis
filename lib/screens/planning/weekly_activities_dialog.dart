@@ -58,7 +58,7 @@ class _WeeklyActivitiesDialogState
             final locale = Localizations.localeOf(context).languageCode;
             return ConstrainedBox(
               constraints: BoxConstraints(
-                maxHeight: MediaQuery.sizeOf(context).height * 0.6,
+                maxHeight: MediaQuery.sizeOf(context).height * 0.7,
               ),
               child: ListView.builder(
                 shrinkWrap: true,
