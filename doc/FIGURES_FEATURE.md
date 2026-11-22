@@ -630,7 +630,9 @@ trainingPlannedDatesProvider(figureId)   // Planifiés
 
 **Archiver ou restaurer**
 
-Dans `FigureFormDialog`, le mode édition propose une action `Archiver` ou `Restaurer` selon l'état courant. L'archivage demande une confirmation. Une figure archivée reste en Firestore mais est exclue de `figuresProvider`, des vues actives, du planning et du filtre des figures en pause. Elle est accessible depuis `Paramètres > Figures archivées`, sur la route `/archived-figures`. Depuis cette liste, une figure peut être ouverte puis restaurée via son formulaire d'édition.
+Depuis `FigureFormDialog`, une figure peut être archivée ou restaurée. L'archivage demande une confirmation. Depuis `FigureDetailDialog`, les figures archivées proposent directement l'action `Restaurer` au lieu de l'action `Modifier`. Une figure archivée reste en Firestore mais est exclue de `figuresProvider`, des vues actives, du planning et du filtre des figures en pause; elle est aussi retirée des listes de lieux et de renfos associés. L'archivage remet également la figure hors pause.
+
+Les figures archivées sont accessibles depuis `Paramètres > Figures archivées`, sur la route `/archived-figures`. Elles peuvent être ouvertes dans `FigureDetailDialog`, puis restaurées directement.
 
 **Marquer en pause**
 ```

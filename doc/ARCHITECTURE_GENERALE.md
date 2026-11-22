@@ -76,7 +76,8 @@ lib/
 │   ├── theme/
 │   │   └── app_theme.dart            # Thème global (light/dark)
 │   └── utils/
-│       └── date_utils.dart           # Utilitaires de date
+│       ├── date_utils.dart           # Utilitaires de date
+│       └── firestore_write_utils.dart # Écritures Firestore détachées avec rapport d'erreur
 │
 ├── models/                            # Entités métier
 │   ├── figure_model.dart             # Figure d'entraînement

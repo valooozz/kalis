@@ -85,8 +85,9 @@ Transitions are triggered from `FigureStatusPickerDialog`, which calls `figureRe
 **Archive / restore**
 - `archived` defaults to `false` for existing documents.
 - In edit mode, `FigureFormDialog` offers `Archive` or `Restore`.
-- Archiving requires confirmation. Archived figures are excluded from `figuresProvider`, active planning views, paused-figure lists and normal tab lists.
+- Archiving requires confirmation. Archived figures are excluded from `figuresProvider`, active planning views, paused-figure lists and normal tab lists; they are removed from associated place and renfo lists and forced to `paused == false`.
 - `ArchivedFiguresScreen` is available at `/archived-figures` through Settings. It lists archived figures by `order` and opens `FigureDetailDialog` on tap.
+- Archived figures use `FigureDetailDialog` to offer `Restore` directly instead of `Edit`.
 
 **Color filter**
 - `colorFilterProvider` (StateProvider\<FigureColor?\>) — null means no filter.

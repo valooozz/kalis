@@ -29,6 +29,7 @@ No sub-dialogs except the inline confirmation dialog for the `credential-already
 - `ArchivedFiguresScreen` reads `archivedFiguresProvider` and shows only `FigureModel.archived == true`.
 - Tapping a card opens `FigureDetailDialog`.
 - `FigureFormDialog` in edit mode can restore the figure without an archive confirmation.
+- `FigureDetailDialog` also exposes a direct `Restore` action for an archived figure; it does not show `Edit` in this state.
 
 **Normal link** (`linkWithCredential`):
 1. `googleSignIn.signIn()` → get `accessToken` + `idToken`.

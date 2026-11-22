@@ -183,6 +183,7 @@ Dans `todayRenfoItemsProvider`, les renfos sont filtrés selon les règles suiva
 
 - on exclut les renfos dont au moins une figure associée est déjà planifiée aujourd'hui
 - on calcule la date du dernier enregistrement validé (`renfoLastDoneDatesProvider`) en ignorant explicitement la date du jour pour éviter qu'une validation récente masque un retard réel
+- la date de référence d'un renfo peut aussi provenir du dernier entraînement effectué sur l'une de ses figures associées, si cette date est plus récente que ses validations précédentes
 - on considère qu'un renfo est "fait aujourd'hui" à partir des validations réelles de la journée (`doneTodayIds`), sans utiliser cette date comme référence de dernier succès pour l'alerte
 - un renfo est considéré en alerte quand il n'a pas été validé depuis au moins `renfoAlertDays` jours (seuil fixé à 4 jours)
 
@@ -207,7 +208,7 @@ L'icône de la barre d'outils de `TodayScreen` est colorée selon cet état.
 |---|---|
 | `renfosProvider` | Stream de tous les renfos triés par nom |
 | `renfoDoneAllProvider` | Stream de toutes les validations de renfo |
-| `renfoLastDoneDatesProvider` | Dernière date d'exécution de chaque renfo |
+| `renfoLastDoneDatesProvider` | Dernière date d'exécution du renfo ou de ses figures associées, hors aujourd'hui |
 | `todayRenfoItemsProvider` | Renfos éligibles pour aujourd'hui, avec état d’alerte et validation |
 | `renfoButtonStateProvider` | État visuel de l'icône du bouton Today |
 

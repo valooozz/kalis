@@ -87,7 +87,7 @@ Consumed only by `figuresProvider` to filter the figure list.
 | `archivedFiguresProvider` | StreamProvider\<List\<FigureModel\>\> | Archived figures, sorted by `order` |
 | `figuresByStateProvider` | StreamProvider.family\<…, FigureState\> | Subset of `figuresProvider` by state |
 | `figureByIdProvider` | Provider.family\<FigureModel?, String\> | Derived from `figuresProvider` |
-| `allFiguresProvider` | StreamProvider\<List\<FigureModel\>\> | Toutes les figures sans filtre, source des calculs d’ordre locaux |
+| `allFiguresProvider` | StreamProvider\<List\<FigureModel\>\> | Toutes les figures sans filtre, source des calculs d'ordre locaux |
 | `nextFigureOrderProvider` | Provider.family | Prochain ordre d’une catégorie calculé depuis le cache |
 | `previousFigureOrderProvider` | Provider.family | Ordre précédent d’une catégorie calculé depuis le cache |
 | `lastTrainingDateProvider` | FutureProvider.family | Last done date for a figure (via trainingDoneRepo) |
@@ -123,6 +123,17 @@ Key logic in `availableFiguresForDayProvider`: excludes figures already planned 
 
 ---
 
+## renfo_providers.dart
+
+| Provider | Type | Description |
+|---|---|---|
+| `renfosProvider` | StreamProvider\<List\<RenfoModel\>\> | Renfos triés par nom |
+| `renfoDoneAllProvider` | StreamProvider\<List\<RenfoDoneModel\>\> | Toutes les validations de renfo |
+| `renfoDoneDatesProvider(renfoId)` | Provider.family | Dates de validation pour un renfo |
+| `renfoLastDoneDatesProvider` | Provider\<Map<String, DateTime>\> | Dernière activité du renfo ou de ses figures associées, hors aujourd'hui |
+| `todayRenfoItemsProvider` | Provider\<List\<RenfoTodayItem\>\> | Renfos disponibles aujourd'hui avec alerte et validation |
+| `renfoButtonStateProvider` | Provider\<RenfoButtonState\> | État visuel du bouton Today |
+
 ## journal_providers.dart
 
 | Provider | Type | Description |
@@ -156,4 +167,5 @@ Key logic in `availableFiguresForDayProvider`: excludes figures already planned 
 - New feature providers should consume repositories from `core_providers` and date from `todayProvider`.
 - Never call `DateTime.now()` inside a provider — always use `todayProvider`.
 - Providers that aggregate across multiple figures (e.g. `allTrainingDoneDatesProvider`) depend on `figuresProvider` first to get the list of IDs, then fan out to per-figure streams.
+- Firestore mutations launched by the UI use `detachFirestoreWrite()` so dialogs close without awaiting the network operation. Errors are reported to `FlutterError` with the operation name.
 - `.family` providers take a single typed parameter; pass a composite object or record if multiple parameters are needed.

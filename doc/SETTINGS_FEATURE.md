@@ -126,7 +126,7 @@ Scaffold(
 
 ### Figures archivées
 
-La section Compte contient une tuile ouvrant `/archived-figures`. L'écran associé affiche toutes les figures dont le champ `archived` vaut `true`, quel que soit leur statut ou leur couleur. Chaque carte ouvre `FigureDetailDialog`; son formulaire d'édition permet de restaurer la figure.
+La section Compte contient une tuile ouvrant `/archived-figures`. L'écran associé affiche toutes les figures dont le champ `archived` vaut `true`, quel que soit leur statut ou leur couleur. Chaque carte ouvre `FigureDetailDialog`. Dans ce dialogue, une figure archivée peut être restaurée directement via le bouton `Restaurer`; elle ne propose pas le bouton `Modifier` tant qu'elle reste archivée.
 
 Une liste vide affiche le message dédié lorsqu'aucune figure n'est archivée.
 

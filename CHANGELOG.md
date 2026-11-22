@@ -1,5 +1,13 @@
 # Version 1
 
+## v1.23.0
+
+- Mise à jour des interactions de validation afin de fermer les dialogues immédiatement pendant la synchronisation Firestore.
+- Calcul de la dernière activité d'un renfo tenant compte des derniers entraînements effectués sur chacune de ses figures associées.
+- Suppression des liaisons avec renfos et lieux lors de l'archivage d'une figure.
+- Restauration directe des figures archivées depuis leur boîte de dialogue de détail, avec retrait de leurs associations aux lieux et renfos.
+- Corrections mineures de style.
+
 ## v1.22.0
 
 - Archivage des figures depuis leur formulaire d'édition, avec consultation et restauration depuis les paramètres.

@@ -21,6 +21,8 @@ Ce document décrit les providers présents dans `lib/providers` : leur utilité
 - journalEntryRepositoryProvider : `Provider<JournalEntryRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
 - generalNoteRepositoryProvider : `Provider<GeneralNoteRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
 - weeklyActivitiesRepositoryProvider : `Provider<WeeklyActivitiesRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
+- renfoRepositoryProvider : `Provider<RenfoRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
+- renfoDoneRepositoryProvider : `Provider<RenfoDoneRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
 - googleSignInProvider : `Provider<GoogleSignIn>`.
 - isLinkedToGoogleProvider : `Provider<bool>` qui observe `authStateProvider`.
 
@@ -47,6 +49,8 @@ Providers exposés et dépendances principales :
 - `figureOrderProvider` : fournit un `FigureOrderNotifier` pour modifier l'ordre via `FigureRepository`.
 - `trainingDoneDatesProvider` / `trainingPlannedDatesProvider` : listes de dates pour une figure à partir des repositories correspondants.
 - `allTrainingDoneDatesProvider` / `allTrainingPlannedDatesProvider` : agrègent pour toutes les figures ; dépendent de `figuresProvider` et des repositories `trainingDone` / `trainingPlanned`.
+- `allFiguresProvider` : stream de toutes les figures, sans exclusion des figures archivées ni filtre couleur.
+- `nextFigureOrderProvider` / `previousFigureOrderProvider` : calculent les ordres suivant/précédent pour une catégorie depuis le cache de toutes les figures.
 
 Remarque : `figure_providers.dart` est un consommateur majeur des repositories définis dans `core_providers.dart` et du filtre couleur.
 
@@ -95,6 +99,25 @@ Usage : centraliser la logique liée à « aujourd'hui » et fournir des informa
 - `weeklyActivitiesProvider` : `StreamProvider<WeeklyActivitiesModel>` lit `weeklyActivitiesRepositoryProvider` et retourne un modèle vide si l'utilisateur ou la ressource n'est pas disponible.
 
 Le document surveillé est `users/{uid}/weeklyActivities/main`.
+
+---
+
+## renfo_providers.dart
+
+- `renfosProvider` : stream des renfos triés par nom.
+- `renfoDoneAllProvider` : stream de toutes les validations de renfo.
+- `renfoDoneDatesProvider` : dates de validation pour un renfo donné.
+- `renfoLastDoneDatesProvider` : dernière date d'exécution du renfo ou de ses figures associées, hors date du jour.
+- `todayRenfoItemsProvider` : renfos disponibles aujourd'hui avec leur alerte et leur statut effectué.
+- `renfoButtonStateProvider` : état visuel `hidden`, `red`, `green` ou `grey` du bouton Today.
+
+L'alerte utilise un seuil de 4 jours. La date du jour est exclue du calcul de la dernière exécution afin qu'une validation récente ne masque pas un retard réel.
+
+---
+
+## Écritures Firestore détachées
+
+Les écrans utilisent `core/utils/firestore_write_utils.dart` pour lancer les mutations Firestore sans attendre leur fin avant de fermer le dialogue. `detachFirestoreWrite()` exécute l'écriture en tâche détachée et rapporte les erreurs via `FlutterError.reportError` avec le contexte de l'opération. Les échecs restent donc visibles dans les diagnostics sans bloquer la fermeture immédiate de l'interface.
 
 ---
 
