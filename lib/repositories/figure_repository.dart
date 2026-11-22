@@ -34,7 +34,39 @@ class FigureRepository {
   }
 
   Future<void> update(FigureModel figure) async {
-    await _collection.doc(figure.id).update(figure.toFirestore());
+    if (!figure.archived) {
+      await _collection.doc(figure.id).update(figure.toFirestore());
+      return;
+    }
+
+    final batch = _firestore.batch();
+    batch.update(_collection.doc(figure.id), figure.toFirestore());
+
+    final places = await _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('places')
+        .where('figureIds', arrayContains: figure.id)
+        .get();
+    for (final doc in places.docs) {
+      batch.update(doc.reference, {
+        'figureIds': FieldValue.arrayRemove([figure.id]),
+      });
+    }
+
+    final renfos = await _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('renfos')
+        .where('figureIds', arrayContains: figure.id)
+        .get();
+    for (final doc in renfos.docs) {
+      batch.update(doc.reference, {
+        'figureIds': FieldValue.arrayRemove([figure.id]),
+      });
+    }
+
+    await batch.commit();
   }
 
   Future<void> delete(String figureId) async {
