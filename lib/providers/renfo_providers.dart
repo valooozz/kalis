@@ -4,6 +4,7 @@ import 'package:kalis/core/utils/date_utils.dart';
 import '../models/renfo_model.dart';
 import '../models/renfo_done_model.dart';
 import 'core_providers.dart';
+import 'figure_providers.dart';
 import 'today_providers.dart';
 
 /// Seuil (en jours) à partir duquel un renfo est affiché en rouge.
@@ -40,6 +41,7 @@ final renfoDoneDatesProvider =
 
 /// Dernière date de travail (manuel) pour chaque renfo.
 final renfoLastDoneDatesProvider = Provider<Map<String, DateTime>>((ref) {
+  final renfos = ref.watch(renfosProvider).valueOrNull ?? [];
   final allRenfoDone = ref.watch(renfoDoneAllProvider).valueOrNull ?? [];
   final today = ref.watch(todayProvider);
   final result = <String, DateTime>{};
@@ -51,6 +53,22 @@ final renfoLastDoneDatesProvider = Provider<Map<String, DateTime>>((ref) {
       result[renfoDone.renfoId] = date;
     }
   }
+
+  for (final renfo in renfos) {
+    var lastDate = result[renfo.id];
+    for (final figureId in renfo.figureIds) {
+      final figureDate = ref
+          .watch(lastTrainingDateProvider(figureId))
+          .valueOrNull
+          ?.dateOnly;
+      if (figureDate == null || figureDate.isAfter(today)) continue;
+      if (lastDate == null || figureDate.isAfter(lastDate)) {
+        lastDate = figureDate;
+      }
+    }
+    if (lastDate != null) result[renfo.id] = lastDate;
+  }
+
   return result;
 });
 
