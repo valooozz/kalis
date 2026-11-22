@@ -96,17 +96,38 @@ class FigureRepository {
         .collection('journalEntries')
         .where('figureId', isEqualTo: figureId)
         .get();
+    final placesFuture = _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('places')
+        .where('figureIds', arrayContains: figureId)
+        .get();
+    final renfosFuture = _firestore
+        .collection('users')
+        .doc(_userId)
+        .collection('renfos')
+        .where('figureIds', arrayContains: figureId)
+        .get();
 
     final cascadeDelete =
         Future.wait([
           trainingDoneFuture,
           trainingPlannedFuture,
           journalEntriesFuture,
+          placesFuture,
+          renfosFuture,
         ]).then((snapshots) async {
           final batch = _firestore.batch();
-          for (final snapshot in snapshots) {
+          for (final snapshot in snapshots.take(3)) {
             for (final doc in snapshot.docs) {
               batch.delete(doc.reference);
+            }
+          }
+          for (final snapshot in snapshots.skip(3)) {
+            for (final doc in snapshot.docs) {
+              batch.update(doc.reference, {
+                'figureIds': FieldValue.arrayRemove([figureId]),
+              });
             }
           }
           await batch.commit();
