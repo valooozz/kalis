@@ -469,7 +469,7 @@ abstract class AppLocalizations {
   /// No description provided for @placesHelpContent.
   ///
   /// In fr, this message translates to:
-  /// **'Les lieux permettent d\'organiser tes figures selon l\'endroit où tu t\'entraînes. Quand tu ajoutes une figure à ta planification, tu peux filtrer les figures disponibles en choisissant un lieu.'**
+  /// **'Les lieux permettent d\'organiser tes figures selon l\'endroit où tu t\'entraînes. Crée des lieux et indique quelles figures peuvent y être travaillées. Quand tu planifies une journée, tu peux filtrer les figures disponibles par lieu.'**
   String get placesHelpContent;
 
   /// No description provided for @addPlace.
@@ -1105,7 +1105,7 @@ abstract class AppLocalizations {
   /// No description provided for @renfosHelpContent.
   ///
   /// In fr, this message translates to:
-  /// **'Un renfo rassemble plusieurs figures autour d\'une routine ou d\'un objectif. Crée un renfo, associe-lui des figures, puis valide sa pratique depuis la séance du jour.'**
+  /// **'Un renfo te permet de renforcer tes muscles en lien avec une ou plusieurs figures. Crée un renfo, associe-lui des figures, puis valide sa pratique depuis la séance du jour.\n\nUn renfo ne peut pas être travaillé si au moins une des ses figures l\'est ce jour-là.'**
   String get renfosHelpContent;
 
   /// No description provided for @addRenfo.
