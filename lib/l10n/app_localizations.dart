@@ -241,7 +241,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteFigureConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer \"{name}\" ? Cette action est irréversible.'**
+  /// **'Supprimer \"{name}\" ? Cette action est irréversible.'**
   String deleteFigureConfirm(String name);
 
   /// No description provided for @fieldName.
@@ -325,7 +325,7 @@ abstract class AppLocalizations {
   /// No description provided for @trainingHint.
   ///
   /// In fr, this message translates to:
-  /// **'Comment s\'est passé l\'entraînement ?'**
+  /// **'Comment s\'est passé l\'entraînement ?'**
   String get trainingHint;
 
   /// No description provided for @trainingNote.
@@ -463,7 +463,7 @@ abstract class AppLocalizations {
   /// No description provided for @placesHelpTitle.
   ///
   /// In fr, this message translates to:
-  /// **'À quoi servent les lieux ?'**
+  /// **'À quoi servent les lieux ?'**
   String get placesHelpTitle;
 
   /// No description provided for @placesHelpContent.
@@ -499,7 +499,7 @@ abstract class AppLocalizations {
   /// No description provided for @deletePlaceConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer \"{name}\" ? Cette action est irréversible.'**
+  /// **'Supprimer \"{name}\" ? Cette action est irréversible.'**
   String deletePlaceConfirm(String name);
 
   /// No description provided for @placeAlreadyExistError.
@@ -571,7 +571,7 @@ abstract class AppLocalizations {
   /// No description provided for @archiveFigureConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Archiver la figure \"{name}\" ?'**
+  /// **'Archiver la figure \"{name}\" ?'**
   String archiveFigureConfirm(String name);
 
   /// No description provided for @resumeFigure.
@@ -715,7 +715,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsAlreadyLinkedContent.
   ///
   /// In fr, this message translates to:
-  /// **'Ce compte Google est déjà lié à un autre compte Kalis. Veux-tu te connecter à ce compte ? Tes données actuelles ne seront pas migrées.'**
+  /// **'Ce compte Google est déjà lié à un autre compte Kalis. Veux-tu te connecter à ce compte ? Tes données actuelles ne seront pas migrées.'**
   String get settingsAlreadyLinkedContent;
 
   /// No description provided for @buttonConfirm.
@@ -781,7 +781,7 @@ abstract class AppLocalizations {
   /// No description provided for @markAsLearnedConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Passer \"{name}\" au statut Maîtrisée ?'**
+  /// **'Passer \"{name}\" au statut Maîtrisée ?'**
   String markAsLearnedConfirm(String name);
 
   /// No description provided for @allFiguresDone.
@@ -889,7 +889,7 @@ abstract class AppLocalizations {
   /// No description provided for @pauseFigureConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Mettre en pause la figure \"{name}\" ? Elle n\'apparaîtra plus dans la planification.'**
+  /// **'Mettre en pause la figure \"{name}\" ? Elle n\'apparaîtra plus dans la planification.'**
   String pauseFigureConfirm(String name);
 
   /// No description provided for @buttonPause.
@@ -919,7 +919,7 @@ abstract class AppLocalizations {
   /// No description provided for @pastPlanningMarkDoneConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Marquer \"{name}\" comme travaillée ce jour ?'**
+  /// **'Marquer \"{name}\" comme travaillée ce jour ?'**
   String pastPlanningMarkDoneConfirm(String name);
 
   /// No description provided for @pastPlanningMarkNotDoneTitle.
@@ -931,7 +931,7 @@ abstract class AppLocalizations {
   /// No description provided for @pastPlanningMarkNotDoneConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Retirer \"{name}\" des figures travaillées ce jour ?'**
+  /// **'Retirer \"{name}\" des figures travaillées ce jour ?'**
   String pastPlanningMarkNotDoneConfirm(String name);
 
   /// No description provided for @pastPlanningRemoveTitle.
@@ -943,7 +943,7 @@ abstract class AppLocalizations {
   /// No description provided for @pastPlanningRemoveConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Retirer \"{name}\" de ce jour ?'**
+  /// **'Retirer \"{name}\" de ce jour ?'**
   String pastPlanningRemoveConfirm(String name);
 
   /// No description provided for @noFiguresPast.
@@ -979,7 +979,7 @@ abstract class AppLocalizations {
   /// No description provided for @beginLearningConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Passer \"{name}\" en apprentissage et l\'ajouter à ce jour ?'**
+  /// **'Passer \"{name}\" en apprentissage et l\'ajouter à ce jour ?'**
   String beginLearningConfirm(String name);
 
   /// No description provided for @noFiguresToLearn.
@@ -997,7 +997,7 @@ abstract class AppLocalizations {
   /// No description provided for @resumeFigureConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Reprendre \"{name}\" et l\'ajouter à ce jour ?'**
+  /// **'Reprendre \"{name}\" et l\'ajouter à ce jour ?'**
   String resumeFigureConfirm(String name);
 
   /// No description provided for @pausedFiguresSection.
@@ -1099,7 +1099,7 @@ abstract class AppLocalizations {
   /// No description provided for @renfosHelpTitle.
   ///
   /// In fr, this message translates to:
-  /// **'À quoi servent les renfos ?'**
+  /// **'À quoi servent les renfos ?'**
   String get renfosHelpTitle;
 
   /// No description provided for @renfosHelpContent.
@@ -1135,7 +1135,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteRenfoConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Supprimer \"{name}\" ? Cette action est irréversible.'**
+  /// **'Supprimer \"{name}\" ? Cette action est irréversible.'**
   String deleteRenfoConfirm(String name);
 
   /// No description provided for @renfoAlreadyExistError.

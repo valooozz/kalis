@@ -84,7 +84,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String deleteFigureConfirm(String name) {
-    return 'Supprimer \"$name\" ? Cette action est irréversible.';
+    return 'Supprimer \"$name\" ? Cette action est irréversible.';
   }
 
   @override
@@ -127,7 +127,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get journalHint => 'Écris ta note ici...';
 
   @override
-  String get trainingHint => 'Comment s\'est passé l\'entraînement ?';
+  String get trainingHint => 'Comment s\'est passé l\'entraînement ?';
 
   @override
   String get trainingNote => 'Note de séance';
@@ -204,7 +204,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get placesTitle => 'Lieux';
 
   @override
-  String get placesHelpTitle => 'À quoi servent les lieux ?';
+  String get placesHelpTitle => 'À quoi servent les lieux ?';
 
   @override
   String get placesHelpContent =>
@@ -224,7 +224,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String deletePlaceConfirm(String name) {
-    return 'Supprimer \"$name\" ? Cette action est irréversible.';
+    return 'Supprimer \"$name\" ? Cette action est irréversible.';
   }
 
   @override
@@ -271,7 +271,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String archiveFigureConfirm(String name) {
-    return 'Archiver la figure \"$name\" ?';
+    return 'Archiver la figure \"$name\" ?';
   }
 
   @override
@@ -352,7 +352,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsAlreadyLinkedContent =>
-      'Ce compte Google est déjà lié à un autre compte Kalis. Veux-tu te connecter à ce compte ? Tes données actuelles ne seront pas migrées.';
+      'Ce compte Google est déjà lié à un autre compte Kalis. Veux-tu te connecter à ce compte ? Tes données actuelles ne seront pas migrées.';
 
   @override
   String get buttonConfirm => 'Confirmer';
@@ -386,7 +386,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String markAsLearnedConfirm(String name) {
-    return 'Passer \"$name\" au statut Maîtrisée ?';
+    return 'Passer \"$name\" au statut Maîtrisée ?';
   }
 
   @override
@@ -451,7 +451,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String pauseFigureConfirm(String name) {
-    return 'Mettre en pause la figure \"$name\" ? Elle n\'apparaîtra plus dans la planification.';
+    return 'Mettre en pause la figure \"$name\" ? Elle n\'apparaîtra plus dans la planification.';
   }
 
   @override
@@ -469,7 +469,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String pastPlanningMarkDoneConfirm(String name) {
-    return 'Marquer \"$name\" comme travaillée ce jour ?';
+    return 'Marquer \"$name\" comme travaillée ce jour ?';
   }
 
   @override
@@ -477,7 +477,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String pastPlanningMarkNotDoneConfirm(String name) {
-    return 'Retirer \"$name\" des figures travaillées ce jour ?';
+    return 'Retirer \"$name\" des figures travaillées ce jour ?';
   }
 
   @override
@@ -485,7 +485,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String pastPlanningRemoveConfirm(String name) {
-    return 'Retirer \"$name\" de ce jour ?';
+    return 'Retirer \"$name\" de ce jour ?';
   }
 
   @override
@@ -506,7 +506,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String beginLearningConfirm(String name) {
-    return 'Passer \"$name\" en apprentissage et l\'ajouter à ce jour ?';
+    return 'Passer \"$name\" en apprentissage et l\'ajouter à ce jour ?';
   }
 
   @override
@@ -517,7 +517,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String resumeFigureConfirm(String name) {
-    return 'Reprendre \"$name\" et l\'ajouter à ce jour ?';
+    return 'Reprendre \"$name\" et l\'ajouter à ce jour ?';
   }
 
   @override
@@ -572,7 +572,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get renfosTitle => 'Renfos';
 
   @override
-  String get renfosHelpTitle => 'À quoi servent les renfos ?';
+  String get renfosHelpTitle => 'À quoi servent les renfos ?';
 
   @override
   String get renfosHelpContent =>
@@ -592,7 +592,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String deleteRenfoConfirm(String name) {
-    return 'Supprimer \"$name\" ? Cette action est irréversible.';
+    return 'Supprimer \"$name\" ? Cette action est irréversible.';
   }
 
   @override

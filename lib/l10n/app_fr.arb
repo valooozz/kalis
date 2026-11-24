@@ -24,7 +24,7 @@
     "editFigure": "Modifier la figure",
     "newFigure": "Nouvelle figure",
     "deleteFigure": "Supprimer",
-    "deleteFigureConfirm": "Supprimer \"{name}\" ? Cette action est irréversible.",
+    "deleteFigureConfirm": "Supprimer \"{name}\"\u00a0? Cette action est irréversible.",
     "@deleteFigureConfirm": {
         "placeholders": {
             "name": {
@@ -45,7 +45,7 @@
     "editJournalEntry": "Modifier l'entrée",
     "addJournalEntry": "Ajouter une entrée",
     "journalHint": "Écris ta note ici...",
-    "trainingHint": "Comment s'est passé l'entraînement ?",
+    "trainingHint": "Comment s'est passé l'entraînement\u00a0?",
     "trainingNote": "Note de séance",
     "addFigureToDay": "Ajouter une figure",
     "showLearnedFigures": "Afficher les figures maîtrisées",
@@ -96,13 +96,13 @@
     "yesterday": "Hier",
     "dayBefore": "La veille",
     "placesTitle": "Lieux",
-    "placesHelpTitle": "À quoi servent les lieux ?",
+    "placesHelpTitle": "À quoi servent les lieux\u00a0?",
     "placesHelpContent": "Les lieux permettent d'organiser tes figures selon l'endroit où tu t'entraînes. Crée des lieux et indique quelles figures peuvent y être travaillées. Quand tu planifies une journée, tu peux filtrer les figures disponibles par lieu.",
     "addPlace": "Ajouter un lieu",
     "newPlace": "Nouveau lieu",
     "editPlace": "Modifier le lieu",
     "deletePlace": "Supprimer le lieu",
-    "deletePlaceConfirm": "Supprimer \"{name}\" ? Cette action est irréversible.",
+    "deletePlaceConfirm": "Supprimer \"{name}\"\u00a0? Cette action est irréversible.",
     "@deletePlaceConfirm": {
         "placeholders": {
             "name": {
@@ -128,7 +128,7 @@
     "noArchivedFigures": "Aucune figure archivée",
     "archiveFigure": "Archiver",
     "restoreFigure": "Restaurer",
-    "archiveFigureConfirm": "Archiver la figure \"{name}\" ?",
+    "archiveFigureConfirm": "Archiver la figure \"{name}\"\u00a0?",
     "@archiveFigureConfirm": {
         "placeholders": {
             "name": {
@@ -159,7 +159,7 @@
     "settingsLinkGoogleSuccess": "Compte Google lié avec succès",
     "settingsLinkGoogleError": "Erreur lors de la liaison au compte Google",
     "settingsAlreadyLinkedTitle": "Compte déjà utilisé",
-    "settingsAlreadyLinkedContent": "Ce compte Google est déjà lié à un autre compte Kalis. Veux-tu te connecter à ce compte ? Tes données actuelles ne seront pas migrées.",
+    "settingsAlreadyLinkedContent": "Ce compte Google est déjà lié à un autre compte Kalis. Veux-tu te connecter à ce compte\u00a0? Tes données actuelles ne seront pas migrées.",
     "buttonConfirm": "Confirmer",
     "record": "Record",
     "recordDialogTitle": "Modifier le record",
@@ -170,7 +170,7 @@
     "noRecord": "Aucun record",
     "markAsLearned": "Marquer comme maîtrisée",
     "markAsLearnedTitle": "Marquer comme maîtrisée",
-    "markAsLearnedConfirm": "Passer \"{name}\" au statut Maîtrisée ?",
+    "markAsLearnedConfirm": "Passer \"{name}\" au statut Maîtrisée\u00a0?",
     "@markAsLearnedConfirm": {
         "placeholders": {
             "name": {
@@ -202,7 +202,7 @@
     "filterByColor": "Filtrer par couleur",
     "pausedFigure": "Figure en pause",
     "pauseFigureTitle": "Mettre en pause",
-    "pauseFigureConfirm": "Mettre en pause la figure \"{name}\" ? Elle n'apparaîtra plus dans la planification.",
+    "pauseFigureConfirm": "Mettre en pause la figure \"{name}\"\u00a0? Elle n'apparaîtra plus dans la planification.",
     "@pauseFigureConfirm": {
         "placeholders": {
             "name": {
@@ -214,7 +214,7 @@
     "cannotRemoveDoneFigure": "Cette figure a déjà été travaillée aujourd'hui et ne peut pas être retirée",
     "pastPlanningTitle": "Séances passées",
     "pastPlanningMarkDoneTitle": "Marquer comme travaillée",
-    "pastPlanningMarkDoneConfirm": "Marquer \"{name}\" comme travaillée ce jour ?",
+    "pastPlanningMarkDoneConfirm": "Marquer \"{name}\" comme travaillée ce jour\u00a0?",
     "@pastPlanningMarkDoneConfirm": {
         "placeholders": {
             "name": {
@@ -223,7 +223,7 @@
         }
     },
     "pastPlanningMarkNotDoneTitle": "Marquer comme non travaillée",
-    "pastPlanningMarkNotDoneConfirm": "Retirer \"{name}\" des figures travaillées ce jour ?",
+    "pastPlanningMarkNotDoneConfirm": "Retirer \"{name}\" des figures travaillées ce jour\u00a0?",
     "@pastPlanningMarkNotDoneConfirm": {
         "placeholders": {
             "name": {
@@ -232,7 +232,7 @@
         }
     },
     "pastPlanningRemoveTitle": "Retirer la figure",
-    "pastPlanningRemoveConfirm": "Retirer \"{name}\" de ce jour ?",
+    "pastPlanningRemoveConfirm": "Retirer \"{name}\" de ce jour\u00a0?",
     "@pastPlanningRemoveConfirm": {
         "placeholders": {
             "name": {
@@ -245,7 +245,7 @@
     "errorRemoval": "Cette figure a été travaillée et ne peut donc pas être retirée.",
     "beginLearningDialogTitle": "Commencer une figure",
     "beginLearningConfirmTitle": "Commencer l'apprentissage",
-    "beginLearningConfirm": "Passer \"{name}\" en apprentissage et l'ajouter à ce jour ?",
+    "beginLearningConfirm": "Passer \"{name}\" en apprentissage et l'ajouter à ce jour\u00a0?",
     "@beginLearningConfirm": {
         "placeholders": {
             "name": {
@@ -255,7 +255,7 @@
     },
     "noFiguresToLearn": "Aucune figure à apprendre",
     "resumeFigureConfirmTitle": "Reprendre la figure",
-    "resumeFigureConfirm": "Reprendre \"{name}\" et l'ajouter à ce jour ?",
+    "resumeFigureConfirm": "Reprendre \"{name}\" et l'ajouter à ce jour\u00a0?",
     "@resumeFigureConfirm": {
         "placeholders": {
             "name": {
@@ -279,13 +279,13 @@
     "noFigurePlannedThisDay": "Aucune figure prévue",
     "swapDaysSuccess": "Les jours ont été échangés",
     "renfosTitle": "Renfos",
-    "renfosHelpTitle": "À quoi servent les renfos ?",
+    "renfosHelpTitle": "À quoi servent les renfos\u00a0?",
     "renfosHelpContent": "Un renfo te permet de renforcer tes muscles en lien avec une ou plusieurs figures. Crée un renfo, associe-lui des figures, puis valide sa pratique depuis la séance du jour.\n\nUn renfo ne peut pas être travaillé si au moins une des ses figures l'est ce jour-là.",
     "addRenfo": "Ajouter un renfo",
     "newRenfo": "Nouveau renfo",
     "editRenfo": "Modifier le renfo",
     "deleteRenfo": "Supprimer le renfo",
-    "deleteRenfoConfirm": "Supprimer \"{name}\" ? Cette action est irréversible.",
+    "deleteRenfoConfirm": "Supprimer \"{name}\"\u00a0? Cette action est irréversible.",
     "@deleteRenfoConfirm": {
         "placeholders": {
             "name": {
