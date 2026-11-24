@@ -11,6 +11,7 @@ import 'today_training_dialog.dart';
 import '../../providers/renfo_providers.dart';
 import 'today_renfo_dialog.dart';
 import 'general_note_dialog.dart';
+import '../../widgets/help_dialog_button.dart';
 
 class TodayScreen extends ConsumerWidget {
   const TodayScreen({super.key});
@@ -58,6 +59,12 @@ class TodayScreen extends ConsumerWidget {
                         ),
                       ),
                       actions: [
+                        HelpDialogButton(
+                          tooltip: lbl.todayHelpTitle,
+                          title: lbl.todayHelpTitle,
+                          content: lbl.todayHelpContent,
+                          closeLabel: lbl.buttonClose,
+                        ),
                         IconButton(
                           icon: const Icon(Icons.sticky_note_2),
                           onPressed: () => showDialog(

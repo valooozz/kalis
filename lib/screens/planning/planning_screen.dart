@@ -15,6 +15,7 @@ import '../../providers/weekly_activities_providers.dart';
 import '../../core/utils/date_utils.dart';
 import 'add_figure_to_day_dialog.dart';
 import 'weekly_activities_dialog.dart';
+import '../../widgets/help_dialog_button.dart';
 
 class PlanningScreen extends ConsumerWidget {
   const PlanningScreen({super.key});
@@ -32,6 +33,12 @@ class PlanningScreen extends ConsumerWidget {
             pinned: true,
             expandedHeight: 120,
             actions: [
+              HelpDialogButton(
+                tooltip: lbl.planningHelpTitle,
+                title: lbl.planningHelpTitle,
+                content: lbl.planningHelpContent,
+                closeLabel: lbl.buttonClose,
+              ),
               IconButton(
                 icon: const Icon(Icons.event_note),
                 onPressed: () => showDialog(

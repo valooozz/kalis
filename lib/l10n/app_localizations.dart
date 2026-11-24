@@ -130,11 +130,35 @@ abstract class AppLocalizations {
   /// **'Séance du jour'**
   String get todayScreenTitle;
 
+  /// No description provided for @todayHelpTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestes disponibles'**
+  String get todayHelpTitle;
+
+  /// No description provided for @todayHelpContent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appuie sur une figure pour valider ton entraînement ou modifier sa note. \n\nMaintiens une figure validée pour annuler sa validation, ou une figure non validée pour revoir sa dernière note. \n\nMaintiens le fond de l\'écran pour ouvrir les renfos du jour.'**
+  String get todayHelpContent;
+
   /// No description provided for @planningScreenTitle.
   ///
   /// In fr, this message translates to:
   /// **'Planification'**
   String get planningScreenTitle;
+
+  /// No description provided for @planningHelpTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestes disponibles'**
+  String get planningHelpTitle;
+
+  /// No description provided for @planningHelpContent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appuie sur une figure pour voir ses derniers et prochains entraînements. \n\nMaintiens une figure pour la retirer de cette journée. \n\nAppuie sur + pour ajouter une figure. \n\nMaintiens + pour commencer ou reprendre une figure.'**
+  String get planningHelpContent;
 
   /// No description provided for @stateLearned.
   ///

@@ -27,7 +27,21 @@ class AppLocalizationsFr extends AppLocalizations {
   String get todayScreenTitle => 'Séance du jour';
 
   @override
+  String get todayHelpTitle => 'Gestes disponibles';
+
+  @override
+  String get todayHelpContent =>
+      'Appuie sur une figure pour valider ton entraînement ou modifier sa note. \n\nMaintiens une figure validée pour annuler sa validation, ou une figure non validée pour revoir sa dernière note. \n\nMaintiens le fond de l\'écran pour ouvrir les renfos du jour.';
+
+  @override
   String get planningScreenTitle => 'Planification';
+
+  @override
+  String get planningHelpTitle => 'Gestes disponibles';
+
+  @override
+  String get planningHelpContent =>
+      'Appuie sur une figure pour voir ses derniers et prochains entraînements. \n\nMaintiens une figure pour la retirer de cette journée. \n\nAppuie sur + pour ajouter une figure. \n\nMaintiens + pour commencer ou reprendre une figure.';
 
   @override
   String get stateLearned => 'Maîtrisées';
