@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +15,27 @@ import '../repositories/renfo_repository.dart';
 import '../repositories/renfo_done_repository.dart';
 
 const helpBubblesEnabledKey = 'help_bubbles_enabled';
+const appLocaleKey = 'app_locale';
+
+class AppLocaleNotifier extends AsyncNotifier<Locale?> {
+  @override
+  Future<Locale?> build() async {
+    final preferences = await SharedPreferences.getInstance();
+    final languageCode = preferences.getString(appLocaleKey);
+    if (languageCode != 'fr' && languageCode != 'en') return null;
+    return Locale(languageCode!);
+  }
+
+  Future<void> setLocale(Locale locale) async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setString(appLocaleKey, locale.languageCode);
+    state = AsyncData(locale);
+  }
+}
+
+final appLocaleProvider = AsyncNotifierProvider<AppLocaleNotifier, Locale?>(
+  AppLocaleNotifier.new,
+);
 
 class HelpBubblesNotifier extends Notifier<bool> {
   @override

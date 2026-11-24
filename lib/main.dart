@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
+import 'providers/core_providers.dart';
 import 'core/theme/app_theme.dart';
 import 'core/router/app_router.dart';
 import 'firebase_options.dart';
@@ -37,6 +38,7 @@ class KalisApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
+    final locale = ref.watch(appLocaleProvider).valueOrNull;
 
     return MaterialApp.router(
       title: 'Kalis',
@@ -48,8 +50,8 @@ class KalisApp extends ConsumerWidget {
 
       routerConfig: router,
 
-      locale: const Locale('fr'),
-      supportedLocales: const [Locale('fr'), Locale('en')],
+      locale: locale,
+      supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

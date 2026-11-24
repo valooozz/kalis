@@ -298,6 +298,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Afficher les boutons ? sur les écrans';
 
   @override
+  String get settingsLanguage => 'Langue';
+
+  @override
+  String get languageFrench => 'Français';
+
+  @override
+  String get languageEnglish => 'Anglais';
+
+  @override
   String get onboardingSkip => 'Passer';
 
   @override

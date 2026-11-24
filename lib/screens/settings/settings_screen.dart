@@ -48,6 +48,20 @@ class SettingsScreen extends ConsumerWidget {
                       .setEnabled(enabled);
                 },
               ),
+              ListTile(
+                leading: Icon(
+                  Icons.language,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                title: Text(lbl.settingsLanguage),
+                subtitle: Text(
+                  ref.watch(appLocaleProvider).valueOrNull?.languageCode == 'en'
+                      ? lbl.languageEnglish
+                      : lbl.languageFrench,
+                ),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => _chooseLanguage(context, ref, lbl),
+              ),
 
               // Section compte
               _SectionHeader(label: lbl.settingsAccountSection),
@@ -78,6 +92,40 @@ class SettingsScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _chooseLanguage(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations lbl,
+  ) async {
+    final currentLocale = ref.read(appLocaleProvider).valueOrNull;
+    final selectedLocale = await showDialog<Locale>(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: Text(lbl.settingsLanguage),
+        children: [
+          SimpleDialogOption(
+            onPressed: () => Navigator.pop(context, const Locale('fr')),
+            child: _LanguageOption(
+              label: lbl.languageFrench,
+              selected: currentLocale?.languageCode == 'fr',
+            ),
+          ),
+          SimpleDialogOption(
+            onPressed: () => Navigator.pop(context, const Locale('en')),
+            child: _LanguageOption(
+              label: lbl.languageEnglish,
+              selected: currentLocale?.languageCode == 'en',
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (selectedLocale != null) {
+      await ref.read(appLocaleProvider.notifier).setLocale(selectedLocale);
+    }
   }
 
   Future<void> _linkGoogle(
@@ -152,6 +200,24 @@ class SettingsScreen extends ConsumerWidget {
     // Connexion avec le compte Google existant
     await FirebaseAuth.instance.signInWithCredential(credential);
   }
+}
+
+class _LanguageOption extends StatelessWidget {
+  const _LanguageOption({required this.label, required this.selected});
+
+  final String label;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      Icon(
+        selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+      ),
+      const SizedBox(width: 12),
+      Text(label),
+    ],
+  );
 }
 
 class _SectionHeader extends StatelessWidget {

@@ -1,0 +1,304 @@
+{
+    "@@locale": "en",
+    "appName": "Kalis",
+    "tabFigures": "Figures",
+    "tabToday": "Today",
+    "tabPlanning": "Planning",
+    "figuresScreenTitle": "Figures",
+    "todayScreenTitle": "Today's session",
+    "todayHelpTitle": "Available actions",
+    "todayHelpContent": "Tap a figure to mark your training as done or edit its note.\n\nPress and hold a completed figure to undo it, or an incomplete figure to review its latest note.\n\nPress and hold the screen background to open today's strength exercises.",
+    "planningScreenTitle": "Planning",
+    "planningHelpTitle": "Available actions",
+    "planningHelpContent": "Tap a figure to see its recent and upcoming training sessions.\n\nPress and hold a figure to remove it from that day.\n\nTap + to add a figure.\n\nPress and hold + to start or resume a figure.",
+    "stateLearned": "Mastered",
+    "stateLearning": "Learning",
+    "stateToLearn": "To learn",
+    "noFiguresToday": "Today is for recharging",
+    "noFiguresTodaySubtitle": "Your body needs some rest!",
+    "noFigures": "No figures yet",
+    "noFiguresAction": "Add a figure",
+    "noJournalEntry": "No journal entries",
+    "noFigureAvailable": "No figures available",
+    "addFigure": "Add a figure",
+    "editFigure": "Edit figure",
+    "newFigure": "New figure",
+    "deleteFigure": "Delete",
+    "deleteFigureConfirm": "Delete \"{name}\"? This action cannot be undone.",
+    "@deleteFigureConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "fieldName": "Name",
+    "fieldNameHint": "E.g. Muscle-up",
+    "fieldColor": "Color",
+    "fieldStartDate": "Start date",
+    "fieldMasteryDate": "Mastery date",
+    "fieldStartedOn": "Started on",
+    "fieldMasteredOn": "Mastered on",
+    "changeStatus": "Change status",
+    "journal": "Journal",
+    "newJournalEntry": "New entry",
+    "editJournalEntry": "Edit entry",
+    "addJournalEntry": "Add an entry",
+    "journalHint": "Write your note here...",
+    "trainingHint": "How did your training go?",
+    "trainingNote": "Session note",
+    "addFigureToDay": "Add a figure",
+    "showLearnedFigures": "Show mastered figures",
+    "lastTraining": "Last",
+    "nextTraining": "Next",
+    "buttonCancel": "Cancel",
+    "buttonClose": "Close",
+    "buttonSave": "Save",
+    "buttonAdd": "Add",
+    "buttonEdit": "Edit",
+    "buttonDelete": "Delete",
+    "buttonValidate": "Done",
+    "daysAgo": "{days} days ago",
+    "@daysAgo": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
+    "daysBefore": "{days} days earlier",
+    "@daysBefore": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
+    "inDays": "In {days} days",
+    "@inDays": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
+    "daysAfter": "{days} days later",
+    "@daysAfter": {
+        "placeholders": {
+            "days": {
+                "type": "int"
+            }
+        }
+    },
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "dayAfter": "The day after",
+    "yesterday": "Yesterday",
+    "dayBefore": "The day before",
+    "placesTitle": "Locations",
+    "placesHelpTitle": "What are locations for?",
+    "placesHelpContent": "Locations help you organize your figures based on where you train. Create locations and choose which figures can be practised there. When planning a day, you can filter the available figures by location.",
+    "addPlace": "Add a location",
+    "newPlace": "New location",
+    "editPlace": "Edit location",
+    "deletePlace": "Delete location",
+    "deletePlaceConfirm": "Delete \"{name}\"? This action cannot be undone.",
+    "@deletePlaceConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "placeAlreadyExistError": "This location already exists.",
+    "fieldPlaceName": "Name",
+    "noPlaces": "No locations yet",
+    "linkedFigures": "{count, plural, =1{{count} figure} other{{count} figures}}",
+    "@linkedFigures": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "beginLearning": "I'm going to learn this figure",
+    "settingsTitle": "Settings",
+    "archivedFiguresTitle": "Archived figures",
+    "archivedFiguresSubtitle": "View and restore archived figures",
+    "noArchivedFigures": "No archived figures",
+    "archiveFigure": "Archive",
+    "restoreFigure": "Restore",
+    "archiveFigureConfirm": "Archive the figure \"{name}\"?",
+    "@archiveFigureConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "resumeFigure": "Resume",
+    "settingsAccountSection": "Account",
+    "settingsHelpSection": "Help",
+    "settingsReplayOnboarding": "Replay the introduction",
+    "settingsReplayOnboardingSubtitle": "Rediscover the basics of Kalis",
+    "settingsHelpBubbles": "Show help bubbles",
+    "settingsHelpBubblesSubtitle": "Show ? buttons on screens",
+    "settingsLanguage": "Language",
+    "languageFrench": "French",
+    "languageEnglish": "English",
+    "onboardingSkip": "Skip",
+    "onboardingPrevious": "Previous",
+    "onboardingNext": "Next",
+    "onboardingStart": "Get started",
+    "onboardingFiguresTitle": "Organize your figures",
+    "onboardingFiguresDescription": "Add your figures and track which ones you want to learn, are learning, or have mastered.",
+    "onboardingPlanningTitle": "Plan your training",
+    "onboardingPlanningDescription": "Schedule figures for upcoming days to build sessions that fit your pace.",
+    "onboardingProgressTitle": "Track your progress",
+    "onboardingProgressDescription": "Mark today's training as done, add notes, and check your records.",
+    "settingsLinkGoogle": "Link a Google account",
+    "settingsLinkGoogleSubtitle": "Sync your data across all your devices",
+    "settingsLinkedGoogle": "Connected with Google",
+    "settingsLinkGoogleSuccess": "Google account linked successfully",
+    "settingsLinkGoogleError": "Error linking Google account",
+    "settingsAlreadyLinkedTitle": "Account already in use",
+    "settingsAlreadyLinkedContent": "This Google account is already linked to another Kalis account. Would you like to sign in to it? Your current data will not be migrated.",
+    "buttonConfirm": "Confirm",
+    "record": "Record",
+    "recordDialogTitle": "Edit record",
+    "recordValue": "Value",
+    "recordUnit": "Unit",
+    "recordUnitReps": "Repetitions",
+    "recordUnitSeconds": "Seconds",
+    "noRecord": "No records",
+    "markAsLearned": "Mark as mastered",
+    "markAsLearnedTitle": "Mark as mastered",
+    "markAsLearnedConfirm": "Mark \"{name}\" as mastered?",
+    "@markAsLearnedConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "allFiguresDone": "All figures have been practised!",
+    "previousTraining": "Previous",
+    "followingTraining": "Next",
+    "calendarLegendDone": "Completed",
+    "calendarLegendPlanned": "Planned",
+    "recordsTitle": "Records",
+    "calendarMonthCount": "{count, plural, =0{No training this month} =1{1 training session this month} other{{count} training sessions this month}}",
+    "@calendarMonthCount": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "generalNoteTooltip": "General note",
+    "generalNoteDialogTitle": "General note",
+    "generalNoteHint": "Write your note here...",
+    "weeklyActivitiesTooltip": "Weekly activities",
+    "weeklyActivitiesDialogTitle": "Weekly activities",
+    "weeklyActivityHint": "E.g. dance class",
+    "globalCalendarTitle": "Global calendar",
+    "filterByColor": "Filter by color",
+    "pausedFigure": "Paused figure",
+    "pauseFigureTitle": "Pause figure",
+    "pauseFigureConfirm": "Pause the figure \"{name}\"? It will no longer appear in planning.",
+    "@pauseFigureConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "buttonPause": "Pause",
+    "cannotRemoveDoneFigure": "This figure has already been practised today and cannot be removed",
+    "pastPlanningTitle": "Past sessions",
+    "pastPlanningMarkDoneTitle": "Mark as practised",
+    "pastPlanningMarkDoneConfirm": "Mark \"{name}\" as practised on this day?",
+    "@pastPlanningMarkDoneConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "pastPlanningMarkNotDoneTitle": "Mark as not practised",
+    "pastPlanningMarkNotDoneConfirm": "Remove \"{name}\" from the figures practised on this day?",
+    "@pastPlanningMarkNotDoneConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "pastPlanningRemoveTitle": "Remove figure",
+    "pastPlanningRemoveConfirm": "Remove \"{name}\" from this day?",
+    "@pastPlanningRemoveConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "noFiguresPast": "No figures",
+    "errorRemovalTitle": "Cannot remove figure",
+    "errorRemoval": "This figure has been practised and therefore cannot be removed.",
+    "beginLearningDialogTitle": "Start a figure",
+    "beginLearningConfirmTitle": "Start learning",
+    "beginLearningConfirm": "Set \"{name}\" to learning and add it to today?",
+    "@beginLearningConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "noFiguresToLearn": "No figures to learn",
+    "resumeFigureConfirmTitle": "Resume figure",
+    "resumeFigureConfirm": "Resume \"{name}\" and add it to today?",
+    "@resumeFigureConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "pausedFiguresSection": "Paused figures",
+    "toLearnFiguresSection": "Figures to learn",
+    "deactivateFigure": "Deactivate figure",
+    "activateFigure": "Keep figure active",
+    "favoriteFigure": "Add figure to favourites",
+    "favoriteFigureHint": "Favourite figures will appear first when planning.",
+    "activeFigureHint": "A mastered figure that remains active will appear in planning alongside figures you are learning.",
+    "unfavoriteFigure": "Remove figure from favourites",
+    "swapDaysTooltip": "Swap two days",
+    "swapDaysDialogTitle": "Swap two days",
+    "swapDaysConfirmButton": "Swap",
+    "cannotSwapDoneFigureTitle": "Cannot swap days",
+    "cannotSwapDoneFigure": "A figure already completed today would be moved.",
+    "noFigurePlannedThisDay": "No figures planned",
+    "swapDaysSuccess": "Days swapped",
+    "renfosTitle": "Strength exercises",
+    "renfosHelpTitle": "What are strength exercises for?",
+    "renfosHelpContent": "A strength exercise helps you build strength for one or more figures. Create an exercise, link it to figures, then mark it as done from today's session.\n\nA strength exercise cannot be practised if at least one of its linked figures is being practised that day.",
+    "addRenfo": "Add a strength exercise",
+    "newRenfo": "New strength exercise",
+    "editRenfo": "Edit strength exercise",
+    "deleteRenfo": "Delete strength exercise",
+    "deleteRenfoConfirm": "Delete \"{name}\"? This action cannot be undone.",
+    "@deleteRenfoConfirm": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "renfoAlreadyExistError": "This strength exercise already exists.",
+    "fieldRenfoName": "Name",
+    "noRenfos": "No strength exercises yet",
+    "renfoSessionTitle": "Today's strength exercises",
+    "noRenfoToday": "No strength exercises available today"
+}
