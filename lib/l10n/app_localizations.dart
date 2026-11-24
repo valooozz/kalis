@@ -469,7 +469,7 @@ abstract class AppLocalizations {
   /// No description provided for @placesHelpContent.
   ///
   /// In fr, this message translates to:
-  /// **'Les lieux permettent d’organiser tes figures selon l’endroit où tu t’entraînes. Quand tu ajoutes une figure à ta planification, tu peux filtrer les figures disponibles en choisissant un lieu.'**
+  /// **'Les lieux permettent d\'organiser tes figures selon l\'endroit où tu t\'entraînes. Quand tu ajoutes une figure à ta planification, tu peux filtrer les figures disponibles en choisissant un lieu.'**
   String get placesHelpContent;
 
   /// No description provided for @addPlace.
@@ -595,7 +595,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsReplayOnboarding.
   ///
   /// In fr, this message translates to:
-  /// **'Revoir l’introduction'**
+  /// **'Revoir l\'introduction'**
   String get settingsReplayOnboarding;
 
   /// No description provided for @settingsReplayOnboardingSubtitle.
@@ -603,6 +603,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Découvre à nouveau les bases de Kalis'**
   String get settingsReplayOnboardingSubtitle;
+
+  /// No description provided for @settingsHelpBubbles.
+  ///
+  /// In fr, this message translates to:
+  /// **'Afficher les bulles d\'aide'**
+  String get settingsHelpBubbles;
+
+  /// No description provided for @settingsHelpBubblesSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Afficher les boutons ? sur les écrans'**
+  String get settingsHelpBubblesSubtitle;
 
   /// No description provided for @onboardingSkip.
   ///
@@ -637,7 +649,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingFiguresDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Ajoute tes figures et suis celles à apprendre, en cours d’apprentissage ou déjà maîtrisées.'**
+  /// **'Ajoute tes figures et suis celles à apprendre, en cours d\'apprentissage ou déjà maîtrisées.'**
   String get onboardingFiguresDescription;
 
   /// No description provided for @onboardingPlanningTitle.
@@ -1093,7 +1105,7 @@ abstract class AppLocalizations {
   /// No description provided for @renfosHelpContent.
   ///
   /// In fr, this message translates to:
-  /// **'Un renfo rassemble plusieurs figures autour d’une routine ou d’un objectif. Crée un renfo, associe-lui des figures, puis valide sa pratique depuis la séance du jour.'**
+  /// **'Un renfo rassemble plusieurs figures autour d\'une routine ou d\'un objectif. Crée un renfo, associe-lui des figures, puis valide sa pratique depuis la séance du jour.'**
   String get renfosHelpContent;
 
   /// No description provided for @addRenfo.

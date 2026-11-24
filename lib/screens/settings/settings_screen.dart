@@ -34,6 +34,20 @@ class SettingsScreen extends ConsumerWidget {
                 subtitle: lbl.settingsReplayOnboardingSubtitle,
                 onTap: () => context.push('/onboarding'),
               ),
+              SwitchListTile(
+                secondary: Icon(
+                  Icons.help_outline,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                title: Text(lbl.settingsHelpBubbles),
+                subtitle: Text(lbl.settingsHelpBubblesSubtitle),
+                value: ref.watch(helpBubblesEnabledProvider),
+                onChanged: (enabled) {
+                  ref
+                      .read(helpBubblesEnabledProvider.notifier)
+                      .setEnabled(enabled);
+                },
+              ),
 
               // Section compte
               _SectionHeader(label: lbl.settingsAccountSection),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kalis/providers/core_providers.dart';
 
-class HelpDialogButton extends StatelessWidget {
+class HelpDialogButton extends ConsumerWidget {
   const HelpDialogButton({
     super.key,
     required this.tooltip,
@@ -15,7 +17,10 @@ class HelpDialogButton extends StatelessWidget {
   final String closeLabel;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final enabled = ref.watch(helpBubblesEnabledProvider);
+    if (!enabled) return const SizedBox.shrink();
+
     return IconButton(
       tooltip: tooltip,
       icon: const Icon(Icons.help_outline),

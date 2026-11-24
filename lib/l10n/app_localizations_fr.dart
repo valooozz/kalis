@@ -208,7 +208,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get placesHelpContent =>
-      'Les lieux permettent d’organiser tes figures selon l’endroit où tu t’entraînes. Quand tu ajoutes une figure à ta planification, tu peux filtrer les figures disponibles en choisissant un lieu.';
+      'Les lieux permettent d\'organiser tes figures selon l\'endroit où tu t\'entraînes. Quand tu ajoutes une figure à ta planification, tu peux filtrer les figures disponibles en choisissant un lieu.';
 
   @override
   String get addPlace => 'Ajouter un lieu';
@@ -284,11 +284,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsHelpSection => 'Aide';
 
   @override
-  String get settingsReplayOnboarding => 'Revoir l’introduction';
+  String get settingsReplayOnboarding => 'Revoir l\'introduction';
 
   @override
   String get settingsReplayOnboardingSubtitle =>
       'Découvre à nouveau les bases de Kalis';
+
+  @override
+  String get settingsHelpBubbles => 'Afficher les bulles d\'aide';
+
+  @override
+  String get settingsHelpBubblesSubtitle =>
+      'Afficher les boutons ? sur les écrans';
 
   @override
   String get onboardingSkip => 'Passer';
@@ -307,7 +314,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get onboardingFiguresDescription =>
-      'Ajoute tes figures et suis celles à apprendre, en cours d’apprentissage ou déjà maîtrisées.';
+      'Ajoute tes figures et suis celles à apprendre, en cours d\'apprentissage ou déjà maîtrisées.';
 
   @override
   String get onboardingPlanningTitle => 'Planifie tes entraînements';
@@ -569,7 +576,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get renfosHelpContent =>
-      'Un renfo rassemble plusieurs figures autour d’une routine ou d’un objectif. Crée un renfo, associe-lui des figures, puis valide sa pratique depuis la séance du jour.';
+      'Un renfo rassemble plusieurs figures autour d\'une routine ou d\'un objectif. Crée un renfo, associe-lui des figures, puis valide sa pratique depuis la séance du jour.';
 
   @override
   String get addRenfo => 'Ajouter un renfo';

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../repositories/figure_repository.dart';
 import '../repositories/training_done_repository.dart';
 import '../repositories/training_planned_repository.dart';
@@ -11,6 +12,31 @@ import '../repositories/general_note_repository.dart';
 import '../repositories/weekly_activities_repository.dart';
 import '../repositories/renfo_repository.dart';
 import '../repositories/renfo_done_repository.dart';
+
+const helpBubblesEnabledKey = 'help_bubbles_enabled';
+
+class HelpBubblesNotifier extends Notifier<bool> {
+  @override
+  bool build() {
+    _loadFromPrefs();
+    return true;
+  }
+
+  Future<void> _loadFromPrefs() async {
+    final preferences = await SharedPreferences.getInstance();
+    state = preferences.getBool(helpBubblesEnabledKey) ?? true;
+  }
+
+  Future<void> setEnabled(bool enabled) async {
+    state = enabled;
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(helpBubblesEnabledKey, enabled);
+  }
+}
+
+final helpBubblesEnabledProvider = NotifierProvider<HelpBubblesNotifier, bool>(
+  HelpBubblesNotifier.new,
+);
 
 // Provider de l'instance Firestore
 final firestoreProvider = Provider<FirebaseFirestore>((ref) {
