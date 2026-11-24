@@ -1,15 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import '../../providers/core_providers.dart';
 import 'package:go_router/go_router.dart';
 
-class SettingsScreen extends ConsumerWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  bool _isDeletingAccount = false;
+
+  @override
+  Widget build(BuildContext context) {
     final lbl = AppLocalizations.of(context)!;
     final isLinkedToGoogle = ref.watch(isLinkedToGoogleProvider);
 
@@ -73,6 +81,15 @@ class SettingsScreen extends ConsumerWidget {
                   iconColor: Colors.green,
                   onTap: null,
                 ),
+              _SettingsTile(
+                icon: Icons.delete_outline,
+                title: lbl.settingsDeleteAccount,
+                subtitle: _isDeletingAccount
+                    ? lbl.settingsDeleteAccountInProgress
+                    : lbl.settingsDeleteAccountSubtitle,
+                iconColor: Theme.of(context).colorScheme.error,
+                onTap: _isDeletingAccount ? null : () => _deleteAccount(lbl),
+              ),
             ]),
           ),
         ],
@@ -120,6 +137,77 @@ class SettingsScreen extends ConsumerWidget {
           ).showSnackBar(SnackBar(content: Text(lbl.settingsLinkGoogleError)));
         }
       }
+    }
+  }
+
+  Future<void> _deleteAccount(AppLocalizations lbl) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(lbl.settingsDeleteAccount),
+        content: Text(lbl.settingsDeleteAccountConfirm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(lbl.buttonCancel),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+            ),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(lbl.buttonDelete),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    setState(() => _isDeletingAccount = true);
+    var accountDeleted = false;
+
+    try {
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null &&
+          currentUser.providerData.any(
+            (provider) => provider.providerId == 'google.com',
+          )) {
+        final googleUser = await ref.read(googleSignInProvider).signIn();
+        if (googleUser == null) return;
+
+        final googleAuth = await googleUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        await currentUser.reauthenticateWithCredential(credential);
+        await currentUser.getIdToken(true);
+      }
+
+      await FirebaseFunctions.instance.httpsCallable('deleteAccount').call();
+      accountDeleted = true;
+
+      final auth = FirebaseAuth.instance;
+      await auth.signOut();
+      await auth.signInAnonymously();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(lbl.settingsDeleteAccountSuccess)),
+        );
+      }
+    } catch (_) {
+      if (mounted) {
+        final message = accountDeleted
+            ? lbl.settingsDeleteAccountRestart
+            : lbl.settingsDeleteAccountError;
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(message)));
+      }
+    } finally {
+      if (mounted) setState(() => _isDeletingAccount = false);
     }
   }
 

@@ -298,6 +298,32 @@ class AppLocalizationsFr extends AppLocalizations {
       'Afficher les boutons ? sur les écrans';
 
   @override
+  String get settingsDeleteAccount => 'Supprimer mon compte';
+
+  @override
+  String get settingsDeleteAccountSubtitle =>
+      'Effacer définitivement mon compte et toutes mes données';
+
+  @override
+  String get settingsDeleteAccountConfirm =>
+      'Cette action est irréversible. Toutes tes données Kalis seront effacées et un nouveau profil vide sera créé.';
+
+  @override
+  String get settingsDeleteAccountInProgress => 'Suppression en cours...';
+
+  @override
+  String get settingsDeleteAccountSuccess =>
+      'Compte supprimé. Un nouveau profil vide a été créé.';
+
+  @override
+  String get settingsDeleteAccountRestart =>
+      'Compte supprimé, mais impossible de créer un nouveau profil. Redémarre l\'application.';
+
+  @override
+  String get settingsDeleteAccountError =>
+      'Impossible de supprimer le compte. Vérifie ta connexion et réessaie.';
+
+  @override
   String get onboardingSkip => 'Passer';
 
   @override

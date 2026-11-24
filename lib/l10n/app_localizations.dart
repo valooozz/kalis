@@ -616,6 +616,48 @@ abstract class AppLocalizations {
   /// **'Afficher les boutons ? sur les écrans'**
   String get settingsHelpBubblesSubtitle;
 
+  /// No description provided for @settingsDeleteAccount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer mon compte'**
+  String get settingsDeleteAccount;
+
+  /// No description provided for @settingsDeleteAccountSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Effacer définitivement mon compte et toutes mes données'**
+  String get settingsDeleteAccountSubtitle;
+
+  /// No description provided for @settingsDeleteAccountConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette action est irréversible. Toutes tes données Kalis seront effacées et un nouveau profil vide sera créé.'**
+  String get settingsDeleteAccountConfirm;
+
+  /// No description provided for @settingsDeleteAccountInProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suppression en cours...'**
+  String get settingsDeleteAccountInProgress;
+
+  /// No description provided for @settingsDeleteAccountSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte supprimé. Un nouveau profil vide a été créé.'**
+  String get settingsDeleteAccountSuccess;
+
+  /// No description provided for @settingsDeleteAccountRestart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte supprimé, mais impossible de créer un nouveau profil. Redémarre l\'application.'**
+  String get settingsDeleteAccountRestart;
+
+  /// No description provided for @settingsDeleteAccountError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de supprimer le compte. Vérifie ta connexion et réessaie.'**
+  String get settingsDeleteAccountError;
+
   /// No description provided for @onboardingSkip.
   ///
   /// In fr, this message translates to:

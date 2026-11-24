@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -19,6 +22,16 @@ void main() async {
 
   // Initialisation de Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  if (kDebugMode && const bool.fromEnvironment('USE_FIREBASE_EMULATORS')) {
+    const emulatorHost = String.fromEnvironment(
+      'FIREBASE_EMULATOR_HOST',
+      defaultValue: 'localhost',
+    );
+    FirebaseAuth.instance.useAuthEmulator(emulatorHost, 9099);
+    FirebaseFirestore.instance.useFirestoreEmulator(emulatorHost, 8080);
+    FirebaseFunctions.instance.useFunctionsEmulator(emulatorHost, 5001);
+  }
 
   // Connexion anonyme si pas déjà connecté
   if (FirebaseAuth.instance.currentUser == null) {

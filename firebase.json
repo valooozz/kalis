@@ -1,1 +1,30 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"kalis-f86cf","appId":"1:678094034706:android:2e149ea306928befddc5cb","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"kalis-f86cf","configurations":{"android":"1:678094034706:android:2e149ea306928befddc5cb"}}}}}}
+{
+	"flutter": {
+		"platforms": {
+			"android": {
+				"default": {
+					"projectId": "kalis-f86cf",
+					"appId": "1:678094034706:android:2e149ea306928befddc5cb",
+					"fileOutput": "android/app/google-services.json"
+				}
+			},
+			"dart": {
+				"lib/firebase_options.dart": {
+					"projectId": "kalis-f86cf",
+					"configurations": {
+						"android": "1:678094034706:android:2e149ea306928befddc5cb"
+					}
+				}
+			}
+		}
+	},
+	"functions": {
+		"source": "functions"
+	},
+	"emulators": {
+		"auth": { "port": 9099 },
+		"firestore": { "port": 8080 },
+		"functions": { "port": 5001 },
+		"ui": { "enabled": true, "port": 4000 }
+	}
+}
