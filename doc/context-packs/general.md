@@ -2,7 +2,7 @@
 
 ## Overview
 
-Kalis is a Flutter calisthenics tracking app. Users manage a portfolio of body-weight moves (*figures*), plan workouts over a 14-day window, and keep a personal progress journal. Data is persisted and synced in real time via Firebase Firestore. The app targets iOS, Android, Web and Desktop.
+Kalis is a Flutter calisthenics tracking app. Users manage a portfolio of body-weight moves (*figures*), plan workouts over a 14-day window, and keep a personal progress journal. Data is persisted and synced in real time via Firebase Firestore. The app targets iOS, Android, Web and Desktop and supports French and English locales.
 
 ---
 
@@ -80,6 +80,7 @@ Providers are defined in `lib/providers/`. Key providers:
 | `weeklyActivitiesProvider` | StreamProvider | Repeating weekday activities for the current user |
 | `onboardingSeenProvider` | FutureProvider | Whether onboarding was completed or skipped; persisted by SharedPreferences |
 | `helpBubblesEnabledProvider` | NotifierProvider | Whether contextual help buttons are enabled |
+| `appLocaleProvider` | AsyncNotifierProvider | Selected locale, persisted under `app_locale` |
 
 ---
 
@@ -96,6 +97,7 @@ The `MainScreen` hosts a `BottomNavigationBar` with 3 tabs:
 Additional app screens are full-page routes outside the tab shell:
 
 ```
+/language    LanguageSelectionScreen — first-launch French/English selection
 /onboarding  OnboardingScreen  — first-launch introduction
 /places      PlacesScreen      — training locations
 /records     RecordsScreen     — training history
@@ -120,14 +122,14 @@ screens/     main/, today/, planning/, figures/, places/, records/, settings/
 widgets/     figure_card, figure_square_card, journal_entry_tile,
              place_card, color_picker_row, color_filter_dialog,
              date_row, record_display
-l10n/        French only (app_fr.arb)
+l10n/        French and English (app_fr.arb, app_en.arb)
 ```
 
 ---
 
 ## Key Conventions
 
-- All user-facing strings are localised via Flutter's `.arb` system (French only for now).
+- All user-facing strings are localised via Flutter's `.arb` system (French and English). The selected locale is persisted under `app_locale`; `/language` is used when no locale has been chosen.
 - Firestore documents are namespaced per authenticated user (anonymous auth by default; Google linking is optional).
 - `order` field on `FigureModel` drives manual sorting in the figure list.
 - A figure can be `paused`, which hides it from active planning/today views.

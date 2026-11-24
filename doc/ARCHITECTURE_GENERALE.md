@@ -368,6 +368,7 @@ La note générale n'est pas un modèle de figure mais un document unique par ut
 | `archivedFiguresProvider` | Global | Figures dont `archived == true`, triées par ordre |
 | `weeklyActivitiesProvider` | Global | Activités hebdomadaires enregistrées pour l'utilisateur |
 | `onboardingSeenProvider` | FutureProvider | Indique si l'introduction a été vue, stockée dans SharedPreferences |
+| `appLocaleProvider` | AsyncNotifierProvider | Charge et mémorise la locale sous `app_locale` dans SharedPreferences |
 | `helpBubblesEnabledProvider` | NotifierProvider | Active ou masque les boutons d'aide contextuelle |
 
 ### Repositories (CRUD)
@@ -410,6 +411,7 @@ MainScreen (Navigation principale avec BottomNavigationBar)
 └── /planning           → PlanningScreen (planification sur 14 jours)
 
 Routes plein écran (hors onglets)
+├── /language           → LanguageSelectionScreen (sélection initiale de la langue)
 ├── /onboarding         → OnboardingScreen (introduction au premier lancement)
 ├── /places             → PlacesScreen (gestion des lieux)
 ├── /renfos             → RenfosScreen (gestion des routines d'entraînement)
@@ -428,7 +430,8 @@ Routes plein écran (hors onglets)
 | **Planning** | `/planning` | Planifier les entraînements sur 14 jours |
 | **Places** | `/places` | Gérer les lieux d'entraînement et leurs figures associées |
 | **Records** | `/records` | Consulter l'historique des entraînements |
-| **Settings** | `/settings` | Configurer l'authentification, l'onboarding et les bulles d'aide |
+| **Settings** | `/settings` | Configurer l'authentification, la langue, l'onboarding et les bulles d'aide |
+| **Language** | `/language` | Choisir entre français et anglais au premier lancement |
 | **Onboarding** | `/onboarding` | Présenter les bases de l'application au premier lancement ou sur demande |
 
 ---
@@ -471,13 +474,17 @@ Routes plein écran (hors onglets)
 
 ## Localisation
 
-L'application est actuellement disponible **uniquement en français**.
+L'application est disponible en **français et en anglais**.
 
 La localisation est gérée via le système officiel Flutter avec des fichiers `.arb` (Application Resource Bundle) :
 
 - `l10n/app_fr.arb` : Ressources français (clés → traductions)
+- `l10n/app_en.arb` : Ressources anglais (clés → traductions)
 - `l10n/app_localizations.dart` : Classe générée pour accès aux traductions
 - `l10n/app_localizations_fr.dart` : Implémentation français
+- `l10n/app_localizations_en.dart` : Implémentation anglais
+
+`appLocaleProvider` charge la valeur `fr` ou `en` enregistrée sous `app_locale` dans SharedPreferences. Tant qu'aucune valeur n'est enregistrée, le routeur redirige vers `/language`.
 
 Pour ajouter une langue supplémentaire, voir [Flutter i18n documentation](https://flutter.dev/docs/development/accessibility-and-localization/internationalization).
 

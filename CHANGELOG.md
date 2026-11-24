@@ -1,5 +1,10 @@
 # Version 1
 
+## v1.25.0
+
+- Ajout d'une sélection de langue au premier lancement.
+- Ajout d'un choix Français/Anglais depuis les paramètres, avec mémorisation locale de la langue.
+
 ## v1.24.0
 
 - Ajout d'une introduction en trois écrans au premier lancement, avec possibilité de la revoir depuis les paramètres.

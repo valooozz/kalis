@@ -52,6 +52,7 @@ core_providers          firestore, auth, userId, all repositories
 | `googleSignInProvider` | Provider | GoogleSignIn instance |
 | `isLinkedToGoogleProvider` | Provider\<bool\> | Watches authStateProvider |
 | `helpBubblesEnabledProvider` | NotifierProvider\<bool\> | Contextual help visibility, persisted as `help_bubbles_enabled` |
+| `appLocaleProvider` | AsyncNotifierProvider\<Locale?\> | Selected locale, persisted as `app_locale` |
 
 ---
 

@@ -65,6 +65,7 @@ SettingsScreen (écran principal)
 
 **Responsabilités** :
 - Afficher l'interface des paramètres
+- Permettre de choisir la langue entre français et anglais
 - Proposer l'accès à la liste des figures archivées
 - Permettre de rejouer l'introduction via `/onboarding`
 - Permettre d'activer ou masquer les bulles d'aide contextuelle
@@ -123,9 +124,13 @@ Scaffold(
 - Le chevron de droite n'apparaît que si `onTap != null`
 
 ---
-### Introduction et aide contextuelle
+### Introduction, langue et aide contextuelle
 
-La section « Aide » propose « Revoir l'introduction », qui ouvre la route `/onboarding`, et une option « Afficher les bulles d'aide ». Cette option stocke sa valeur sous `help_bubbles_enabled` dans SharedPreferences et masque les boutons `?` de Today, Planning, Lieux et Renfos lorsqu'elle est désactivée.
+La section « Aide » propose « Revoir l'introduction », qui ouvre la route `/onboarding`, une tuile « Langue » permettant de choisir Français ou Anglais, et une option « Afficher les bulles d'aide ». La langue est persistée sous `app_locale` dans SharedPreferences par `AppLocaleNotifier`; le choix réactualise `locale` dans `KalisApp`.
+
+Au premier lancement, tant qu'aucune langue n'est enregistrée, le routeur redirige vers `/language`. `LanguageSelectionScreen` propose les deux langues, puis dirige l'utilisateur vers `/onboarding` si l'introduction reste à voir ou vers `/today` sinon.
+
+L'option d'aide stocke sa valeur sous `help_bubbles_enabled` dans SharedPreferences et masque les boutons `?` de Today, Planning, Lieux et Renfos lorsqu'elle est désactivée.
 
 Le premier lancement redirige automatiquement vers `/onboarding` tant que `onboarding_seen` n'est pas à `true`. Cette introduction comporte trois pages : figures, planification et progression. Les actions « Passer », « Commencer » et la fin des pages marquent l'introduction comme vue.
 ## Écrans et dialogues
@@ -368,6 +373,14 @@ ref.watch(authStateProvider).valueOrNull?.email ?? ''
 
 ---
 
+### appLocaleProvider
+
+**Type** : `AsyncNotifierProvider<AppLocaleNotifier, Locale?>`
+
+**Description** : Charge depuis SharedPreferences la langue sélectionnée sous `app_locale`. Une valeur `null` signifie qu'aucune sélection n'a encore été enregistrée.
+
+**Méthode** : `setLocale(Locale locale)` mémorise `locale.languageCode` (`fr` ou `en`) et met à jour l'état Riverpod. `KalisApp` utilise cet état comme `locale` de `MaterialApp.router`.
+
 ### googleSignInProvider
 
 **Type** : `Provider<GoogleSignIn>`
@@ -503,8 +516,9 @@ FirebaseAuthException(code: 'credential-already-in-use')
 |---------|-------|
 | [lib/providers/core_providers.dart](../../lib/providers/core_providers.dart) | Fournit googleSignInProvider, authStateProvider, isLinkedToGoogleProvider |
 | [lib/l10n/app_localizations.dart](../../lib/l10n/app_localizations.dart) | Clés i18n pour tous les textes |
-| [lib/main.dart](../../lib/main.dart) | Initialisation anonyme au démarrage |
-| [lib/core/router/app_router.dart](../../lib/core/router/app_router.dart) | Enregistrement de la route /settings |
+| [lib/main.dart](../../lib/main.dart) | Initialisation anonyme au démarrage et application de la locale |
+| [lib/screens/language_selection_screen.dart](../../lib/screens/language_selection_screen.dart) | Sélection initiale Français/Anglais |
+| [lib/core/router/app_router.dart](../../lib/core/router/app_router.dart) | Redirections des routes `/language`, `/onboarding` et `/settings` |
 
 ---
 

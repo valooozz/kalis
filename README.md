@@ -12,6 +12,7 @@ Kalis est une application mobile de suivi et d'organisation de séances de calli
 - **Journal** — Gardez une trace de vos progrès grâce à des entrées de journal associées à chaque figure.
 - **Note générale** — Rédigez une note libre pour votre progression globale, objectifs et remarques générales.
 - **Introduction et aide contextuelle** — Une introduction présente les bases de Kalis au premier lancement ou depuis les paramètres. Des aides décrivent les gestes disponibles dans les écrans Today, Planning, Lieux et Renfos, avec une option pour les masquer.
+- **Français et anglais** — Choisissez la langue au premier lancement ou depuis les paramètres. Le choix est mémorisé localement.
 - **Synchronisation cloud** — Vos données sont synchronisées en temps réel via Firebase Firestore et accessibles sur tous vos appareils, avec possibilité de lier un compte Google.
 
 <table>
@@ -72,9 +73,9 @@ Le projet suit un **Repository pattern** avec une séparation claire des respons
 ```
 lib/
 ├── core/          # Thème, router, utilitaires globaux
-├── l10n/          # Fichiers de traduction (.arb)
+├── l10n/          # Fichiers de traduction FR/EN (.arb)
 ├── models/        # Entités métier (figures, activités hebdomadaires, journal, entraînements, lieux)
-├── providers/     # Providers Riverpod (figures, planning, activités, lieux, renfos, note générale)
+├── providers/     # Providers Riverpod (figures, planning, activités, lieux, renfos, langue, note générale)
 ├── repositories/  # Accès aux données Firestore et collections utilisateur
 ├── screens/       # Écrans, dialogs et écrans plein écran (settings, archived figures, records, places, renfos)
 ├── widgets/       # Widgets réutilisables, cartes, sélecteurs, composants UI
@@ -85,7 +86,7 @@ lib/
 
 ## 🌐 Localisation
 
-L'application est disponible pour l'instant uniquement en français. Les traductions sont gérées via le système officiel Flutter avec des fichiers `.arb`.
+L'application est disponible en français et en anglais. Une première sélection est proposée au premier lancement sur la route `/language`, puis la langue peut être modifiée depuis **Paramètres > Langue**. Le choix est conservé localement avec `SharedPreferences` sous la clé `app_locale`. Les traductions sont gérées via le système officiel Flutter avec les fichiers `.arb`.
 
 ## 🚀 Installation
 

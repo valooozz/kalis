@@ -2,7 +2,7 @@
 
 ## Overview
 
-Single-purpose screen for managing authentication. The app starts with an **anonymous Firebase account** (created in `main.dart` if no current user). Settings lets the user upgrade that anonymous account to a Google account, enabling multi-device sync.
+Single-purpose screen for managing authentication and preferences. The app starts with an **anonymous Firebase account** (created in `main.dart` if no current user). Settings lets the user upgrade that account to Google and choose the application language.
 
 ---
 
@@ -17,7 +17,7 @@ SettingsScreen
         └── linked      → "Connecté avec Google" + email  (non-tappable)
 ```
 
-The screen also includes a `Figures archived` tile that pushes `/archived-figures`, plus an onboarding replay action (`/onboarding`) and a persisted switch for contextual help bubbles (`help_bubbles_enabled`).
+The screen also includes a `Figures archived` tile that pushes `/archived-figures`, plus an onboarding replay action (`/onboarding`), a French/English locale selector, and a persisted switch for contextual help bubbles (`help_bubbles_enabled`). The locale is stored under `app_locale` and controlled by `appLocaleProvider`.
 
 No sub-dialogs except the inline confirmation dialog for the `credential-already-in-use` case.
 
@@ -69,6 +69,7 @@ All Firestore collections are scoped to userId, so an account switch silently se
 | `isLinkedToGoogleProvider` | `Provider<bool>` — checks `currentUser.providerData` for `'google.com'`; must be invalidated after `linkWithCredential` |
 | `authStateProvider` | `StreamProvider<User?>` — used to read `user.email` for the subtitle |
 | `googleSignInProvider` | `Provider<GoogleSignIn>` — read-only, single instance |
+| `appLocaleProvider` | `AsyncNotifierProvider<AppLocaleNotifier, Locale?>` — loads/persists `app_locale` and exposes the selected locale |
 
 ---
 
