@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kalis/screens/records/records_screen.dart';
 import 'package:kalis/screens/settings/settings_screen.dart';
+import 'package:kalis/screens/onboarding/onboarding_screen.dart';
 import 'package:kalis/screens/figures/archived_figures_screen.dart';
 import '../../providers/core_providers.dart';
 import '../../screens/today/today_screen.dart';
@@ -14,17 +15,26 @@ import '../../screens/renfos/renfos_screen.dart';
 // Provider du router
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateProvider);
+  final onboardingSeen = ref.watch(onboardingSeenProvider);
 
   return GoRouter(
     initialLocation: '/today',
     redirect: (context, state) {
-      // Tant que l'auth est en cours de chargement, on ne redirige pas
-      if (authState.isLoading) return null;
-      // Si l'utilisateur n'est pas connecté, on ne redirige pas
-      // (la connexion anonyme se fait dans main.dart)
+      // Tant que l'auth ou la préférence d'accueil est en cours de chargement,
+      // on ne redirige pas.
+      if (authState.isLoading || onboardingSeen.isLoading) return null;
+
+      final seen = onboardingSeen.valueOrNull ?? false;
+      final isOnboarding = state.uri.path == '/onboarding';
+
+      if (!seen && !isOnboarding) return '/onboarding';
       return null;
     },
     routes: [
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) => const OnboardingScreen(),
+      ),
       ShellRoute(
         builder: (context, state, child) {
           return MainScreen(child: child);

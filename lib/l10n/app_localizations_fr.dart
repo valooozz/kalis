@@ -190,6 +190,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get placesTitle => 'Lieux';
 
   @override
+  String get placesHelpTitle => 'À quoi servent les lieux ?';
+
+  @override
+  String get placesHelpContent =>
+      'Les lieux permettent d’organiser tes figures selon l’endroit où tu t’entraînes. Quand tu ajoutes une figure à ta planification, tu peux filtrer les figures disponibles en choisissant un lieu.';
+
+  @override
   String get addPlace => 'Ajouter un lieu';
 
   @override
@@ -258,6 +265,49 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsAccountSection => 'Compte';
+
+  @override
+  String get settingsHelpSection => 'Aide';
+
+  @override
+  String get settingsReplayOnboarding => 'Revoir l’introduction';
+
+  @override
+  String get settingsReplayOnboardingSubtitle =>
+      'Découvre à nouveau les bases de Kalis';
+
+  @override
+  String get onboardingSkip => 'Passer';
+
+  @override
+  String get onboardingPrevious => 'Précédent';
+
+  @override
+  String get onboardingNext => 'Suivant';
+
+  @override
+  String get onboardingStart => 'Commencer';
+
+  @override
+  String get onboardingFiguresTitle => 'Organise tes figures';
+
+  @override
+  String get onboardingFiguresDescription =>
+      'Ajoute tes figures et suis celles à apprendre, en cours d’apprentissage ou déjà maîtrisées.';
+
+  @override
+  String get onboardingPlanningTitle => 'Planifie tes entraînements';
+
+  @override
+  String get onboardingPlanningDescription =>
+      'Place tes figures sur les prochains jours pour construire une séance adaptée à ton rythme.';
+
+  @override
+  String get onboardingProgressTitle => 'Suis ta progression';
+
+  @override
+  String get onboardingProgressDescription =>
+      'Valide tes entraînements du jour, ajoute tes notes et consulte tes records.';
 
   @override
   String get settingsLinkGoogle => 'Lier à un compte Google';
@@ -491,6 +541,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get renfosTitle => 'Renfos';
+
+  @override
+  String get renfosHelpTitle => 'À quoi servent les renfos ?';
+
+  @override
+  String get renfosHelpContent =>
+      'Un renfo rassemble plusieurs figures autour d’une routine ou d’un objectif. Crée un renfo, associe-lui des figures, puis valide sa pratique depuis la séance du jour.';
 
   @override
   String get addRenfo => 'Ajouter un renfo';

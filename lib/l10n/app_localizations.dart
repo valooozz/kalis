@@ -436,6 +436,18 @@ abstract class AppLocalizations {
   /// **'Lieux'**
   String get placesTitle;
 
+  /// No description provided for @placesHelpTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'À quoi servent les lieux ?'**
+  String get placesHelpTitle;
+
+  /// No description provided for @placesHelpContent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les lieux permettent d’organiser tes figures selon l’endroit où tu t’entraînes. Quand tu ajoutes une figure à ta planification, tu peux filtrer les figures disponibles en choisissant un lieu.'**
+  String get placesHelpContent;
+
   /// No description provided for @addPlace.
   ///
   /// In fr, this message translates to:
@@ -549,6 +561,84 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Compte'**
   String get settingsAccountSection;
+
+  /// No description provided for @settingsHelpSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aide'**
+  String get settingsHelpSection;
+
+  /// No description provided for @settingsReplayOnboarding.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revoir l’introduction'**
+  String get settingsReplayOnboarding;
+
+  /// No description provided for @settingsReplayOnboardingSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Découvre à nouveau les bases de Kalis'**
+  String get settingsReplayOnboardingSubtitle;
+
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passer'**
+  String get onboardingSkip;
+
+  /// No description provided for @onboardingPrevious.
+  ///
+  /// In fr, this message translates to:
+  /// **'Précédent'**
+  String get onboardingPrevious;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivant'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commencer'**
+  String get onboardingStart;
+
+  /// No description provided for @onboardingFiguresTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Organise tes figures'**
+  String get onboardingFiguresTitle;
+
+  /// No description provided for @onboardingFiguresDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajoute tes figures et suis celles à apprendre, en cours d’apprentissage ou déjà maîtrisées.'**
+  String get onboardingFiguresDescription;
+
+  /// No description provided for @onboardingPlanningTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Planifie tes entraînements'**
+  String get onboardingPlanningTitle;
+
+  /// No description provided for @onboardingPlanningDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Place tes figures sur les prochains jours pour construire une séance adaptée à ton rythme.'**
+  String get onboardingPlanningDescription;
+
+  /// No description provided for @onboardingProgressTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suis ta progression'**
+  String get onboardingProgressTitle;
+
+  /// No description provided for @onboardingProgressDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valide tes entraînements du jour, ajoute tes notes et consulte tes records.'**
+  String get onboardingProgressDescription;
 
   /// No description provided for @settingsLinkGoogle.
   ///
@@ -957,6 +1047,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Renfos'**
   String get renfosTitle;
+
+  /// No description provided for @renfosHelpTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'À quoi servent les renfos ?'**
+  String get renfosHelpTitle;
+
+  /// No description provided for @renfosHelpContent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un renfo rassemble plusieurs figures autour d’une routine ou d’un objectif. Crée un renfo, associe-lui des figures, puis valide sa pratique depuis la séance du jour.'**
+  String get renfosHelpContent;
 
   /// No description provided for @addRenfo.
   ///

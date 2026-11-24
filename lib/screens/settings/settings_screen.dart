@@ -26,6 +26,15 @@ class SettingsScreen extends ConsumerWidget {
           ),
           SliverList(
             delegate: SliverChildListDelegate([
+              // Section aide
+              _SectionHeader(label: lbl.settingsHelpSection),
+              _SettingsTile(
+                icon: Icons.explore_outlined,
+                title: lbl.settingsReplayOnboarding,
+                subtitle: lbl.settingsReplayOnboardingSubtitle,
+                onTap: () => context.push('/onboarding'),
+              ),
+
               // Section compte
               _SectionHeader(label: lbl.settingsAccountSection),
               _SettingsTile(
