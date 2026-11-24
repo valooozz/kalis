@@ -19,33 +19,17 @@ class JournalEntryFormDialog extends ConsumerStatefulWidget {
 class _JournalEntryFormDialogState
     extends ConsumerState<JournalEntryFormDialog> {
   late TextEditingController _controller;
-  late FocusNode _focusNode;
   bool get _isEditing => widget.entry != null;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController(text: widget.entry?.text);
-    _focusNode = FocusNode();
-
-    // On attend la fin du build/de la transition d'ouverture du dialog
-    // avant de donner le focus, pour éviter que le premier tap ne soit
-    // interprété comme un drag de sélection.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _focusNode.requestFocus();
-        // On s'assure que le curseur est bien à la fin, sans sélection.
-        _controller.selection = TextSelection.collapsed(
-          offset: _controller.text.length,
-        );
-      }
-    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 
@@ -57,7 +41,6 @@ class _JournalEntryFormDialogState
       title: Text(_isEditing ? lbl.editJournalEntry : lbl.newJournalEntry),
       content: TextField(
         controller: _controller,
-        focusNode: _focusNode,
         maxLines: 5,
         decoration: InputDecoration(hintText: lbl.journalHint),
       ),

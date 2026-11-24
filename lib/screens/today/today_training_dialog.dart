@@ -25,11 +25,32 @@ class TodayTrainingDialog extends ConsumerStatefulWidget {
 class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
   late TextEditingController _controller;
   JournalEntryModel? _existingEntry;
+  bool _hasEditedNote = false;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    ref.listenManual(todayJournalEntryForFigureProvider(widget.figure.id), (
+      _,
+      entryAsync,
+    ) {
+      entryAsync.whenData((entry) {
+        _existingEntry = entry;
+        if (entry == null || _hasEditedNote || _controller.text.isNotEmpty) {
+          return;
+        }
+
+        final selection = _controller.selection;
+        final offset = selection.isValid
+            ? selection.extentOffset.clamp(0, entry.text.length).toInt()
+            : entry.text.length;
+        _controller.value = TextEditingValue(
+          text: entry.text,
+          selection: TextSelection.collapsed(offset: offset),
+        );
+      });
+    }, fireImmediately: true);
   }
 
   @override
@@ -42,19 +63,9 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final lbl = AppLocalizations.of(context)!;
-    final entryAsync = ref.watch(
-      todayJournalEntryForFigureProvider(widget.figure.id),
-    );
     final journalEntriesAsync = ref.watch(
       journalEntriesForFigureProvider(widget.figure.id),
     );
-
-    entryAsync.whenData((entry) {
-      if (entry != null && _controller.text.isEmpty) {
-        _controller.text = entry.text;
-      }
-      _existingEntry = entry;
-    });
 
     return AlertDialog(
       title: Row(
@@ -106,6 +117,7 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
           TextField(
             controller: _controller,
             maxLines: 4,
+            onChanged: (_) => _hasEditedNote = true,
             decoration: InputDecoration(hintText: lbl.trainingHint),
           ),
         ],
@@ -116,7 +128,7 @@ class _TodayTrainingDialogState extends ConsumerState<TodayTrainingDialog> {
           child: Text(lbl.buttonCancel),
         ),
         FilledButton.icon(
-          onPressed: () => _validate(entryAsync.valueOrNull),
+          onPressed: () => _validate(_existingEntry),
           icon: const Icon(Icons.done_outline),
           label: Text(lbl.buttonValidate),
         ),

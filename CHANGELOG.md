@@ -5,6 +5,7 @@
 - Ajout d'une introduction en trois écrans au premier lancement, avec possibilité de la revoir depuis les paramètres.
 - Ajout d'aides contextuelles sur les écrans Séance du jour, Planification, Lieux et Renfos, activables ou masquables depuis les paramètres.
 - Ajout de conseils uniques lors de l'utilisation des favoris et de l'activation des figures maîtrisées.
+- Correction du déplacement du curseur qui sélectionnait du texte dans les Dialog de journal
 
 ## v1.23.0
 
