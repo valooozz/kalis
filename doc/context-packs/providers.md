@@ -51,6 +51,7 @@ core_providers          firestore, auth, userId, all repositories
 | `weeklyActivitiesRepositoryProvider` | Provider\<WeeklyActivitiesRepository?\> | Weekly activities document, null if not authenticated |
 | `googleSignInProvider` | Provider | GoogleSignIn instance |
 | `isLinkedToGoogleProvider` | Provider\<bool\> | Watches authStateProvider |
+| `helpBubblesEnabledProvider` | NotifierProvider\<bool\> | Contextual help visibility, persisted as `help_bubbles_enabled` |
 
 ---
 

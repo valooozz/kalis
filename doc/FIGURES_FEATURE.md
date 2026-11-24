@@ -632,6 +632,7 @@ trainingPlannedDatesProvider(figureId)   // Planifiés
 
 Depuis `FigureFormDialog`, une figure peut être archivée ou restaurée. L'archivage demande une confirmation. Depuis `FigureDetailDialog`, les figures archivées proposent directement l'action `Restaurer` au lieu de l'action `Modifier`. Une figure archivée reste en Firestore mais est exclue de `figuresProvider`, des vues actives, du planning et du filtre des figures en pause; elle est aussi retirée des listes de lieux et de renfos associés. L'archivage remet également la figure hors pause.
 
+Lors du premier ajout d'une figure aux favoris ou de sa première activation parmi les figures maîtrisées, `FigureDetailDialog` affiche un conseil unique via un SnackBar. Les clés de cette information sont persistées séparément dans SharedPreferences.
 Les figures archivées sont accessibles depuis `Paramètres > Figures archivées`, sur la route `/archived-figures`. Elles peuvent être ouvertes dans `FigureDetailDialog`, puis restaurées directement.
 
 **Marquer en pause**
@@ -671,6 +672,7 @@ Les figures archivées sont accessibles depuis `Paramètres > Figures archivées
 6. Cascade: Supprime aussi:
    - Toutes les notes journal associées
    - Toutes les dates d'entraînement (done + planned)
+   - Les références à la figure dans les lieux et les renfos associés
 ```
 
 ---
@@ -1192,6 +1194,7 @@ Repository effectue suppression cascade:
 2. Supprime tous les journalEntries
 3. Supprime toutes les trainingDone
 4. Supprime toutes les trainingPlanned
+5. Retire la figureId des champs `figureIds` des lieux et renfos associés
 ```
 
 ---

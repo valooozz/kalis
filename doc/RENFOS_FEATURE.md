@@ -31,7 +31,7 @@ Les **Renfos** sont des blocs d'entraînement personnalisés créés par l'utili
 
 ```
 RenfosScreen (écran principal)
-├── SliverAppBar (titre + actions)
+├── SliverAppBar (titre + bouton ? d'aide)
 ├── Liste des renfos (RenfoCard × N)
 │   └── Tap → RenfoDetailDialog
 ├── FAB (+) → RenfoFormDialog

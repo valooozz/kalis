@@ -155,6 +155,7 @@ Les champs pertinents pour le planning :
 │ │ (FlexibleSpaceBar)                     │   │
 │ ├────────────────────────────────────────┤   │
 │ │ Actions:                               │   │
+│ │ ? Aide sur les gestes disponibles      │   │
 │ │ 📜 Historique (14 jours passés)        │   │
 │ └────────────────────────────────────────┘   │
 ├──────────────────────────────────────────────┤

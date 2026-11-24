@@ -17,7 +17,7 @@ SettingsScreen
         └── linked      → "Connecté avec Google" + email  (non-tappable)
 ```
 
-The screen also includes a `Figures archived` tile that pushes `/archived-figures`.
+The screen also includes a `Figures archived` tile that pushes `/archived-figures`, plus an onboarding replay action (`/onboarding`) and a persisted switch for contextual help bubbles (`help_bubbles_enabled`).
 
 No sub-dialogs except the inline confirmation dialog for the `credential-already-in-use` case.
 

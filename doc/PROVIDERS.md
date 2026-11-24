@@ -25,6 +25,8 @@ Ce document décrit les providers présents dans `lib/providers` : leur utilité
 - renfoDoneRepositoryProvider : `Provider<RenfoDoneRepository?>` dépendant de `firestoreProvider` et `userIdProvider`.
 - googleSignInProvider : `Provider<GoogleSignIn>`.
 - isLinkedToGoogleProvider : `Provider<bool>` qui observe `authStateProvider`.
+- onboardingSeenProvider : `FutureProvider<bool>` indiquant si l'introduction a été vue ou passée, avec persistance dans SharedPreferences.
+- helpBubblesEnabledProvider : `NotifierProvider<HelpBubblesNotifier, bool>` activé par défaut, dont la préférence est persistée sous `help_bubbles_enabled`.
 
 Rôle principal : fournir les points d'entrée vers Firestore/Auth et les repositories réutilisables par les autres providers.
 

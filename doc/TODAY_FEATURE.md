@@ -179,6 +179,7 @@ Voir [documentation Figures](FIGURES_FEATURE.md#figuremodel)
 │ ┌────────────────────────────────────────┐
 │ │ Title: "Séance du jour"                │
 │ │ (FlexibleSpaceBar)                     │
+│ │ Action: Bouton ? des gestes disponibles │
 │ └────────────────────────────────────────┘
 ├──────────────────────────────────────────┤
 │ État vide:                               │

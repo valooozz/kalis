@@ -367,6 +367,8 @@ La note générale n'est pas un modèle de figure mais un document unique par ut
 | `colorFilterProvider` | Global | Filtre couleur actif |
 | `archivedFiguresProvider` | Global | Figures dont `archived == true`, triées par ordre |
 | `weeklyActivitiesProvider` | Global | Activités hebdomadaires enregistrées pour l'utilisateur |
+| `onboardingSeenProvider` | FutureProvider | Indique si l'introduction a été vue, stockée dans SharedPreferences |
+| `helpBubblesEnabledProvider` | NotifierProvider | Active ou masque les boutons d'aide contextuelle |
 
 ### Repositories (CRUD)
 
@@ -408,8 +410,9 @@ MainScreen (Navigation principale avec BottomNavigationBar)
 └── /planning           → PlanningScreen (planification sur 14 jours)
 
 Routes plein écran (hors onglets)
+├── /onboarding         → OnboardingScreen (introduction au premier lancement)
 ├── /places             → PlacesScreen (gestion des lieux)
-├── /renfos            → RenfosScreen (gestion des routines d'entraînement)
+├── /renfos             → RenfosScreen (gestion des routines d'entraînement)
 ├── /records            → RecordsScreen (historique + records)
 ├── /settings           → SettingsScreen (compte Google / paramètres)
 ├── /archived-figures   → ArchivedFiguresScreen (liste des figures archivées)
@@ -425,7 +428,8 @@ Routes plein écran (hors onglets)
 | **Planning** | `/planning` | Planifier les entraînements sur 14 jours |
 | **Places** | `/places` | Gérer les lieux d'entraînement et leurs figures associées |
 | **Records** | `/records` | Consulter l'historique des entraînements |
-| **Settings** | `/settings` | Configurer l'authentification et lier son compte Google |
+| **Settings** | `/settings` | Configurer l'authentification, l'onboarding et les bulles d'aide |
+| **Onboarding** | `/onboarding` | Présenter les bases de l'application au premier lancement ou sur demande |
 
 ---
 

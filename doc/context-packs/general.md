@@ -78,6 +78,8 @@ Providers are defined in `lib/providers/`. Key providers:
 | `isLinkedToGoogleProvider` | Provider | Whether the anonymous Firebase user is linked to Google |
 | `archivedFiguresProvider` | StreamProvider | Figures with `archived == true` |
 | `weeklyActivitiesProvider` | StreamProvider | Repeating weekday activities for the current user |
+| `onboardingSeenProvider` | FutureProvider | Whether onboarding was completed or skipped; persisted by SharedPreferences |
+| `helpBubblesEnabledProvider` | NotifierProvider | Whether contextual help buttons are enabled |
 
 ---
 
@@ -94,6 +96,7 @@ The `MainScreen` hosts a `BottomNavigationBar` with 3 tabs:
 Additional app screens are full-page routes outside the tab shell:
 
 ```
+/onboarding  OnboardingScreen  — first-launch introduction
 /places      PlacesScreen      — training locations
 /records     RecordsScreen     — training history
 /settings    SettingsScreen    — auth & preferences

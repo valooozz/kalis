@@ -11,6 +11,7 @@ Kalis est une application mobile de suivi et d'organisation de séances de calli
 - **Renfos** — Créez des blocs d'entraînement personnalisés composés de plusieurs figures, suivez leur exécution quotidienne, ouvrez leur historique de validation dans un calendrier et recevez une alerte si une routine n'a pas été pratiquée depuis plusieurs jours.
 - **Journal** — Gardez une trace de vos progrès grâce à des entrées de journal associées à chaque figure.
 - **Note générale** — Rédigez une note libre pour votre progression globale, objectifs et remarques générales.
+- **Introduction et aide contextuelle** — Une introduction présente les bases de Kalis au premier lancement ou depuis les paramètres. Des aides décrivent les gestes disponibles dans les écrans Today, Planning, Lieux et Renfos, avec une option pour les masquer.
 - **Synchronisation cloud** — Vos données sont synchronisées en temps réel via Firebase Firestore et accessibles sur tous vos appareils, avec possibilité de lier un compte Google.
 
 <table>

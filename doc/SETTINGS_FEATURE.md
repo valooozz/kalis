@@ -66,6 +66,8 @@ SettingsScreen (écran principal)
 **Responsabilités** :
 - Afficher l'interface des paramètres
 - Proposer l'accès à la liste des figures archivées
+- Permettre de rejouer l'introduction via `/onboarding`
+- Permettre d'activer ou masquer les bulles d'aide contextuelle
 - Surveiller le statut de liaison avec Google via `isLinkedToGoogleProvider`
 - Afficher le compte Google lié via `authStateProvider`
 - Gérer les actions de liaison et les dialogues
@@ -121,7 +123,11 @@ Scaffold(
 - Le chevron de droite n'apparaît que si `onTap != null`
 
 ---
+### Introduction et aide contextuelle
 
+La section « Aide » propose « Revoir l'introduction », qui ouvre la route `/onboarding`, et une option « Afficher les bulles d'aide ». Cette option stocke sa valeur sous `help_bubbles_enabled` dans SharedPreferences et masque les boutons `?` de Today, Planning, Lieux et Renfos lorsqu'elle est désactivée.
+
+Le premier lancement redirige automatiquement vers `/onboarding` tant que `onboarding_seen` n'est pas à `true`. Cette introduction comporte trois pages : figures, planification et progression. Les actions « Passer », « Commencer » et la fin des pages marquent l'introduction comme vue.
 ## Écrans et dialogues
 
 ### Figures archivées

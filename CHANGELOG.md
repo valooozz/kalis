@@ -1,5 +1,11 @@
 # Version 1
 
+## v1.24.0
+
+- Ajout d'une introduction en trois écrans au premier lancement, avec possibilité de la revoir depuis les paramètres.
+- Ajout d'aides contextuelles sur les écrans Séance du jour, Planification, Lieux et Renfos, activables ou masquables depuis les paramètres.
+- Ajout de conseils uniques lors de l'utilisation des favoris et de l'activation des figures maîtrisées.
+
 ## v1.23.0
 
 - Mise à jour des interactions de validation afin de fermer les dialogues immédiatement pendant la synchronisation Firestore.
