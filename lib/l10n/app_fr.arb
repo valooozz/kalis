@@ -196,7 +196,7 @@
     "filterByColor": "Filtrer par couleur",
     "pausedFigure": "Figure en pause",
     "pauseFigureTitle": "Mettre en pause",
-    "pauseFigureConfirm": "Mettre en pause la figure \"{name}\" ?",
+    "pauseFigureConfirm": "Mettre en pause la figure \"{name}\" ? Elle n'apparaîtra plus dans la planification.",
     "@pauseFigureConfirm": {
         "placeholders": {
             "name": {
@@ -262,6 +262,8 @@
     "deactivateFigure": "Désactiver la figure",
     "activateFigure": "Garder la figure active",
     "favoriteFigure": "Ajouter la figure aux favoris",
+    "favoriteFigureHint": "Les figures favorites apparaîtront dans les premières figures à planifier.",
+    "activeFigureHint": "Une figure maîtrisée qui reste active apparaîtra dans la planification, au même titre que les figures à apprendre.",
     "unfavoriteFigure": "Retirer la figure des favoris",
     "swapDaysTooltip": "Échanger deux jours",
     "swapDaysDialogTitle": "Échanger deux jours",

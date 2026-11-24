@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/core/utils/firestore_write_utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/models/journal_entry_model.dart';
 import 'package:kalis/models/training_planned_model.dart';
@@ -16,6 +17,9 @@ import '../../core/utils/date_utils.dart';
 import 'figure_form_dialog.dart';
 import 'figure_status_picker_dialog.dart';
 import 'journal_entry_form_dialog.dart';
+
+const _favoriteHintSeenKey = 'favorite_hint_seen';
+const _activeHintSeenKey = 'active_hint_seen';
 
 class FigureDetailDialog extends ConsumerWidget {
   final FigureModel figure;
@@ -52,7 +56,7 @@ class FigureDetailDialog extends ConsumerWidget {
                 IconButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    _toggleActive(ref);
+                    _toggleActive(context, ref, lbl);
                   },
                   icon: Icon(
                     figure.active ? Icons.loop : Icons.loop_outlined,
@@ -70,7 +74,7 @@ class FigureDetailDialog extends ConsumerWidget {
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
-                    _toggleFavorite(ref);
+                    _toggleFavorite(context, ref, lbl);
                   },
                   tooltip: figure.favorite
                       ? lbl.unfavoriteFigure
@@ -375,13 +379,18 @@ class FigureDetailDialog extends ConsumerWidget {
     }
   }
 
-  void _toggleActive(WidgetRef ref) {
+  Future<void> _toggleActive(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations lbl,
+  ) async {
     final figureRepository = ref.read(figureRepositoryProvider);
     final write = figureRepository?.update(
       figure.copyWith(active: !figure.active),
     );
     if (write != null) {
       detachFirestoreWrite(write, operation: 'toggling figure activity');
+      await _showHintOnce(context, lbl.activeFigureHint, _activeHintSeenKey);
     }
   }
 
@@ -393,14 +402,39 @@ class FigureDetailDialog extends ConsumerWidget {
     }
   }
 
-  void _toggleFavorite(WidgetRef ref) {
+  Future<void> _toggleFavorite(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations lbl,
+  ) async {
     final figureRepository = ref.read(figureRepositoryProvider);
     final write = figureRepository?.update(
       figure.copyWith(favorite: !figure.favorite),
     );
     if (write != null) {
       detachFirestoreWrite(write, operation: 'toggling figure favorite');
+      await _showHintOnce(
+        context,
+        lbl.favoriteFigureHint,
+        _favoriteHintSeenKey,
+      );
     }
+  }
+
+  Future<void> _showHintOnce(
+    BuildContext context,
+    String message,
+    String key,
+  ) async {
+    final preferences = await SharedPreferences.getInstance();
+    if (preferences.getBool(key) ?? false) return;
+
+    await preferences.setBool(key, true);
+    if (!context.mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), duration: const Duration(seconds: 4)),
+    );
   }
 }
 

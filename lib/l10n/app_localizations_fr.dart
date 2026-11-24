@@ -430,7 +430,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String pauseFigureConfirm(String name) {
-    return 'Mettre en pause la figure \"$name\" ?';
+    return 'Mettre en pause la figure \"$name\" ? Elle n\'apparaîtra plus dans la planification.';
   }
 
   @override
@@ -513,6 +513,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get favoriteFigure => 'Ajouter la figure aux favoris';
+
+  @override
+  String get favoriteFigureHint =>
+      'Les figures favorites apparaîtront dans les premières figures à planifier.';
+
+  @override
+  String get activeFigureHint =>
+      'Une figure maîtrisée qui reste active apparaîtra dans la planification, au même titre que les figures à apprendre.';
 
   @override
   String get unfavoriteFigure => 'Retirer la figure des favoris';

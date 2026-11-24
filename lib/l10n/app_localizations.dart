@@ -853,7 +853,7 @@ abstract class AppLocalizations {
   /// No description provided for @pauseFigureConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Mettre en pause la figure \"{name}\" ?'**
+  /// **'Mettre en pause la figure \"{name}\" ? Elle n\'apparaîtra plus dans la planification.'**
   String pauseFigureConfirm(String name);
 
   /// No description provided for @buttonPause.
@@ -993,6 +993,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ajouter la figure aux favoris'**
   String get favoriteFigure;
+
+  /// No description provided for @favoriteFigureHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les figures favorites apparaîtront dans les premières figures à planifier.'**
+  String get favoriteFigureHint;
+
+  /// No description provided for @activeFigureHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une figure maîtrisée qui reste active apparaîtra dans la planification, au même titre que les figures à apprendre.'**
+  String get activeFigureHint;
 
   /// No description provided for @unfavoriteFigure.
   ///
