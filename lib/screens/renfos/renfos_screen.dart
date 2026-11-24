@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/providers/renfo_providers.dart';
 import 'package:kalis/widgets/renfo_card.dart';
+import 'package:kalis/widgets/help_dialog_button.dart';
 import 'renfo_form_dialog.dart';
 import 'renfo_detail_dialog.dart';
 
@@ -20,7 +21,30 @@ class RenfosScreen extends ConsumerWidget {
         error: (e, _) => Center(child: Text('Erreur : $e')),
         data: (renfos) {
           if (renfos.isEmpty) {
-            return _EmptyRenfos(onAdd: () => _openAddDialog(context));
+            return CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  pinned: true,
+                  expandedHeight: 120,
+                  actions: [
+                    HelpDialogButton(
+                      tooltip: lbl.renfosHelpTitle,
+                      title: lbl.renfosHelpTitle,
+                      content: lbl.renfosHelpContent,
+                      closeLabel: lbl.buttonClose,
+                    ),
+                  ],
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text(lbl.renfosTitle),
+                    titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
+                  ),
+                ),
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: _EmptyRenfos(onAdd: () => _openAddDialog(context)),
+                ),
+              ],
+            );
           }
 
           return CustomScrollView(
@@ -28,6 +52,14 @@ class RenfosScreen extends ConsumerWidget {
               SliverAppBar(
                 pinned: true,
                 expandedHeight: 120,
+                actions: [
+                  HelpDialogButton(
+                    tooltip: lbl.renfosHelpTitle,
+                    title: lbl.renfosHelpTitle,
+                    content: lbl.renfosHelpContent,
+                    closeLabel: lbl.buttonClose,
+                  ),
+                ],
                 flexibleSpace: FlexibleSpaceBar(
                   title: Text(lbl.renfosTitle),
                   titlePadding: const EdgeInsets.only(left: 16, bottom: 16),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kalis/l10n/app_localizations.dart';
 import 'package:kalis/providers/place_providers.dart';
 import 'package:kalis/widgets/place_card.dart';
+import 'package:kalis/widgets/help_dialog_button.dart';
 import 'place_form_dialog.dart';
 import 'place_detail_dialog.dart';
 
@@ -20,7 +21,30 @@ class PlacesScreen extends ConsumerWidget {
         error: (e, _) => Center(child: Text('Erreur : $e')),
         data: (places) {
           if (places.isEmpty) {
-            return _EmptyPlaces(onAdd: () => _openAddDialog(context));
+            return CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  pinned: true,
+                  expandedHeight: 120,
+                  actions: [
+                    HelpDialogButton(
+                      tooltip: lbl.placesHelpTitle,
+                      title: lbl.placesHelpTitle,
+                      content: lbl.placesHelpContent,
+                      closeLabel: lbl.buttonClose,
+                    ),
+                  ],
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text(lbl.placesTitle),
+                    titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
+                  ),
+                ),
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: _EmptyPlaces(onAdd: () => _openAddDialog(context)),
+                ),
+              ],
+            );
           }
 
           return CustomScrollView(
@@ -28,6 +52,14 @@ class PlacesScreen extends ConsumerWidget {
               SliverAppBar(
                 pinned: true,
                 expandedHeight: 120,
+                actions: [
+                  HelpDialogButton(
+                    tooltip: lbl.placesHelpTitle,
+                    title: lbl.placesHelpTitle,
+                    content: lbl.placesHelpContent,
+                    closeLabel: lbl.buttonClose,
+                  ),
+                ],
                 flexibleSpace: FlexibleSpaceBar(
                   title: Text(lbl.placesTitle),
                   titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
