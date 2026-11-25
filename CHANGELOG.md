@@ -1,5 +1,9 @@
 # Version 1
 
+## v1.25.1
+
+- Correction de l'onglet Figures qui revenait en haut quand on changeait l'ordre des figures
+
 ## v1.25.0
 
 - Ajout d'une sélection de langue au premier lancement.
