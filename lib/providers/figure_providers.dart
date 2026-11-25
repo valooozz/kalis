@@ -18,7 +18,7 @@ final allFiguresProvider = StreamProvider<List<FigureModel>>((ref) {
 
 // Stream de toutes les figures, triées par statut puis alphabétiquement, en tenant compte du filtre de couleur
 final figuresProvider = StreamProvider<List<FigureModel>>((ref) {
-  ref.watch(allFiguresProvider);
+  ref.listen(allFiguresProvider, (previous, next) {});
   final repository = ref.watch(figureRepositoryProvider);
   if (repository == null) return const Stream.empty();
   final selectedColor = ref.watch(colorFilterProvider);
